@@ -74,3 +74,8 @@ CMakeLists.txt.user*
 
 # Build
 /build
+/cmake-build-*
+
+# ide
+/.vscode
+/.idea
