@@ -1,6 +1,11 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 
+#include <QMediaMetaData>
+#include <QMediaPlayer>
+#include <QAudioOutput>
+#include <QMediaDevices>
+
 int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
@@ -10,7 +15,8 @@ int main(int argc, char *argv[])
         &engine,
         &QQmlApplicationEngine::objectCreationFailed,
         &app,
-        []() { QCoreApplication::exit(-1); },
+        []()
+        { QCoreApplication::exit(-1); },
         Qt::QueuedConnection);
     engine.loadFromModule("nimamp", "Main");
 
