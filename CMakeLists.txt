@@ -9,14 +9,14 @@ find_package(Qt6 6.5 REQUIRED COMPONENTS Quick Multimedia)
 qt_standard_project_setup(REQUIRES 6.5)
 
 qt_add_executable(appnimamp
-    main.cpp
+    sources/main.cpp
 )
 
 qt_add_qml_module(appnimamp
     URI nimamp
     VERSION 1.0
     QML_FILES
-        Main.qml
+        qml/Main.qml
 )
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
