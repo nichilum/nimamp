@@ -26,15 +26,13 @@ int main(int argc, char *argv[])
 
     QGuiApplication app(argc, argv);
 
-    QMediaPlayer mediaPlayer;
     QAudioOutput audioOutput;
+    Player player;
 
-    mediaPlayer.setAudioOutput(&audioOutput);
-    mediaPlayer.setSource(QUrl::fromLocalFile(QFileInfo("../music/442.wav").absoluteFilePath()));
-    audioOutput.setVolume(0.2);
-
-    Player player = Player();
     player.print("init");
+    player.setAudioOutput(&audioOutput);
+    player.setSource(QUrl::fromLocalFile(QFileInfo("../music/442.wav").absoluteFilePath()));
+    audioOutput.setVolume(0.2);
 
     QQmlApplicationEngine engine;
     QObject::connect(
@@ -45,7 +43,6 @@ int main(int argc, char *argv[])
         { QCoreApplication::exit(-1); },
         Qt::QueuedConnection);
     engine.loadFromModule("nimamp", "Main");
-    engine.rootContext()->setContextProperty("mediaPlayer", &mediaPlayer);
     engine.rootContext()->setContextProperty("player", &player);
 
     return app.exec();

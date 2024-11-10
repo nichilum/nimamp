@@ -28,8 +28,8 @@ ApplicationWindow {
     // }
 
     Button {
-        text: {mediaPlayer.isPlaying ? qsTr("Stop") : qsTr("Play")}
-        onClicked: {mediaPlayer.isPlaying ? mediaPlayer.stop() : mediaPlayer.play()}
+        text: {player.isPlaying ? qsTr("Stop") : qsTr("Play")}
+        onClicked: {player.isPlaying ? player.stop() : player.play()}
     }
 
 }
