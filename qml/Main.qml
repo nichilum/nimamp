@@ -28,8 +28,17 @@ ApplicationWindow {
     // }
 
     Button {
-        text: {player.isPlaying ? qsTr("Stop") : qsTr("Play")}
-        onClicked: {player.isPlaying ? player.stop() : player.play()}
+        id: playButton
+        text: {player.playbackState === 1 ? qsTr("Stop") : qsTr("Play")}
+        onClicked: {
+            player.playbackState === 1 ? player.pause() : player.play()
+        }
+    }
+
+    Button {
+        text: "Next"
+        anchors.left: playButton.right
+        onClicked: player.next()
     }
 
 }

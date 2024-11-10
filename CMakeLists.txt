@@ -12,6 +12,8 @@ qt_add_executable(appnimamp
     sources/main.cpp
         headers/player.hpp
         sources/player.cpp
+        headers/playlist.hpp
+        sources/playlist.cpp
 )
 
 qt_add_qml_module(appnimamp
