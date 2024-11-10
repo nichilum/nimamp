@@ -42,13 +42,27 @@ ApplicationWindow {
     }
 
     Text {
-        property int durationMs: player.duration
-        property int minutes: Math.floor(durationMs / 60000)
-        property int seconds: Math.floor((durationMs % 60000) / 1000)
-
-        id: songTitle
-        text: minutes + ":" + (seconds < 10 ? "0" : "") + seconds
+        id: timeElapsed
+        text: {
+            const elapsedMs = player.position
+            const elapsedMinutes = Math.floor(elapsedMs / 60000)
+            const elapsedSeconds = Math.floor((elapsedMs % 60000) / 1000)
+            return elapsedMinutes + ":" + (elapsedSeconds < 10 ? "0" : "") + elapsedSeconds
+        }
         anchors.top: playButton.bottom
     }
+
+    Text {
+        id: songDuration
+        text: {
+            const durationMs = player.duration
+            const minutes = Math.floor(durationMs / 60000)
+            const seconds = Math.floor((durationMs % 60000) / 1000)
+            return minutes + ":" + (seconds < 10 ? "0" : "") + seconds
+        }
+        anchors.top: timeElapsed.bottom
+    }
+
+
 
 }
