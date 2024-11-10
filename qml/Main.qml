@@ -75,4 +75,17 @@ ApplicationWindow {
         anchors.top: songDuration.bottom
     }
 
+    Slider {
+        id: volumeSlider
+        to: 1
+        value: player.getVolume()
+        onValueChanged: {
+            if (volumeSlider.pressed){
+                player.setVolume(volumeSlider.value)
+            }
+        }
+        orientation: Qt.Vertical
+        anchors.top: seekSlider.bottom
+    }
+
 }

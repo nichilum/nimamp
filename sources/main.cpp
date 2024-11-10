@@ -23,7 +23,7 @@ int main(int argc, char *argv[])
     Playlist playlist("default", urls);
     player.addPlaylist(playlist);
     player.playPlaylist("default");
-    player.getAudioOutput()->setVolume(0.2);
+    player.setVolume(0.1);
 
     QQmlApplicationEngine engine;
     engine.rootContext()->setContextProperty("player", &player);
