@@ -10,6 +10,8 @@ qt_standard_project_setup(REQUIRES 6.5)
 
 qt_add_executable(appnimamp
     sources/main.cpp
+        headers/player.hpp
+        sources/player.cpp
 )
 
 qt_add_qml_module(appnimamp
