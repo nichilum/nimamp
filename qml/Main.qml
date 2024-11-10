@@ -63,6 +63,16 @@ ApplicationWindow {
         anchors.top: timeElapsed.bottom
     }
 
-
+    Slider {
+        id: seekSlider
+        to: player.duration
+        value: player.position
+        onValueChanged: {
+            if (seekSlider.pressed){
+                player.position = seekSlider.value
+            }
+        }
+        anchors.top: songDuration.bottom
+    }
 
 }
