@@ -41,4 +41,14 @@ ApplicationWindow {
         onClicked: player.next()
     }
 
+    Text {
+        property int durationMs: player.duration
+        property int minutes: Math.floor(durationMs / 60000)
+        property int seconds: Math.floor((durationMs % 60000) / 1000)
+
+        id: songTitle
+        text: minutes + ":" + (seconds < 10 ? "0" : "") + seconds
+        anchors.top: playButton.bottom
+    }
+
 }
