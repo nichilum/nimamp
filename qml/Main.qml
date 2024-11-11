@@ -96,37 +96,37 @@ ApplicationWindow {
             orientation: Qt.Vertical
         }
 
-        ListView {
-            model: queueModel
-            anchors.fill: parent
-
-            Layout.columnSpan: 2
-            Layout.rowSpan: 2
-            height: 200
-
-            delegate: Item {
-                width: parent.width
-                height: 50
-
-                Row {
-                    spacing: 2
-                    anchors.centerIn: parent
-
-                    Text {
-                        text: model.filename
-                        width: parent.width * 0.6
-                        elide: Text.ElideRight
-                    }
-
-                    Button {
-                        text: model.filename
-                        onClicked: {
-                            console.log("Song URL:", model.url)
-                            player.setMediaSource(model.url)
-                        }
-                    }
-                }
-            }
-        }
+        // ListView {
+        //     model: queueModel
+        //     anchors.fill: parent
+        //
+        //     Layout.columnSpan: 2
+        //     Layout.rowSpan: 2
+        //     height: 200
+        //
+        //     delegate: Item {
+        //         width: parent.width
+        //         height: 50
+        //
+        //         Row {
+        //             spacing: 2
+        //             anchors.centerIn: parent
+        //
+        //             Text {
+        //                 text: model.filename
+        //                 width: parent.width * 0.6
+        //                 elide: Text.ElideRight
+        //             }
+        //
+        //             Button {
+        //                 text: model.filename
+        //                 onClicked: {
+        //                     console.log("Song URL:", model.url)
+        //                     player.setMediaSource(model.url)
+        //                 }
+        //             }
+        //         }
+        //     }
+        // }
     }
 }
