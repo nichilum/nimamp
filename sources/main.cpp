@@ -3,6 +3,7 @@
 #include <QQmlContext>
 #include <QMediaMetaData>
 #include <QDir>
+#include <QStringListModel>
 
 #include <iostream>
 
@@ -25,8 +26,13 @@ int main(int argc, char *argv[])
     player.playPlaylist("default");
     player.setVolume(0.1);
 
+    QStringList currentQueue = convertToQStringList(player.getQueue());
+    QStringListModel queueModel;
+    queueModel.setStringList(currentQueue);
+
     QQmlApplicationEngine engine;
     engine.rootContext()->setContextProperty("player", &player);
+    engine.rootContext()->setContextProperty("queueModel", &queueModel);
 
     QObject::connect(
         &engine,

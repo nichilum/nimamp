@@ -2,6 +2,8 @@
 #include <QVector>
 #include <QUrl>
 
+#include "utils.hpp"
+
 class Playlist {
 private:
     QVector<QUrl> songs;
@@ -13,6 +15,7 @@ public:
     void addSongs(const QVector<QUrl> &songs);
     void removeSong(const QUrl &song);
 
+    [[nodiscard]] QStringList getSongUrls() const { return convertToQStringList(songs); }
     [[nodiscard]] QString getName() const { return name; }
     [[nodiscard]] QVector<QUrl> getSongs() const { return songs; }
 };

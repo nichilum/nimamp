@@ -14,8 +14,6 @@ void Player::addPlaylist(const Playlist& playlist) {
 void Player::playPlaylist(const QString &name) {
     for (const auto& playlist : playlists) {
         if (playlist.getName() == name) {
-            currentPlaylist = playlist;
-
             queue.clear();
             queue = playlist.getSongs();
 
@@ -31,12 +29,7 @@ void Player::playPlaylist(const QString &name) {
 }
 
 void Player::next() {
-    if (!currentPlaylist.has_value()) {
-        return;
-    }
-
-    auto songs = currentPlaylist->getSongs();
-    if (songs.empty()) {
+    if (queue.isEmpty()) {
         return;
     }
 
@@ -45,4 +38,20 @@ void Player::next() {
     setSource(song);
     play();
 }
+
+/**
+ * Set the media source of the player and immediately start playing it.
+ * This overwrites the queue and the current song.
+ * @param url The URL of the media source
+ */
+void Player::setMediaSource(const QUrl &url) {
+    setSource(url);
+    play();
+}
+
+void Player::queueSong(const QUrl &url) {
+    queue.push_back(url);
+}
+
+
 

@@ -88,4 +88,33 @@ ApplicationWindow {
         anchors.top: seekSlider.bottom
     }
 
+    ListView {
+        anchors.fill: parent
+        model: queueModel
+
+        delegate: Item {
+            width: parent.width
+            height: 50
+
+            Row {
+                spacing: 2
+                anchors.verticalCenter: parent.verticalCenter
+
+                Text {
+                    text: model.display
+                    width: parent.width * 0.6
+                    elide: Text.ElideRight
+                }
+
+                Button {
+                    text: model.display
+                    onClicked: {
+                        console.log("Song URL:", model.display)
+                        player.setMediaSource(model.display)
+                    }
+                }
+            }
+        }
+    }
+
 }
