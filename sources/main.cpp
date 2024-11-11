@@ -17,8 +17,8 @@ int main(int argc, char *argv[])
 
     QVector<Song> urls;
     QDir directory(QCoreApplication::applicationDirPath() + "/../music");
-    QStringList images = directory.entryList(QStringList() << "*.wav" << "*.mp3",QDir::Files);
-    foreach(QString filename, images) {
+    QStringList files = directory.entryList(QStringList() << "*.wav" << "*.mp3",QDir::Files);
+    foreach(QString filename, files) {
         auto song = Song(QUrl::fromLocalFile(directory.absoluteFilePath(filename)), filename);
         urls.append(song);
     }

@@ -1,6 +1,7 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
+import QtQuick.Dialogs
 
 ApplicationWindow {
     width: 640
@@ -13,12 +14,21 @@ ApplicationWindow {
             title: qsTr("File")
             MenuItem {
                 text: qsTr("&Open")
-                onTriggered: console.log("Open action triggered");
+                onTriggered: folderDialog.open()
             }
             MenuItem {
                 text: qsTr("Exit")
                 onTriggered: Qt.quit();
             }
+        }
+    }
+
+    FolderDialog {
+        id: folderDialog
+        currentFolder: StandardPaths.standardLocations(StandardPaths.MusicLocation)[0]
+        onAccepted: {
+            const folder = folderDialog.selectedFolder
+            player.addFolderToQueue(folder)
         }
     }
 
@@ -118,6 +128,5 @@ ApplicationWindow {
                 }
             }
         }
-
     }
 }

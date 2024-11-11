@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <QDebug>
+#include <QDir>
 
 Player::Player() {
     setAudioOutput(&audioOutput);
@@ -21,13 +22,24 @@ void Player::playPlaylist(const QString &name) {
 
             std::cout << "Playing playlist: " << name.toStdString() << std::endl;
             std::cout << "Songs in queue: " << queue.size() << std::endl;
-            //qDebug() << queue;
+            qDebug() << queue;
 
             setSource(queue.front().getUrl());
             play();
             return;
         }
     }
+}
+
+void Player::addFolderToQueue(const QUrl &directory) {
+    const QDir dir(directory.toLocalFile());
+    QStringList files = dir.entryList(QStringList() << "*.wav" << "*.mp3", QDir::Files);
+    for (const auto& filename : files) {
+        auto song = Song(QUrl::fromLocalFile(dir.absoluteFilePath(filename)), filename);
+        queue.push_back(song);
+    }
+
+    qDebug () << "Added folder to queue: " << queue;
 }
 
 void Player::next() {

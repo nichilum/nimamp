@@ -13,10 +13,11 @@ private:
     QVector<Song> queue;
 public:
     Player();
-    void addPlaylist(const Playlist& playlist);
-    void playPlaylist(const QString& name);
-    Q_INVOKABLE void next();
+    void addPlaylist(const Playlist &playlist);
+    void playPlaylist(const QString &name);
+    Q_INVOKABLE void addFolderToQueue(const QUrl &directory);
     Q_INVOKABLE void setMediaSource(const QUrl &url);
+    Q_INVOKABLE void next();
     Q_INVOKABLE void queueSong(const Song &song);
     Q_INVOKABLE void setVolume(const float volume) { audioOutput.setVolume(volume); }
 
