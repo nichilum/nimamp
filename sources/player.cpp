@@ -5,6 +5,8 @@
 
 Player::Player() {
     setAudioOutput(&audioOutput);
+
+    connect(this, &QMediaPlayer::mediaStatusChanged, this, &Player::songEnded);
 }
 
 void Player::addPlaylist(const Playlist& playlist) {
@@ -53,5 +55,8 @@ void Player::queueSong(const Song &song) {
     queue.push_back(song);
 }
 
-
-
+void Player::songEnded() {
+    if (mediaStatus() == EndOfMedia) {
+        next();
+    }
+}

@@ -24,4 +24,7 @@ public:
     [[nodiscard]] Q_INVOKABLE float getVolume() const { return audioOutput.volume(); }
     [[nodiscard]] QVector<Playlist> getPlaylists() const { return playlists; }
     [[nodiscard]] QVector<Song> getQueue() const { return queue; }
+
+public slots:
+    void songEnded();
 };
