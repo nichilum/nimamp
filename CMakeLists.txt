@@ -3,6 +3,7 @@ cmake_minimum_required(VERSION 3.16)
 project(nimamp VERSION 0.1 LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_STANDARD 20)
 
 find_package(Qt6 6.5 REQUIRED COMPONENTS Quick Multimedia)
 
@@ -15,8 +16,9 @@ qt_add_executable(appnimamp
         headers/playlist.hpp
         sources/playlist.cpp
         headers/utils.hpp
-        sources/song.cpp
         headers/song.hpp
+        headers/song_model.hpp
+        sources/song.cpp
 )
 
 qt_add_qml_module(appnimamp

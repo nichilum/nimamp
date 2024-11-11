@@ -8,17 +8,19 @@
 #include <iostream>
 
 #include "headers/player.hpp"
+#include "headers/song_model.hpp"
 
 int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
     Player player;
 
-    QVector<QUrl> urls;
+    QVector<Song> urls;
     QDir directory(QCoreApplication::applicationDirPath() + "/../music");
     QStringList images = directory.entryList(QStringList() << "*.wav" << "*.mp3",QDir::Files);
     foreach(QString filename, images) {
-        urls.append(QUrl::fromLocalFile(QFileInfo(directory, filename).absoluteFilePath()));
+        auto song = Song(QUrl::fromLocalFile(directory.absoluteFilePath(filename)), filename);
+        urls.append(song);
     }
 
     Playlist playlist("default", urls);
@@ -26,9 +28,8 @@ int main(int argc, char *argv[])
     player.playPlaylist("default");
     player.setVolume(0.1);
 
-    QStringList currentQueue = convertToQStringList(player.getQueue());
-    QStringListModel queueModel;
-    queueModel.setStringList(currentQueue);
+    SongModel queueModel;
+    queueModel.addSongs(player.getQueue());
 
     QQmlApplicationEngine engine;
     engine.rootContext()->setContextProperty("player", &player);

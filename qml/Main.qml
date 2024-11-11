@@ -101,16 +101,16 @@ ApplicationWindow {
                 anchors.verticalCenter: parent.verticalCenter
 
                 Text {
-                    text: model.display
+                    text: model.filename
                     width: parent.width * 0.6
                     elide: Text.ElideRight
                 }
 
                 Button {
-                    text: model.display
+                    text: model.filename
                     onClicked: {
-                        console.log("Song URL:", model.display)
-                        player.setMediaSource(model.display)
+                        console.log("Song URL:", model.url)
+                        player.setMediaSource(model.url)
                     }
                 }
             }

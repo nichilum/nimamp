@@ -2,12 +2,12 @@
 
 #include <QVector>
 #include <QUrl>
-#include <QStringList>
 #include <algorithm>
 
-inline QStringList convertToQStringList(const QVector<QUrl>& urlVector) {
+inline QStringList convertToQStringList(const QVector<Song>& songVector) {
     QStringList stringList;
-    std::transform(urlVector.begin(), urlVector.end(), std::back_inserter(stringList),
-                   [](const QUrl &url) { return url.toString(); });
+    std::transform(songVector.begin(), songVector.end(), std::back_inserter(stringList), [](const Song& song) {
+        return song.getFilename();
+    });
     return stringList;
 }

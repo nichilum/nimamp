@@ -19,9 +19,9 @@ void Player::playPlaylist(const QString &name) {
 
             std::cout << "Playing playlist: " << name.toStdString() << std::endl;
             std::cout << "Songs in queue: " << queue.size() << std::endl;
-            qDebug() << queue;
+            //qDebug() << queue;
 
-            setSource(queue.front());
+            setSource(queue.front().getUrl());
             play();
             return;
         }
@@ -35,7 +35,7 @@ void Player::next() {
 
     queue.pop_front();
     auto song = queue.front();
-    setSource(song);
+    setSource(song.getUrl());
     play();
 }
 
@@ -49,8 +49,8 @@ void Player::setMediaSource(const QUrl &url) {
     play();
 }
 
-void Player::queueSong(const QUrl &url) {
-    queue.push_back(url);
+void Player::queueSong(const Song &song) {
+    queue.push_back(song);
 }
 
 
