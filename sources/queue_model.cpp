@@ -63,3 +63,15 @@ QHash<int, QByteArray> QueueModel::roleNames() const {
 QVector<Song> QueueModel::getSongs() const {
     return m_songs;
 }
+
+/**
+ * Pop first element of the queue and return the element after.
+ * @return First Song after pop
+ */
+Song QueueModel::dequeue() {
+    // qDebug() << rowCount();
+    beginRemoveRows(QModelIndex(), 1, rowCount() - 1);
+    m_songs.pop_front();
+    endRemoveRows();
+    return m_songs.front();
+}

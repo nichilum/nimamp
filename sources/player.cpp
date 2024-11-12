@@ -66,6 +66,7 @@ void Player::next() {
     }
 
     auto song = queue.dequeue();
+    qDebug() << "Added folder to queue: " << queue.getSongs();
     setSource(song.getUrl());
     play();
 }

@@ -14,7 +14,7 @@ class QueueModel final : public QAbstractListModel {
         FilenameRole
     };
 
-    QueueModel(QObject *parent = nullptr) : QAbstractListModel(parent){};
+    QueueModel(QObject *parent = nullptr) : QAbstractListModel(parent) {};
     void addSong(const Song &song);
     void addSongs(QList<Song> &&songs);
     void setSongs(QList<Song> &&songs);
@@ -28,14 +28,7 @@ class QueueModel final : public QAbstractListModel {
         return m_songs.isEmpty();
     }
 
-    /**
-     * Pop first element of the queue and return the element after.
-     * @return First Song after pop
-     */
-    Song dequeue() {
-        m_songs.pop_front();
-        return m_songs.front();
-    }
+    Song dequeue();
 
    private:
     QVector<Song> m_songs;

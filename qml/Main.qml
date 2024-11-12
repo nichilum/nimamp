@@ -51,6 +51,11 @@ ApplicationWindow {
                 text: "Next"
                 onClicked: player.next()
             }
+
+            Button {
+                text: "Clear"
+                onClicked: player.clearQueue()
+            }
         }
 
         Text {

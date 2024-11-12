@@ -37,6 +37,10 @@ class Player final : public QMediaPlayer {
 
     static Player *getInstance();
 
+    Q_INVOKABLE void clearQueue() {
+        queue.clear();
+    };  // debug stuff
+
    public slots:
     void songEnded();
 };
