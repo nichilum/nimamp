@@ -7,19 +7,16 @@
 #include <iostream>
 
 #include "headers/player.hpp"
-#include "headers/song_model.hpp"
+#include "headers/queue_model.hpp"
 
 int main(int argc, char *argv[]) {
     QGuiApplication app(argc, argv);
     auto player = Player::getInstance();
     player->setVolume(0.1);  // gehoerschutz
 
-    SongModel queueModel;
-    queueModel.addSongs(player->getQueue());
-
     QQmlApplicationEngine engine;
     engine.rootContext()->setContextProperty("player", player);
-    engine.rootContext()->setContextProperty("queueModel", &queueModel);
+    engine.rootContext()->setContextProperty("queueModel", player->getQueue());
 
     QObject::connect(
         &engine,

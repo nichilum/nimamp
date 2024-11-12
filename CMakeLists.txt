@@ -10,21 +10,22 @@ find_package(Qt6 6.5 REQUIRED COMPONENTS Quick Multimedia)
 qt_standard_project_setup(REQUIRES 6.5)
 
 qt_add_executable(appnimamp
-    sources/main.cpp
+        sources/main.cpp
         headers/player.hpp
         sources/player.cpp
         headers/playlist.hpp
         sources/playlist.cpp
         headers/utils.hpp
         headers/song.hpp
-        headers/song_model.hpp
         sources/song.cpp
+        headers/queue_model.hpp
+        sources/queue_model.cpp
 )
 
 qt_add_qml_module(appnimamp
-    URI nimamp
-    VERSION 1.0
-    QML_FILES
+        URI nimamp
+        VERSION 1.0
+        QML_FILES
         qml/Main.qml
 )
 
@@ -32,21 +33,21 @@ qt_add_qml_module(appnimamp
 # If you are developing for iOS or macOS you should consider setting an
 # explicit, fixed bundle identifier manually though.
 set_target_properties(appnimamp PROPERTIES
-#    MACOSX_BUNDLE_GUI_IDENTIFIER com.example.appnimamp
-    MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
-    MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
-    MACOSX_BUNDLE TRUE
-    WIN32_EXECUTABLE TRUE
+        #    MACOSX_BUNDLE_GUI_IDENTIFIER com.example.appnimamp
+        MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
+        MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
+        MACOSX_BUNDLE TRUE
+        WIN32_EXECUTABLE TRUE
 )
 
 target_link_libraries(appnimamp
-    PRIVATE Qt6::Quick
-    PRIVATE Qt6::Multimedia
+        PRIVATE Qt6::Quick
+        PRIVATE Qt6::Multimedia
 )
 
 include(GNUInstallDirs)
 install(TARGETS appnimamp
-    BUNDLE DESTINATION .
-    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+        BUNDLE DESTINATION .
+        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
 )
