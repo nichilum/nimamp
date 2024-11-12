@@ -41,7 +41,7 @@ ApplicationWindow {
         RowLayout {
             Button {
                 id: playButton
-                text: {player.playbackState === 1 ? qsTr("Stop") : qsTr("Play")}
+                text: {player.playbackState === 1 ? qsTr("Pause") : qsTr("Play")}
                 onClicked: {
                         player.playbackState === 1 ? player.pause() : player.play()
                 }
@@ -78,7 +78,7 @@ ApplicationWindow {
             to: player.duration
             value: player.position
             onValueChanged: {
-                if (seekSlider.pressed){
+                if (seekSlider.pressed) {
                     player.position = seekSlider.value
                 }
             }
@@ -89,7 +89,7 @@ ApplicationWindow {
             to: 1
             value: player.getVolume()
             onValueChanged: {
-                if (volumeSlider.pressed){
+                if (volumeSlider.pressed) {
                     player.setVolume(volumeSlider.value)
                 }
             }
