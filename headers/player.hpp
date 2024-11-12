@@ -6,12 +6,13 @@
 #include "playlist.hpp"
 
 class Player final : public QMediaPlayer {
-Q_OBJECT
-private:
+    Q_OBJECT
+   private:
     QAudioOutput audioOutput;
     QVector<Playlist> playlists;
     QVector<Song> queue;
-public:
+
+   public:
     Player();
     void addPlaylist(const Playlist &playlist);
     void playPlaylist(const QString &name);
@@ -26,6 +27,6 @@ public:
     [[nodiscard]] QVector<Playlist> getPlaylists() const { return playlists; }
     [[nodiscard]] QVector<Song> getQueue() const { return queue; }
 
-public slots:
+   public slots:
     void songEnded();
 };

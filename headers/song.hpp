@@ -1,9 +1,9 @@
 #pragma once
-#include <QUrl>
 #include <QDebug>
+#include <QUrl>
 
 class Song {
-public:
+   public:
     QUrl url;
     QString filename;
 
@@ -25,7 +25,7 @@ inline QDebug operator<<(QDebug debug, const QVector<Song> &songs) {
     QDebugStateSaver saver(debug);
     debug.nospace() << "QVector<Song> [";
     for (const auto &song : songs) {
-        debug.nospace() << "\n  " << song;  // This will use the Song's QDebug operator
+        debug.nospace() << "\n  " << song;
     }
     debug.nospace() << "\n]";
     return debug;
