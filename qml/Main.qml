@@ -99,6 +99,7 @@ ApplicationWindow {
         ListView {
             model: player.getQueue()
             anchors.fill: parent
+            //anchors.left: grid.right
 
             Layout.columnSpan: 2
             Layout.rowSpan: 2

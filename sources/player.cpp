@@ -1,7 +1,9 @@
 #include "../headers/player.hpp"
 
+#include <QCoreApplication>
 #include <QDebug>
 #include <QDir>
+#include <QVariantList>
 #include <iostream>
 
 Player *Player::instance = nullptr;
@@ -10,6 +12,16 @@ Player::Player() {
     setAudioOutput(&audioOutput);
 
     connect(this, &QMediaPlayer::mediaStatusChanged, this, &Player::songEnded);
+    connect(QCoreApplication::instance(), &QCoreApplication::aboutToQuit, this, &Player::saveQueue);
+
+    auto songList = settings.value("queue").toList();
+    QVector<Song> loadedQueue;
+    for (const QVariant &songVariant : songList) {
+        if (songVariant.canConvert<Song>()) {
+            loadedQueue.append(songVariant.value<Song>());
+        }
+    }
+    qDebug() << "Loaded songs: " << loadedQueue;
 }
 
 void Player::addPlaylist(const Playlist &playlist) {
@@ -34,6 +46,8 @@ void Player::playPlaylist(const QString &name) {
 }
 
 void Player::addFolderToQueue(const QUrl &directory) {
+    queue.clear();
+
     const QDir dir(directory.toLocalFile());
     QStringList files = dir.entryList(QStringList() << "*.wav"
                                                     << "*.mp3",
@@ -75,6 +89,14 @@ Player *Player::getInstance() {
         instance = new Player();
     }
     return instance;
+}
+
+void Player::saveQueue() {
+    QVariantList songList;
+    for (const Song &song : queue.getSongs()) {
+        songList.append(QVariant::fromValue(song));
+    }
+    settings.setValue("queue", songList);
 }
 
 void Player::songEnded() {

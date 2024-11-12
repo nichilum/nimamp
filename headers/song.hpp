@@ -1,18 +1,34 @@
 #pragma once
-#include <QDebug>
-#include <QUrl>
 
-class Song {
+#include <QDataStream>
+#include <QDebug>
+#include <QMetaType>
+#include <QUrl>
+#include <QVariant>
+
+class Song : public QVariant {
    public:
     QUrl url;
     QString filename;
 
+    Song() = default;
     Song(const QUrl &url, const QString &filename) : url(url), filename(filename) {}
     Song(const QUrl &url) : url(url), filename(url.fileName()) {}
     [[nodiscard]] QUrl getUrl() const { return url; }
     [[nodiscard]] QString getFilename() const { return filename; }
 
     bool operator==(Song const &) const = default;
+
+    // Serialization
+    friend QDataStream &operator<<(QDataStream &out, const Song &song) {
+        out << song.url << song.filename;
+        return out;
+    }
+
+    friend QDataStream &operator>>(QDataStream &in, Song &song) {
+        in >> song.url >> song.filename;
+        return in;
+    }
 };
 
 inline QDebug operator<<(QDebug debug, const Song &song) {
@@ -30,3 +46,5 @@ inline QDebug operator<<(QDebug debug, const QVector<Song> &songs) {
     debug.nospace() << "\n]";
     return debug;
 }
+
+Q_DECLARE_METATYPE(Song)

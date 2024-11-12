@@ -2,6 +2,7 @@
 #include <QAudioOutput>
 #include <QMediaPlayer>
 #include <QObject>
+#include <QSettings>
 
 #include "playlist.hpp"
 #include "queue_model.hpp"
@@ -17,9 +18,11 @@ class Player final : public QMediaPlayer {
     QVector<Playlist> playlists;
     QueueModel queue;
     QVector<Song> priorityQueue;
+    QSettings settings;
 
    public:
     void addPlaylist(const Playlist &playlist);
+    void saveQueue();
     void playPlaylist(const QString &name);                    // to queue
     Q_INVOKABLE void addFolderToQueue(const QUrl &directory);  // to
     Q_INVOKABLE void setMediaSource(const QUrl &url);          // delete queue not prio queue
