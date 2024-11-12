@@ -10,6 +10,7 @@ class Playlist {
 
    public:
     explicit Playlist(const QString &name);
+    Playlist(const QString &name, const QUrl &directory);
     Playlist(const QString &name, const QVector<Song> &songs);
     void addSong(const Song &song);
     void addSongs(const QVector<Song> &songs);

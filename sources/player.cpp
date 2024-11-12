@@ -4,6 +4,8 @@
 #include <QDir>
 #include <iostream>
 
+Player *Player::instance = nullptr;
+
 Player::Player() {
     setAudioOutput(&audioOutput);
 
@@ -37,7 +39,7 @@ void Player::addFolderToQueue(const QUrl &directory) {
                                                     << "*.mp3",
                                       QDir::Files);
     for (const auto &filename : files) {
-        auto song = Song(QUrl::fromLocalFile(dir.absoluteFilePath(filename)), filename);
+        auto song = Song(QUrl::fromLocalFile(dir.absoluteFilePath(filename)));
         queue.push_back(song);
     }
 
@@ -67,6 +69,13 @@ void Player::setMediaSource(const QUrl &url) {
 
 void Player::queueSong(const Song &song) {
     queue.push_back(song);
+}
+
+Player *Player::getInstance() {
+    if (instance == nullptr) {
+        instance = new Player();
+    }
+    return instance;
 }
 
 void Player::songEnded() {
