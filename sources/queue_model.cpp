@@ -1,5 +1,3 @@
-#pragma once
-
 #include "headers/queue_model.hpp"
 
 #include <QAbstractListModel>

@@ -96,34 +96,38 @@ ApplicationWindow {
             orientation: Qt.Vertical
         }
 
-        ListView {
-            model: player.getQueue()
-            anchors.fill: parent
-            //anchors.left: grid.right
+        Rectangle{
+            Layout.fillHeight: true
+            Layout.fillWidth: true
 
-            Layout.columnSpan: 2
-            Layout.rowSpan: 2
-            height: 200
+            ListView {
+                model: player.getQueue()
+                anchors.fill: parent
 
-            delegate: Item {
-                width: parent.width
-                height: 50
+                Layout.columnSpan: 2
+                Layout.rowSpan: 2
+                height: 200
 
-                Row {
-                    spacing: 2
-                    anchors.centerIn: parent
+                delegate: Item {
+                    width: parent.width
+                    height: 50
 
-                    Text {
-                        text: model.filename
-                        width: parent.width * 0.6
-                        elide: Text.ElideRight
-                    }
+                    Row {
+                        spacing: 2
+                        anchors.centerIn: parent
 
-                    Button {
-                        text: model.filename
-                        onClicked: {
-                            console.log("Song URL:", model.url)
-                            player.setMediaSource(model.url)
+                        Text {
+                            text: model.filename
+                            width: parent.width * 0.6
+                            elide: Text.ElideRight
+                        }
+
+                        Button {
+                            text: model.filename
+                            onClicked: {
+                                console.log("Song URL:", model.url)
+                                player.setMediaSource(model.url)
+                            }
                         }
                     }
                 }
