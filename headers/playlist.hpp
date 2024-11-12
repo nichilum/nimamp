@@ -4,10 +4,11 @@
 #include "utils.hpp"
 
 class Playlist {
-private:
+   private:
     QVector<Song> songs;
     QString name;
-public:
+
+   public:
     explicit Playlist(const QString &name);
     Playlist(const QString &name, const QVector<Song> &songs);
     void addSong(const Song &song);

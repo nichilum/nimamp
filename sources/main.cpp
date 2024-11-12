@@ -1,24 +1,24 @@
+#include <QDir>
 #include <QGuiApplication>
+#include <QMediaMetaData>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
-#include <QMediaMetaData>
-#include <QDir>
 #include <QStringListModel>
-
 #include <iostream>
 
 #include "headers/player.hpp"
 #include "headers/song_model.hpp"
 
-int main(int argc, char *argv[])
-{
+int main(int argc, char *argv[]) {
     QGuiApplication app(argc, argv);
     Player player;
 
     QVector<Song> urls;
     QDir directory(QCoreApplication::applicationDirPath() + "/../music");
-    QStringList files = directory.entryList(QStringList() << "*.wav" << "*.mp3",QDir::Files);
-    foreach(QString filename, files) {
+    QStringList files = directory.entryList(QStringList() << "*.wav"
+                                                          << "*.mp3",
+                                            QDir::Files);
+    foreach (QString filename, files) {
         auto song = Song(QUrl::fromLocalFile(directory.absoluteFilePath(filename)), filename);
         urls.append(song);
     }
@@ -39,8 +39,7 @@ int main(int argc, char *argv[])
         &engine,
         &QQmlApplicationEngine::objectCreationFailed,
         &app,
-        []()
-        { QCoreApplication::exit(-1); },
+        []() { QCoreApplication::exit(-1); },
         Qt::QueuedConnection);
     engine.loadFromModule("nimamp", "Main");
 

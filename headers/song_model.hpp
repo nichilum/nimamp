@@ -7,14 +7,14 @@
 #include "song.hpp"
 
 class SongModel final : public QAbstractListModel {
-Q_OBJECT
-public:
+    Q_OBJECT
+   public:
     enum Roles {
         UrlRole = Qt::UserRole + 1,
         FilenameRole
     };
 
-    SongModel(QObject *parent = nullptr) : QAbstractListModel(parent) {};
+    SongModel(QObject *parent = nullptr) : QAbstractListModel(parent){};
 
     void addSongs(QList<Song> &&songs) {
         if (songs.isEmpty())
@@ -24,7 +24,6 @@ public:
         m_songs.append(songs);
         endInsertRows();
     }
-
 
     int rowCount(const QModelIndex &parent = QModelIndex()) const override {
         Q_UNUSED(parent);
@@ -51,6 +50,6 @@ public:
         return roles;
     }
 
-private:
+   private:
     QList<Song> m_songs;
 };

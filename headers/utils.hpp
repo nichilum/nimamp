@@ -1,7 +1,7 @@
 #pragma once
 
-#include <QVector>
 #include <QUrl>
+#include <QVector>
 #include <algorithm>
 
 inline QStringList convertToQStringList(const QVector<Song>& songVector) {

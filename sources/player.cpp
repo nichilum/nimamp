@@ -1,8 +1,8 @@
 #include "../headers/player.hpp"
 
-#include <iostream>
 #include <QDebug>
 #include <QDir>
+#include <iostream>
 
 Player::Player() {
     setAudioOutput(&audioOutput);
@@ -10,12 +10,12 @@ Player::Player() {
     connect(this, &QMediaPlayer::mediaStatusChanged, this, &Player::songEnded);
 }
 
-void Player::addPlaylist(const Playlist& playlist) {
+void Player::addPlaylist(const Playlist &playlist) {
     playlists.push_back(playlist);
 }
 
 void Player::playPlaylist(const QString &name) {
-    for (const auto& playlist : playlists) {
+    for (const auto &playlist : playlists) {
         if (playlist.getName() == name) {
             queue.clear();
             queue = playlist.getSongs();
@@ -33,13 +33,15 @@ void Player::playPlaylist(const QString &name) {
 
 void Player::addFolderToQueue(const QUrl &directory) {
     const QDir dir(directory.toLocalFile());
-    QStringList files = dir.entryList(QStringList() << "*.wav" << "*.mp3", QDir::Files);
-    for (const auto& filename : files) {
+    QStringList files = dir.entryList(QStringList() << "*.wav"
+                                                    << "*.mp3",
+                                      QDir::Files);
+    for (const auto &filename : files) {
         auto song = Song(QUrl::fromLocalFile(dir.absoluteFilePath(filename)), filename);
         queue.push_back(song);
     }
 
-    qDebug () << "Added folder to queue: " << queue;
+    qDebug() << "Added folder to queue: " << queue;
 }
 
 void Player::next() {
