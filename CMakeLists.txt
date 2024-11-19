@@ -5,7 +5,11 @@ project(nimamp VERSION 0.1 LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_STANDARD 20)
 
-find_package(Qt6 6.5 REQUIRED COMPONENTS Quick Multimedia)
+find_package(Qt6 6.5 REQUIRED COMPONENTS Widgets Multimedia)
+
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTOUIC ON)
+set(CMAKE_AUTORCC ON)
 
 qt_standard_project_setup(REQUIRES 6.5)
 
@@ -18,16 +22,11 @@ qt_add_executable(appnimamp
         headers/utils.hpp
         headers/song.hpp
         sources/song.cpp
-        headers/queue_model.hpp
-        sources/queue_model.cpp
+        mainwindow.cpp
+        mainwindow.hpp
+        MainWindow.ui
 )
 
-qt_add_qml_module(appnimamp
-        URI nimamp
-        VERSION 1.0
-        QML_FILES
-        qml/Main.qml
-)
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
 # If you are developing for iOS or macOS you should consider setting an
@@ -41,8 +40,8 @@ set_target_properties(appnimamp PROPERTIES
 )
 
 target_link_libraries(appnimamp
-        PRIVATE Qt6::Quick
         PRIVATE Qt6::Multimedia
+        PRIVATE Qt6::Widgets
 )
 
 include(GNUInstallDirs)

@@ -5,7 +5,6 @@
 #include <QSettings>
 
 #include "playlist.hpp"
-#include "queue_model.hpp"
 
 class Player final : public QMediaPlayer {
     Q_OBJECT
@@ -16,7 +15,7 @@ class Player final : public QMediaPlayer {
    private:
     QAudioOutput audioOutput;
     QVector<Playlist> playlists;
-    QueueModel queue;
+    QVector<Song> queue;
     QVector<Song> priorityQueue;
     QSettings settings;
 
@@ -33,7 +32,7 @@ class Player final : public QMediaPlayer {
     [[nodiscard]] QAudioOutput *getAudioOutput() { return &audioOutput; }
     [[nodiscard]] Q_INVOKABLE float getVolume() const { return audioOutput.volume(); }
     [[nodiscard]] QVector<Playlist> getPlaylists() const { return playlists; }
-    [[nodiscard]] Q_INVOKABLE QueueModel *getQueue() { return &queue; }
+    [[nodiscard]] Q_INVOKABLE QVector<Song> *getQueue() { return &queue; }
 
     static Player *getInstance();
 

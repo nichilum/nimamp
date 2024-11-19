@@ -1,32 +1,41 @@
 #include <QDir>
-#include <QGuiApplication>
-#include <QMediaMetaData>
-#include <QQmlApplicationEngine>
-#include <QQmlContext>
-#include <QStringListModel>
-#include <iostream>
+#include <QApplication>
 
-#include "headers/player.hpp"
-#include "headers/queue_model.hpp"
+#include "../mainwindow.hpp"
+#include "../headers/player.hpp"
 
 int main(int argc, char *argv[]) {
-    QGuiApplication app(argc, argv);
+    // QGuiApplication app(argc, argv);
+    // auto player = Player::getInstance();
+    // player->setVolume(0.1);  // gehoerschutz
+    //
+    // QQmlApplicationEngine engine;
+    // engine.rootContext()->setContextProperty("player", player);
+    // engine.rootContext()->setContextProperty("queueModel", player->getQueue());
+    //
+    // qRegisterMetaType<Song>("Song");
+    //
+    // QObject::connect(
+    //     &engine,
+    //     &QQmlApplicationEngine::objectCreationFailed,
+    //     &app,
+    //     []() { QCoreApplication::exit(-1); },
+    //     Qt::QueuedConnection);
+    // engine.loadFromModule("nimamp", "Main");
+    //
+    // return app.exec();
+
+    QApplication app(argc, argv);
+
     auto player = Player::getInstance();
     player->setVolume(0.1);  // gehoerschutz
+    player->addFolderToQueue(QUrl::fromLocalFile("../music"));
 
-    QQmlApplicationEngine engine;
-    engine.rootContext()->setContextProperty("player", player);
-    engine.rootContext()->setContextProperty("queueModel", player->getQueue());
+    MainWindow window;
+
 
     qRegisterMetaType<Song>("Song");
 
-    QObject::connect(
-        &engine,
-        &QQmlApplicationEngine::objectCreationFailed,
-        &app,
-        []() { QCoreApplication::exit(-1); },
-        Qt::QueuedConnection);
-    engine.loadFromModule("nimamp", "Main");
-
-    return app.exec();
+    window.show();
+    return QApplication::exec();
 }

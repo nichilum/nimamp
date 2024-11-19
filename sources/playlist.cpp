@@ -1,4 +1,4 @@
-#include "headers/playlist.hpp"
+#include "../headers/playlist.hpp"
 
 #include <QDir>
 
