@@ -45,10 +45,10 @@ void Player::playPlaylist(const QString &name) {
     }
 }
 
-void Player::addFolderToQueue(const QUrl &directory) {
+void Player::addFolderToQueue(const QString &directory) {
     queue.clear();
 
-    const QDir dir(directory.toLocalFile());
+    const QDir dir(directory);
     QStringList files = dir.entryList(QStringList() << "*.wav"
                                                     << "*.mp3",
                                       QDir::Files);
@@ -66,7 +66,7 @@ void Player::next() {
     }
     queue.pop_front();
     auto song = queue.front();
-    qDebug() << "Added folder to queue: " << queue;
+    qDebug() << "Current queue: " << queue;
     setSource(song.getUrl());
     play();
 }
@@ -103,5 +103,14 @@ void Player::saveQueue() {
 void Player::songEnded() {
     if (mediaStatus() == EndOfMedia) {
         next();
+    }
+}
+
+void Player::togglePlayPause() {
+    auto player = Player::getInstance();
+    if (player->isPlaying() == QMediaPlayer::PlayingState) {
+        player->pause();
+    } else {
+        player->play();
     }
 }

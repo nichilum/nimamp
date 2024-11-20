@@ -79,3 +79,6 @@ CMakeLists.txt.user*
 # ide
 /.vscode
 /.idea
+
+# ui tmp
+*.TMP

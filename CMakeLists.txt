@@ -22,9 +22,9 @@ qt_add_executable(appnimamp
         headers/utils.hpp
         headers/song.hpp
         sources/song.cpp
-        mainwindow.cpp
-        mainwindow.hpp
-        MainWindow.ui
+        sources/mainwindow.cpp
+        headers/mainwindow.hpp
+        sources/MainWindow.ui
 )
 
 

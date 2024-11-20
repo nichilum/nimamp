@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>650</width>
-    <height>417</height>
+    <width>901</width>
+    <height>586</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,8 +17,8 @@
    <widget class="QListWidget" name="listWidget">
     <property name="geometry">
      <rect>
-      <x>380</x>
-      <y>0</y>
+      <x>500</x>
+      <y>100</y>
       <width>256</width>
       <height>361</height>
      </rect>
@@ -27,8 +27,8 @@
    <widget class="QPushButton" name="nextButton">
     <property name="geometry">
      <rect>
-      <x>90</x>
-      <y>10</y>
+      <x>210</x>
+      <y>110</y>
       <width>31</width>
       <height>24</height>
      </rect>
@@ -43,8 +43,8 @@
    <widget class="QPushButton" name="prevButton">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>10</y>
+      <x>130</x>
+      <y>110</y>
       <width>31</width>
       <height>24</height>
      </rect>
@@ -59,8 +59,8 @@
    <widget class="QPushButton" name="playButton">
     <property name="geometry">
      <rect>
-      <x>50</x>
-      <y>10</y>
+      <x>170</x>
+      <y>110</y>
       <width>31</width>
       <height>24</height>
      </rect>
@@ -75,8 +75,8 @@
    <widget class="QSlider" name="seekSlider">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>40</y>
+      <x>130</x>
+      <y>140</y>
       <width>160</width>
       <height>22</height>
      </rect>
@@ -88,8 +88,8 @@
    <widget class="QTableWidget" name="tableWidget">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>80</y>
+      <x>130</x>
+      <y>180</y>
       <width>361</width>
       <height>281</height>
      </rect>
@@ -101,18 +101,49 @@
     <column/>
     <column/>
    </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>500</x>
+      <y>80</y>
+      <width>49</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Queue</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>650</width>
-     <height>33</height>
+     <width>901</width>
+     <height>21</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menuMain">
+    <property name="title">
+     <string>File</string>
+    </property>
+    <addaction name="actionFolderToQueue"/>
+   </widget>
+   <widget class="QMenu" name="menuEdit">
+    <property name="title">
+     <string>Edit</string>
+    </property>
+   </widget>
+   <addaction name="menuMain"/>
+   <addaction name="menuEdit"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionFolderToQueue">
+   <property name="text">
+    <string>FolderToQueue</string>
+   </property>
+  </action>
  </widget>
  <resources/>
  <connections/>

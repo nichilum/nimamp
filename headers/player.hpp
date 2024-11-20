@@ -22,9 +22,9 @@ class Player final : public QMediaPlayer {
    public:
     void addPlaylist(const Playlist &playlist);
     void saveQueue();
-    void playPlaylist(const QString &name);                    // to queue
-    Q_INVOKABLE void addFolderToQueue(const QUrl &directory);  // to
-    Q_INVOKABLE void setMediaSource(const QUrl &url);          // delete queue not prio queue
+    void playPlaylist(const QString &name);                       // to queue
+    Q_INVOKABLE void addFolderToQueue(const QString &directory);  // to
+    Q_INVOKABLE void setMediaSource(const QUrl &url);             // delete queue not prio queue
     Q_INVOKABLE void next();
     Q_INVOKABLE void queueSong(const Song &song);  // to prio queue
     Q_INVOKABLE void setVolume(const float volume) { audioOutput.setVolume(volume); }
@@ -39,6 +39,8 @@ class Player final : public QMediaPlayer {
     Q_INVOKABLE void clearQueue() {
         queue.clear();
     };  // debug stuff
+
+    static void togglePlayPause();
 
    public slots:
     void songEnded();
