@@ -13,6 +13,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     connect(ui->nextButton, &QPushButton::clicked, player, &Player::next);
     connect(ui->prevButton, &QPushButton::clicked, player, &Player::next);  // TODO: implement previous
     connect(ui->actionFolderToQueue, &QAction::triggered, this, &MainWindow::openFolderDialog);
+
+    ui->scrollArea->setWidget(player->getQueue());
 }
 
 MainWindow::~MainWindow() {

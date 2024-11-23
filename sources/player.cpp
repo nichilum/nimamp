@@ -31,14 +31,14 @@ void Player::addPlaylist(const Playlist &playlist) {
 void Player::playPlaylist(const QString &name) {
     for (const auto &playlist : playlists) {
         if (playlist.getName() == name) {
-            queue.clear();
-            queue = playlist.getSongs();
+            queue.clearQueue();
+            queue.queueSongs(playlist.getSongs());
 
             std::cout << "Playing playlist: " << name.toStdString() << std::endl;
-            std::cout << "Songs in queue: " << queue.size() << std::endl;
-            qDebug() << queue;
+            std::cout << "Songs in queue: " << queue.getQueue()->size() << std::endl;
+            qDebug() << queue.getQueue();
 
-            setSource(queue.front().getUrl());
+            setSource(queue.getQueue()->front().getUrl());
             play();
             return;
         }
@@ -46,7 +46,7 @@ void Player::playPlaylist(const QString &name) {
 }
 
 void Player::addFolderToQueue(const QString &directory) {
-    queue.clear();
+    queue.clearQueue();
 
     const QDir dir(directory);
     QStringList files = dir.entryList(QStringList() << "*.wav"
@@ -54,19 +54,19 @@ void Player::addFolderToQueue(const QString &directory) {
                                       QDir::Files);
     for (const auto &filename : files) {
         auto song = Song(QUrl::fromLocalFile(dir.absoluteFilePath(filename)));
-        queue.push_back(song);
+        queue.queueSong(song);
     }
 
-    qDebug() << "Added folder to queue: " << queue;
+    qDebug() << "Added folder to queue: " << *queue.getQueue();
 }
 
 void Player::next() {
-    if (queue.isEmpty()) {
+    if (queue.getQueue()->isEmpty()) {
         return;
     }
-    queue.pop_front();
-    auto song = queue.front();
-    qDebug() << "Current queue: " << queue;
+    queue.getQueue()->pop_front();
+    auto song = queue.getQueue()->front();
+    qDebug() << "Current queue: " << *queue.getQueue();
     setSource(song.getUrl());
     play();
 }
@@ -82,7 +82,7 @@ void Player::setMediaSource(const QUrl &url) {
 }
 
 void Player::queueSong(const Song &song) {
-    queue.push_back(song);
+    queue.queueSong(song);
 }
 
 Player *Player::getInstance() {
@@ -94,7 +94,8 @@ Player *Player::getInstance() {
 
 void Player::saveQueue() {
     QVariantList songList;
-    for (const Song &song : queue) {
+    auto songs = queue.getQueue();
+    for (const Song &song : *songs) {
         songList.append(QVariant::fromValue(song));
     }
     settings.setValue("queue", songList);
