@@ -33,6 +33,7 @@ class Player final : public QMediaPlayer {
     [[nodiscard]] Q_INVOKABLE float getVolume() const { return audioOutput.volume(); }
     [[nodiscard]] QVector<Playlist> getPlaylists() const { return playlists; }
     [[nodiscard]] Q_INVOKABLE Queue *getQueue() { return &queue; }
+    void setQueue(const Queue &queue) { this->queue = queue; }
 
     static Player *getInstance();
 

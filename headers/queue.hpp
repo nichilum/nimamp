@@ -27,4 +27,17 @@ class Queue final : public QWidget {
 
     [[nodiscard]] QVector<Song> *getQueue() { return &queue; }
     [[nodiscard]] QVector<Song> *getPriorityQueue() { return &priorityQueue; }
+
+    Queue& operator=(const Queue &other) {
+        if (this == &other) return *this; // Handle self-assignment
+
+        // Copy all members from `other` to `this`
+        this->queue = other.queue;
+        this->priorityQueue = other.priorityQueue;
+        this->layout = other.layout;
+        // Add more member copying as needed
+
+        return *this;
+    }
 };
+

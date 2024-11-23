@@ -14,7 +14,25 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     connect(ui->prevButton, &QPushButton::clicked, player, &Player::next);  // TODO: implement previous
     connect(ui->actionFolderToQueue, &QAction::triggered, this, &MainWindow::openFolderDialog);
 
+    Queue *queue = new Queue(this);
+    player->setQueue(*queue);
     ui->scrollArea->setWidget(player->getQueue());
+
+    QWidget *scrollWidget = new QWidget(this);
+
+    // Optionally set a layout for the scroll widget
+    QVBoxLayout *layout = new QVBoxLayout(scrollWidget);
+
+    // Add some content (e.g., QLabel) to the scroll widget
+    for (int i = 0; i < 20; ++i) {
+        layout->addWidget(new QLabel(QString("Label %1").arg(i + 1), scrollWidget));
+    }
+
+    // Set the scrollWidget as the widget for the scroll area
+    ui->scrollArea->setWidget(scrollWidget);
+
+    // Enable automatic resizing of the scroll widget
+    scrollWidget->setMinimumSize(scrollWidget->sizeHint());
 }
 
 MainWindow::~MainWindow() {
