@@ -18,4 +18,11 @@ class MainWindow : public QMainWindow {
    private:
     Ui::MainWindow *ui;
     void openFolderDialog();
+    static void setMediaPosition(int position);
+    void updateSlider(qint64 position) const;
+    void updateDuration(qint64 duration) const;
+    void seekToReleasedPosition();
+
+   public slots:
+    void updateQueue();
 };

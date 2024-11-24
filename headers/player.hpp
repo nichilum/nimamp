@@ -5,7 +5,6 @@
 #include <QSettings>
 
 #include "playlist.hpp"
-#include "queue.hpp"
 
 class Player final : public QMediaPlayer {
     Q_OBJECT
@@ -16,7 +15,8 @@ class Player final : public QMediaPlayer {
    private:
     QAudioOutput audioOutput;
     QVector<Playlist> playlists;
-    Queue queue;
+    QVector<Song> queue;
+    QVector<Song> priorityQueue;
     QSettings settings;
 
    public:
@@ -26,23 +26,24 @@ class Player final : public QMediaPlayer {
     Q_INVOKABLE void addFolderToQueue(const QString &directory);  // to
     Q_INVOKABLE void setMediaSource(const QUrl &url);             // delete queue not prio queue
     Q_INVOKABLE void next();
+    Q_INVOKABLE void clearQueue();
     Q_INVOKABLE void queueSong(const Song &song);  // to prio queue
     Q_INVOKABLE void setVolume(const float volume) { audioOutput.setVolume(volume); }
 
     [[nodiscard]] QAudioOutput *getAudioOutput() { return &audioOutput; }
     [[nodiscard]] Q_INVOKABLE float getVolume() const { return audioOutput.volume(); }
     [[nodiscard]] QVector<Playlist> getPlaylists() const { return playlists; }
-    [[nodiscard]] Q_INVOKABLE Queue *getQueue() { return &queue; }
-    void setQueue(const Queue &queue) { this->queue = queue; }
+    [[nodiscard]] Q_INVOKABLE QVector<Song> *getQueue() { return &queue; }
+    void setQueue(const QVector<Song> &queue) { this->queue = queue; }
 
     static Player *getInstance();
 
-    Q_INVOKABLE void clearQueue() {
-        queue.clearQueue();
-    };
 
     static void togglePlayPause();
 
    public slots:
     void songEnded();
+
+   signals:
+    void queueChanged();
 };
