@@ -6,14 +6,13 @@
 
 int main(int argc, char *argv[]) {
     QApplication app(argc, argv);
+    qRegisterMetaType<Song>("Song");
 
     auto player = Player::getInstance();
     player->setVolume(0.1);  // gehoerschutz
 
     MainWindow window;
-
-    qRegisterMetaType<Song>("Song");
-
     window.show();
+
     return QApplication::exec();
 }

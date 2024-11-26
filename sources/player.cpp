@@ -14,29 +14,33 @@ Player::Player() {
     connect(this, &QMediaPlayer::mediaStatusChanged, this, &Player::songEnded);
     connect(QCoreApplication::instance(), &QCoreApplication::aboutToQuit, this, &Player::saveQueue);
 
-    auto songList = settings.value("queue").toList();
-    QVector<Song> loadedQueue;
-    for (const QVariant &songVariant : songList) {
-        if (songVariant.canConvert<Song>()) {
-            loadedQueue.append(songVariant.value<Song>());
-        }
-    }
-    qDebug() << "Loaded songs: " << loadedQueue;
+    // auto songList = settings.value("queue").toList();
+    // QVector<Song> loadedQueue;
+    // for (const QVariant &songVariant : songList) {
+    //     if (songVariant.canConvert<Song>()) {
+    //         loadedQueue.append(songVariant.value<Song>());
+    //     }
+    // }
+    // qDebug() << "Loaded songs: " << loadedQueue;
 }
 
+/*
+ * Add Playlist to playlist vector
+ */
 void Player::addPlaylist(const Playlist &playlist) {
     playlists.push_back(playlist);
 }
 
+/*
+ * replace queue with playlist
+ */
 void Player::playPlaylist(const QString &name) {
     for (const auto &playlist : playlists) {
         if (playlist.getName() == name) {
-            queue.clear();
-            queue.append(playlist.getSongs());
+            clearQueue();
 
-            std::cout << "Playing playlist: " << name.toStdString() << std::endl;
-            std::cout << "Songs in queue: " << queue.size() << std::endl;
-            qDebug() << queue;
+            queue.append(playlist.getSongs());
+            emit queueChanged();
 
             setSource(queue.front().getUrl());
             play();
@@ -56,6 +60,7 @@ void Player::addFolderToQueue(const QString &directory) {
                                       QDir::Files);
     for (const auto &filename : files) {
         auto song = Song(QUrl::fromLocalFile(dir.absoluteFilePath(filename)));
+        queuePrioritySong(song);
         queueSong(song);
     }
 
@@ -63,16 +68,19 @@ void Player::addFolderToQueue(const QString &directory) {
 }
 
 void Player::next() {
-    if (queue.isEmpty()) {
-        return;
+    if (!priorityQueue.isEmpty()) {
+        auto song = priorityQueue.front();
+        priorityQueue.pop_front();
+        setSource(song.url);
+        play();
+        emit queueChanged();
+    } else if (!queue.isEmpty()) {
+        auto song = queue.front();
+        queue.pop_front();
+        setSource(song.url);
+        play();
+        emit queueChanged();
     }
-    queue.pop_front();
-    auto song = queue.front();
-    qDebug() << "Current queue: " << queue;
-    setSource(song.getUrl());
-    play();
-
-    emit queueChanged();
 }
 
 void Player::clearQueue() {
@@ -80,18 +88,29 @@ void Player::clearQueue() {
     emit queueChanged();
 }
 
+void Player::clearPriorityQueue() {
+    priorityQueue.clear();
+    emit queueChanged();
+}
+
 /**
  * Set the media source of the player and immediately start playing it.
  * This overwrites the queue and the current song.
- * @param url The URL of the media source
+ * @param song The Song to play
  */
-void Player::setMediaSource(const QUrl &url) {
-    setSource(url);
+void Player::playSong(const Song &song) {
+    clearQueue();
+    setSource(song.url);
     play();
 }
 
 void Player::queueSong(const Song &song) {
     queue.push_back(song);
+    emit queueChanged();
+}
+
+void Player::queuePrioritySong(const Song &song) {
+    priorityQueue.push_back(song);
     emit queueChanged();
 }
 
@@ -102,14 +121,6 @@ Player *Player::getInstance() {
     return instance;
 }
 
-void Player::saveQueue() {
-    QVariantList songList;
-    for (const Song &song : queue) {
-        songList.append(QVariant::fromValue(song));
-    }
-    settings.setValue("queue", songList);
-}
-
 void Player::songEnded() {
     if (mediaStatus() == EndOfMedia) {
         next();
@@ -117,10 +128,19 @@ void Player::songEnded() {
 }
 
 void Player::togglePlayPause() {
-    auto player = Player::getInstance();
-    if (player->isPlaying() == QMediaPlayer::PlayingState) {
-        player->pause();
+    if (isPlaying() == QMediaPlayer::PlayingState) {
+        pause();
     } else {
-        player->play();
+        play();
     }
+}
+
+// Saving and Loading
+
+void Player::saveQueue() {
+    QVariantList songList;
+    for (const Song &song : queue) {
+        songList.append(QVariant::fromValue(song));
+    }
+    settings.setValue("queue", songList);
 }

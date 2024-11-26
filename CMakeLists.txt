@@ -27,6 +27,7 @@ qt_add_executable(appnimamp
         sources/MainWindow.ui
         sources/SongItem.cpp
         headers/song_item.hpp
+        sources/SongItem.ui
 )
 
 

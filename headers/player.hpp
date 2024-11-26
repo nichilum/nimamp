@@ -3,6 +3,7 @@
 #include <QMediaPlayer>
 #include <QObject>
 #include <QSettings>
+#include <QStack>
 
 #include "playlist.hpp"
 
@@ -18,28 +19,32 @@ class Player final : public QMediaPlayer {
     QVector<Song> queue;
     QVector<Song> priorityQueue;
     QSettings settings;
+    QStack<Song> history;
 
    public:
     void addPlaylist(const Playlist &playlist);
     void saveQueue();
-    void playPlaylist(const QString &name);                       // to queue
-    Q_INVOKABLE void addFolderToQueue(const QString &directory);  // to
-    Q_INVOKABLE void setMediaSource(const QUrl &url);             // delete queue not prio queue
-    Q_INVOKABLE void next();
-    Q_INVOKABLE void clearQueue();
-    Q_INVOKABLE void queueSong(const Song &song);  // to prio queue
-    Q_INVOKABLE void setVolume(const float volume) { audioOutput.setVolume(volume); }
+    void playPlaylist(const QString &name);
+    void addFolderToQueue(const QString &directory);
+    void playSong(const Song &song);
+    void next();
+    void clearQueue();
+    void clearPriorityQueue();
+    void queueSong(const Song &song);
+    void queuePrioritySong(const Song &song);
+    void setVolume(const float volume) { audioOutput.setVolume(volume); }
 
     [[nodiscard]] QAudioOutput *getAudioOutput() { return &audioOutput; }
-    [[nodiscard]] Q_INVOKABLE float getVolume() const { return audioOutput.volume(); }
+    [[nodiscard]] float getVolume() const { return audioOutput.volume(); }
     [[nodiscard]] QVector<Playlist> getPlaylists() const { return playlists; }
-    [[nodiscard]] Q_INVOKABLE QVector<Song> *getQueue() { return &queue; }
-    void setQueue(const QVector<Song> &queue) { this->queue = queue; }
+    [[nodiscard]] QVector<Song> *getQueue() { return &queue; }
+    [[nodiscard]] QVector<Song> *getPriorityQueue() { return &priorityQueue; }
+    [[nodiscard]] bool isQueueEmpty() { return queue.isEmpty(); }
+    [[nodiscard]] bool isPriorityQueueEmpty() { return priorityQueue.isEmpty(); }
 
     static Player *getInstance();
 
-
-    static void togglePlayPause();
+    void togglePlayPause();
 
    public slots:
     void songEnded();

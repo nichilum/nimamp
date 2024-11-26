@@ -4,27 +4,23 @@
 #include <QPushButton>
 #include <QWidget>
 
-#include "ui_SongItem.h"
+QT_BEGIN_NAMESPACE
+namespace Ui {
+class SongItem;
+}
+QT_END_NAMESPACE
 
 class SongItem : public QWidget {
     Q_OBJECT
    public:
-    explicit SongItem(const QString &songName, QWidget *parent = nullptr)
-        : QWidget(parent), ui(new Ui_SongItem) {
-        ui->setupUi(this);
-        ui->label->setText(songName);
+    QString name;
+    explicit SongItem(const QString &songName, QWidget *parent = nullptr);
 
-        // Connect remove button
-        connect(ui->pushButton, &QPushButton::clicked, [this, songName]() {
-            emit removeRequested(songName);
-        });
-    }
-
-    ~SongItem() override { delete ui; }
+    ~SongItem() override;
 
    signals:
     void removeRequested(const QString &songName);
 
    private:
-    Ui_SongItem *ui;
+    Ui::SongItem *ui;
 };
