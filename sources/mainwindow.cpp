@@ -24,6 +24,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
     // update queue
     connect(player, &Player::queueChanged, this, &MainWindow::updateQueue);
+    connect(ui->listWidget->model(), &QAbstractItemModel::rowsMoved, this, &MainWindow::onRowsMoved);
 }
 
 MainWindow::~MainWindow() {
@@ -86,16 +87,34 @@ void MainWindow::updateQueue() {
         ui->listWidget->setItemWidget(item, songWidget);
     }
 
-    for (int i = 0; i < ui->listWidget->count(); ++i) {
-        // Retrieve the QListWidgetItem
-        QListWidgetItem *item = ui->listWidget->item(i);
+    // for (int i = 0; i < ui->listWidget->count(); ++i) {
+    //     // Retrieve the QListWidgetItem
+    //     QListWidgetItem *item = ui->listWidget->item(i);
+    //
+    //     // Retrieve the widget associated with this item
+    //     SongItem *songWidget = qobject_cast<SongItem *>(ui->listWidget->itemWidget(item));
+    //
+    //     // If songWidget is valid, you can access its properties or methods
+    //     if (songWidget) {
+    //         qDebug() << "Song widget filename: " << songWidget->name;
+    //     }
+    // }
+}
 
-        // Retrieve the widget associated with this item
-        SongItem *songWidget = qobject_cast<SongItem *>(ui->listWidget->itemWidget(item));
+void MainWindow::onRowsMoved(const QModelIndex &parent, int start, int end, const QModelIndex &destination, int row) {
+    Q_UNUSED(parent);
+    Q_UNUSED(end);
 
-        // If songWidget is valid, you can access its properties or methods
-        if (songWidget) {
-            qDebug() << "Song widget filename: " << songWidget->name;
-        }
+    auto player = Player::getInstance();
+
+    if (row > start) {
+        row -= 1;
     }
+
+    if (start >= 0 && row >= 0 && start < player->getQueue()->size() && row <= player->getQueue()->size()) {
+        auto movedItem = player->getQueue()->takeAt(start);
+        player->getQueue()->insert(row, movedItem);
+    }
+
+    qDebug() << "Updated queue:" << *player->getQueue();
 }

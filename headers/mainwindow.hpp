@@ -22,6 +22,7 @@ class MainWindow : public QMainWindow {
     void updateSlider(qint64 position) const;
     void updateDuration(qint64 duration) const;
     void seekToReleasedPosition();
+    static void onRowsMoved(const QModelIndex &parent, int start, int end, const QModelIndex &destination, int row);
 
    public slots:
     void updateQueue();
