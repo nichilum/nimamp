@@ -18,13 +18,16 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     connect(ui->actionFolderToQueue, &QAction::triggered, this, &MainWindow::openFolderDialog);
 
     // seek slider
-    connect(player, &QMediaPlayer::positionChanged, this, &MainWindow::updateSlider);
-    connect(player, &QMediaPlayer::durationChanged, this, &MainWindow::updateDuration);
+    connect(player, &QMediaPlayer::positionChanged, this, &MainWindow::updateSeekSlider);
+    connect(player, &QMediaPlayer::durationChanged, this, &MainWindow::updateSeekDuration);
     connect(ui->seekSlider, &QSlider::sliderReleased, this, &MainWindow::seekToReleasedPosition);
 
     // update queue
     connect(player, &Player::queueChanged, this, &MainWindow::updateQueue);
     connect(ui->listWidget->model(), &QAbstractItemModel::rowsMoved, this, &MainWindow::onRowsMoved);
+
+    // volume slider
+    connect(ui->volumeSlider, &QSlider::valueChanged, this, &MainWindow::updateVolume);
 }
 
 MainWindow::~MainWindow() {
@@ -38,20 +41,25 @@ void MainWindow::openFolderDialog() {
     Player::getInstance()->addFolderToQueue(dir);
 }
 
-void MainWindow::updateSlider(const qint64 position) const {
+void MainWindow::updateSeekSlider(const qint64 position) const {
     if (ui->seekSlider->isSliderDown()) {
         return;
     }
     ui->seekSlider->setValue(static_cast<int>(position));
 }
 
-void MainWindow::updateDuration(const qint64 duration) const {
+void MainWindow::updateSeekDuration(const qint64 duration) const {
     ui->seekSlider->setRange(0, static_cast<int>(duration));
 }
 
 void MainWindow::seekToReleasedPosition() {
     auto player = Player::getInstance();
     player->setPosition(ui->seekSlider->value());
+}
+
+void MainWindow::updateVolume(int volume) const {
+    auto player = Player::getInstance();
+    player->setVolume(volume / 100.);
 }
 
 void MainWindow::updateQueue() {

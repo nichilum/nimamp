@@ -60,7 +60,7 @@ void Player::addFolderToQueue(const QString &directory) {
                                       QDir::Files);
     for (const auto &filename : files) {
         auto song = Song(QUrl::fromLocalFile(dir.absoluteFilePath(filename)));
-        queuePrioritySong(song);
+        // queuePrioritySong(song);
         queueSong(song);
     }
 

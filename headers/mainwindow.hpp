@@ -19,9 +19,10 @@ class MainWindow : public QMainWindow {
     Ui::MainWindow *ui;
     void openFolderDialog();
     static void setMediaPosition(int position);
-    void updateSlider(qint64 position) const;
-    void updateDuration(qint64 duration) const;
+    void updateSeekSlider(qint64 position) const;
+    void updateSeekDuration(qint64 duration) const;
     void seekToReleasedPosition();
+    void updateVolume(int volume) const;
     static void onRowsMoved(const QModelIndex &parent, int start, int end, const QModelIndex &destination, int row);
 
    public slots:
