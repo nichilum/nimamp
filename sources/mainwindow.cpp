@@ -28,6 +28,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
     // volume slider
     connect(ui->volumeSlider, &QSlider::valueChanged, this, &MainWindow::updateVolume);
+
+    connect(player, &QMediaPlayer::sourceChanged, this, &MainWindow::onSourceChanged);
 }
 
 MainWindow::~MainWindow() {
@@ -112,4 +114,8 @@ void MainWindow::onRowsMoved(const QModelIndex &parent, int start, int end, cons
     }
 
     qDebug() << "Updated queue:" << *player->getQueue();
+}
+
+void MainWindow::onSourceChanged(const QUrl &media) {
+    // update main song image, descriptor etc.
 }

@@ -24,6 +24,7 @@ class MainWindow : public QMainWindow {
     void seekToReleasedPosition();
     void updateVolume(int volume) const;
     static void onRowsMoved(const QModelIndex &parent, int start, int end, const QModelIndex &destination, int row);
+    void onSourceChanged(const QUrl &media);
 
    public slots:
     void updateQueue();

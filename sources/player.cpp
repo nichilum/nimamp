@@ -143,8 +143,6 @@ void Player::songEnded() {
 }
 
 void Player::togglePlayPause() {
-    qDebug() << source();
-    qDebug() << history;
     if (source().isEmpty()) {
         next();
         return;
