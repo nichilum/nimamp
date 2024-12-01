@@ -1,9 +1,11 @@
 #include "../headers/mainwindow.hpp"
 
 #include <QFileDialog>
+#include <QMediaMetaData>
 
 #include "../headers/player.hpp"
 #include "../headers/song_item.hpp"
+#include "../headers/utils.hpp"
 #include "ui_MainWindow.h"
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow) {
@@ -32,7 +34,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     // volume slider
     connect(ui->volumeSlider, &QSlider::valueChanged, this, &MainWindow::updateVolume);
 
-    connect(player, &QMediaPlayer::sourceChanged, this, &MainWindow::onSourceChanged);
+    connect(player, &QMediaPlayer::metaDataChanged, this, &MainWindow::onMetadataChanged);
 }
 
 MainWindow::~MainWindow() {
@@ -46,11 +48,16 @@ void MainWindow::openFolderDialog() {
     Player::getInstance()->addFolderToQueue(dir);
 }
 
+
 void MainWindow::updateSeekSlider(const qint64 position) const {
     if (ui->seekSlider->isSliderDown()) {
         return;
     }
     ui->seekSlider->setValue(static_cast<int>(position));
+
+    auto formattedTime = msToString(position);
+
+    ui->currentTimeLabel->setText(formattedTime);
 }
 
 void MainWindow::updateSeekDuration(const qint64 duration) const {
@@ -119,6 +126,18 @@ void MainWindow::onRowsMoved(const QModelIndex &parent, int start, int end, cons
     qDebug() << "Updated queue:" << *player->getQueue();
 }
 
-void MainWindow::onSourceChanged(const QUrl &media) {
+void MainWindow::onMetadataChanged() {
     // update main song image, descriptor etc.
+    auto player = Player::getInstance();
+    auto data = player->metaData();
+
+    auto title = data.stringValue(QMediaMetaData::Title);
+    auto artist = data.stringValue(QMediaMetaData::AlbumArtist);
+    auto thumbnail = data.value(QMediaMetaData::ThumbnailImage).value<QImage>();
+    auto duration = data.value(QMediaMetaData::Duration).toInt();
+
+    ui->songNameLabel->setText(title);
+    ui->artistNameLabel->setText(artist);
+    ui->coverLabel->setPixmap(QPixmap::fromImage(thumbnail));
+    ui->durationLabel->setText(msToString(duration));
 }
