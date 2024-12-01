@@ -116,6 +116,17 @@
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout_2">
          <item>
+          <widget class="QPushButton" name="shuffleButton">
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset>
+             <normaloff>../resources/shuffle.svg</normaloff>../resources/shuffle.svg</iconset>
+           </property>
+          </widget>
+         </item>
+         <item>
           <widget class="QPushButton" name="prevButton">
            <property name="text">
             <string/>
@@ -148,6 +159,17 @@
            <property name="icon">
             <iconset>
              <normaloff>../resources/skip-forward.svg</normaloff>../resources/skip-forward.svg</iconset>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="loopButton">
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset>
+             <normaloff>../resources/repeat.svg</normaloff>../resources/repeat.svg</iconset>
            </property>
           </widget>
          </item>

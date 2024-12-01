@@ -129,6 +129,15 @@ void Player::queuePrioritySong(const Song &song) {
     emit queueChanged();
 }
 
+void Player::setLoop(const bool loop) {
+    qInfo() << "Setting loop to " << loop;
+    if (loop) {
+        setLoops(Infinite);
+    } else {
+        setLoops(Once);
+    }
+}
+
 Player *Player::getInstance() {
     if (instance == nullptr) {
         instance = new Player();

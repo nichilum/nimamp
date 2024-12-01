@@ -20,6 +20,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     connect(ui->playButton, &QPushButton::clicked, player, &Player::togglePlayPause);
     connect(ui->nextButton, &QPushButton::clicked, player, &Player::next);
     connect(ui->prevButton, &QPushButton::clicked, player, &Player::previous);
+    connect(ui->loopButton, &QPushButton::clicked, this, &MainWindow::toggleLoop);
     connect(ui->actionFolderToQueue, &QAction::triggered, this, &MainWindow::openFolderDialog);
 
     // seek slider
@@ -126,7 +127,7 @@ void MainWindow::onRowsMoved(const QModelIndex &parent, int start, int end, cons
     qDebug() << "Updated queue:" << *player->getQueue();
 }
 
-void MainWindow::onMetadataChanged() {
+void MainWindow::onMetadataChanged() const {
     // update main song image, descriptor etc.
     auto player = Player::getInstance();
     auto data = player->metaData();
@@ -141,7 +142,13 @@ void MainWindow::onMetadataChanged() {
     ui->coverLabel->setPixmap(QPixmap::fromImage(thumbnail));
     ui->durationLabel->setText(msToString(duration));
 
-    //auto r = getSongThumbnail(player->source().toString());
-    //qDebug() << "Thumbnail: " << r;
-    //ui->coverLabel->setPixmap(r);
+    // auto r = getSongThumbnail(player->source().toString());
+    // qDebug() << "Thumbnail: " << r;
+    // ui->coverLabel->setPixmap(r);
+}
+
+void MainWindow::toggleLoop() const {
+    auto player = Player::getInstance();
+    player->setLoop(!player->isLooping());
+    ui->loopButton->setFlat(!ui->loopButton->isFlat());
 }

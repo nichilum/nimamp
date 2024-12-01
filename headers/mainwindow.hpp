@@ -23,7 +23,8 @@ class MainWindow : public QMainWindow {
     void seekToReleasedPosition();
     static void updateVolume(int volume);
     static void onRowsMoved(const QModelIndex &parent, int start, int end, const QModelIndex &destination, int row);
-    void onMetadataChanged();
+    void onMetadataChanged() const;
+    void toggleLoop() const;
 
    public slots:
     void updateQueue();
