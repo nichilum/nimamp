@@ -134,7 +134,7 @@ void MainWindow::onMetadataChanged() const {
     auto data = player->metaData();
 
     auto title = data.stringValue(QMediaMetaData::Title);
-    auto artist = data.stringValue(QMediaMetaData::AlbumArtist);
+    auto artist = data.stringValue(QMediaMetaData::ContributingArtist);
     auto thumbnail = data.value(QMediaMetaData::ThumbnailImage).value<QImage>();
     auto duration = data.value(QMediaMetaData::Duration).toInt();
 
