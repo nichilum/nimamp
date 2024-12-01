@@ -140,4 +140,8 @@ void MainWindow::onMetadataChanged() {
     ui->artistNameLabel->setText(artist);
     ui->coverLabel->setPixmap(QPixmap::fromImage(thumbnail));
     ui->durationLabel->setText(msToString(duration));
+
+    //auto r = getSongThumbnail(player->source().toString());
+    //qDebug() << "Thumbnail: " << r;
+    //ui->coverLabel->setPixmap(r);
 }

@@ -6,8 +6,12 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_STANDARD 20)
 
 find_package(Qt6 6.5 REQUIRED COMPONENTS Widgets Multimedia)
-find_package(Taglib REQUIRED)
 
+find_package(PkgConfig REQUIRED)
+pkg_check_modules(TAGLIB REQUIRED IMPORTED_TARGET taglib)
+
+include_directories(${TAGLIB_INCLUDE_DIRS})
+link_directories(${TAGLIB_LIBRARY_DIRS})
 
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
@@ -47,7 +51,7 @@ set_target_properties(appnimamp PROPERTIES
 target_link_libraries(appnimamp
         PRIVATE Qt6::Multimedia
         PRIVATE Qt6::Widgets
-        PRIVATE Taglib::Taglib
+        PRIVATE ${TAGLIB_LIBRARIES}
 )
 
 include(GNUInstallDirs)
