@@ -114,7 +114,23 @@ void Player::clearPriorityQueue() {
  * @param song The Song to play
  */
 void Player::playSong(const Song &song) {
-    clearQueue();
+    clearQueue();  // idk is this good????
+    // maybe ditch prio queue and just not clear is here?
+    auto curSource = source();
+    if (!curSource.isEmpty()) {
+        history.append(Song(curSource));
+    }
+    setSource(song.url);
+    play();
+}
+
+void Player::playSongFromQueue(const Song &song) {
+    // TODO: clear queue up to song
+    // TODO: make this to own private function:???
+    auto curSource = source();
+    if (!curSource.isEmpty()) {
+        history.append(Song(curSource));
+    }
     setSource(song.url);
     play();
 }

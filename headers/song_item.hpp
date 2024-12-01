@@ -14,7 +14,7 @@ class SongItem : public QWidget {
     Q_OBJECT
    public:
     QString name;
-    explicit SongItem(const QString &songName, QWidget *parent = nullptr);
+    explicit SongItem(const Song &song, QWidget *parent = nullptr);
 
     ~SongItem() override;
 

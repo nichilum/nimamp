@@ -50,7 +50,6 @@ void MainWindow::openFolderDialog() {
     Player::getInstance()->addFolderToQueue(dir);
 }
 
-
 void MainWindow::updateSeekSlider(const qint64 position) const {
     if (ui->seekSlider->isSliderDown()) {
         return;
@@ -81,7 +80,7 @@ void MainWindow::updateQueue() {
     ui->queueListWidget->clear();
 
     for (const auto &song : *player->getPriorityQueue()) {
-        auto *songWidget = new SongItem(song.getFilename(), this);
+        auto *songWidget = new SongItem(song, this);
 
         auto *item = new QListWidgetItem(ui->queueListWidget);
         item->setSizeHint(songWidget->sizeHint());
@@ -101,7 +100,7 @@ void MainWindow::updateQueue() {
         ui->queueListWidget->setItemWidget(item, line);
     }
     for (const auto &song : *player->getQueue()) {
-        auto *songWidget = new SongItem(song.getFilename(), this);
+        auto *songWidget = new SongItem(song, this);
 
         auto *item = new QListWidgetItem(ui->queueListWidget);
         item->setSizeHint(songWidget->sizeHint());

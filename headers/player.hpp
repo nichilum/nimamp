@@ -28,6 +28,7 @@ class Player final : public QMediaPlayer {
     void playPlaylist(const QString &name);
     void addFolderToQueue(const QString &directory);
     void playSong(const Song &song);
+    void playSongFromQueue(const Song &song);
     void next();
     void previous();
     void clearQueue();
@@ -44,7 +45,7 @@ class Player final : public QMediaPlayer {
     [[nodiscard]] QVector<Song> *getPriorityQueue() { return &priorityQueue; }
     [[nodiscard]] bool isQueueEmpty() const { return queue.isEmpty(); }
     [[nodiscard]] bool isPriorityQueueEmpty() const { return priorityQueue.isEmpty(); }
-    [[nodiscard]] bool isLooping() const {return loops() == Infinite;}
+    [[nodiscard]] bool isLooping() const { return loops() == Infinite; }
 
     static Player *getInstance();
 
