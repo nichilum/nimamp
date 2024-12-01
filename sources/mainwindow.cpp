@@ -11,6 +11,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
     auto player = Player::getInstance();
 
+    // set volume slider
+    ui->volumeSlider->setValue(static_cast<int>(player->getVolume() * 100.));
+
     // buttons
     connect(ui->playButton, &QPushButton::clicked, player, &Player::togglePlayPause);
     connect(ui->nextButton, &QPushButton::clicked, player, &Player::next);
