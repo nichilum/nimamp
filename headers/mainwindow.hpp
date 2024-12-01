@@ -25,6 +25,7 @@ class MainWindow : public QMainWindow {
     static void onRowsMoved(const QModelIndex &parent, int start, int end, const QModelIndex &destination, int row);
     void onMetadataChanged() const;
     void toggleLoop() const;
+    void changePlayPauseIcon() const;
 
    public slots:
     void updateQueue();

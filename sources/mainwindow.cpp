@@ -36,6 +36,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     connect(ui->volumeSlider, &QSlider::valueChanged, this, &MainWindow::updateVolume);
 
     connect(player, &QMediaPlayer::metaDataChanged, this, &MainWindow::onMetadataChanged);
+    connect(player, &QMediaPlayer::playingChanged, this, &MainWindow::changePlayPauseIcon);
 }
 
 MainWindow::~MainWindow() {
@@ -151,4 +152,13 @@ void MainWindow::toggleLoop() const {
     auto player = Player::getInstance();
     player->setLoop(!player->isLooping());
     ui->loopButton->setFlat(!ui->loopButton->isFlat());
+}
+
+void MainWindow::changePlayPauseIcon() const {
+    auto player = Player::getInstance();
+    if (player->isPlaying() == QMediaPlayer::PlayingState) {
+        ui->playButton->setIcon(QIcon(":/resources/pause.svg"));
+    } else {
+        ui->playButton->setIcon(QIcon(":/resources/play.svg"));
+    }
 }

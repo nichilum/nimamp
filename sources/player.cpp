@@ -157,7 +157,7 @@ void Player::togglePlayPause() {
         return;
     }
 
-    if (isPlaying() == QMediaPlayer::PlayingState) {
+    if (isPlaying() == PlayingState) {
         pause();
     } else {
         play();
