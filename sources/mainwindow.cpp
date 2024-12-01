@@ -1,9 +1,11 @@
 #include "../headers/mainwindow.hpp"
 
 #include <QFileDialog>
+#include <QMediaMetaData>
 
 #include "../headers/player.hpp"
 #include "../headers/song_item.hpp"
+#include "../headers/utils.hpp"
 #include "ui_MainWindow.h"
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow) {
@@ -27,12 +29,12 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
     // update queue
     connect(player, &Player::queueChanged, this, &MainWindow::updateQueue);
-    connect(ui->listWidget->model(), &QAbstractItemModel::rowsMoved, this, &MainWindow::onRowsMoved);
+    connect(ui->queueListWidget->model(), &QAbstractItemModel::rowsMoved, this, &MainWindow::onRowsMoved);
 
     // volume slider
     connect(ui->volumeSlider, &QSlider::valueChanged, this, &MainWindow::updateVolume);
 
-    connect(player, &QMediaPlayer::sourceChanged, this, &MainWindow::onSourceChanged);
+    connect(player, &QMediaPlayer::metaDataChanged, this, &MainWindow::onMetadataChanged);
 }
 
 MainWindow::~MainWindow() {
@@ -46,11 +48,16 @@ void MainWindow::openFolderDialog() {
     Player::getInstance()->addFolderToQueue(dir);
 }
 
+
 void MainWindow::updateSeekSlider(const qint64 position) const {
     if (ui->seekSlider->isSliderDown()) {
         return;
     }
     ui->seekSlider->setValue(static_cast<int>(position));
+
+    auto formattedTime = msToString(position);
+
+    ui->currentTimeLabel->setText(formattedTime);
 }
 
 void MainWindow::updateSeekDuration(const qint64 duration) const {
@@ -69,15 +76,15 @@ void MainWindow::updateVolume(int volume) const {
 
 void MainWindow::updateQueue() {
     auto player = Player::getInstance();
-    ui->listWidget->clear();
+    ui->queueListWidget->clear();
 
     for (const auto &song : *player->getPriorityQueue()) {
         auto *songWidget = new SongItem(song.getFilename(), this);
 
-        auto *item = new QListWidgetItem(ui->listWidget);
+        auto *item = new QListWidgetItem(ui->queueListWidget);
         item->setSizeHint(songWidget->sizeHint());
-        ui->listWidget->addItem(item);
-        ui->listWidget->setItemWidget(item, songWidget);
+        ui->queueListWidget->addItem(item);
+        ui->queueListWidget->setItemWidget(item, songWidget);
     }
     if (!player->isPriorityQueueEmpty()) {  // hline between queues
         auto line = new QFrame();
@@ -85,19 +92,19 @@ void MainWindow::updateQueue() {
         line->setFrameShape(QFrame::HLine);
         line->setFrameShadow(QFrame::Sunken);
 
-        auto *item = new QListWidgetItem(ui->listWidget);
+        auto *item = new QListWidgetItem(ui->queueListWidget);
         item->setFlags(item->flags() & ~Qt::ItemIsSelectable);
         item->setSizeHint(line->sizeHint());
-        ui->listWidget->addItem(item);
-        ui->listWidget->setItemWidget(item, line);
+        ui->queueListWidget->addItem(item);
+        ui->queueListWidget->setItemWidget(item, line);
     }
     for (const auto &song : *player->getQueue()) {
         auto *songWidget = new SongItem(song.getFilename(), this);
 
-        auto *item = new QListWidgetItem(ui->listWidget);
+        auto *item = new QListWidgetItem(ui->queueListWidget);
         item->setSizeHint(songWidget->sizeHint());
-        ui->listWidget->addItem(item);
-        ui->listWidget->setItemWidget(item, songWidget);
+        ui->queueListWidget->addItem(item);
+        ui->queueListWidget->setItemWidget(item, songWidget);
     }
 }
 
@@ -119,6 +126,18 @@ void MainWindow::onRowsMoved(const QModelIndex &parent, int start, int end, cons
     qDebug() << "Updated queue:" << *player->getQueue();
 }
 
-void MainWindow::onSourceChanged(const QUrl &media) {
+void MainWindow::onMetadataChanged() {
     // update main song image, descriptor etc.
+    auto player = Player::getInstance();
+    auto data = player->metaData();
+
+    auto title = data.stringValue(QMediaMetaData::Title);
+    auto artist = data.stringValue(QMediaMetaData::AlbumArtist);
+    auto thumbnail = data.value(QMediaMetaData::ThumbnailImage).value<QImage>();
+    auto duration = data.value(QMediaMetaData::Duration).toInt();
+
+    ui->songNameLabel->setText(title);
+    ui->artistNameLabel->setText(artist);
+    ui->coverLabel->setPixmap(QPixmap::fromImage(thumbnail));
+    ui->durationLabel->setText(msToString(duration));
 }
