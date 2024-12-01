@@ -69,7 +69,7 @@ void MainWindow::seekToReleasedPosition() {
     player->setPosition(ui->seekSlider->value());
 }
 
-void MainWindow::updateVolume(int volume) const {
+void MainWindow::updateVolume(int volume) {
     auto player = Player::getInstance();
     player->setVolume(volume / 100.);
 }

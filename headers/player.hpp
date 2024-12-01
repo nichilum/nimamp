@@ -41,8 +41,8 @@ class Player final : public QMediaPlayer {
     [[nodiscard]] QVector<Playlist> getPlaylists() const { return playlists; }
     [[nodiscard]] QVector<Song> *getQueue() { return &queue; }
     [[nodiscard]] QVector<Song> *getPriorityQueue() { return &priorityQueue; }
-    [[nodiscard]] bool isQueueEmpty() { return queue.isEmpty(); }
-    [[nodiscard]] bool isPriorityQueueEmpty() { return priorityQueue.isEmpty(); }
+    [[nodiscard]] bool isQueueEmpty() const { return queue.isEmpty(); }
+    [[nodiscard]] bool isPriorityQueueEmpty() const { return priorityQueue.isEmpty(); }
 
     static Player *getInstance();
 
