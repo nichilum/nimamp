@@ -18,8 +18,9 @@ class Player final : public QMediaPlayer {
     QVector<Playlist> playlists;
     QVector<Song> queue;
     QVector<Song> priorityQueue;
-    QSettings settings;
     QStack<Song> history;
+
+    QSettings settings;
 
    public:
     void addPlaylist(const Playlist &playlist);
@@ -28,6 +29,7 @@ class Player final : public QMediaPlayer {
     void addFolderToQueue(const QString &directory);
     void playSong(const Song &song);
     void next();
+    void previous();
     void clearQueue();
     void clearPriorityQueue();
     void queueSong(const Song &song);

@@ -17,7 +17,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     // buttons
     connect(ui->playButton, &QPushButton::clicked, player, &Player::togglePlayPause);
     connect(ui->nextButton, &QPushButton::clicked, player, &Player::next);
-    connect(ui->prevButton, &QPushButton::clicked, player, &Player::next);  // TODO: implement previous
+    connect(ui->prevButton, &QPushButton::clicked, player, &Player::previous);
     connect(ui->actionFolderToQueue, &QAction::triggered, this, &MainWindow::openFolderDialog);
 
     // seek slider
@@ -97,19 +97,6 @@ void MainWindow::updateQueue() {
         ui->listWidget->addItem(item);
         ui->listWidget->setItemWidget(item, songWidget);
     }
-
-    // for (int i = 0; i < ui->listWidget->count(); ++i) {
-    //     // Retrieve the QListWidgetItem
-    //     QListWidgetItem *item = ui->listWidget->item(i);
-    //
-    //     // Retrieve the widget associated with this item
-    //     SongItem *songWidget = qobject_cast<SongItem *>(ui->listWidget->itemWidget(item));
-    //
-    //     // If songWidget is valid, you can access its properties or methods
-    //     if (songWidget) {
-    //         qDebug() << "Song widget filename: " << songWidget->name;
-    //     }
-    // }
 }
 
 void MainWindow::onRowsMoved(const QModelIndex &parent, int start, int end, const QModelIndex &destination, int row) {

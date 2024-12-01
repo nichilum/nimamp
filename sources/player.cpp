@@ -68,6 +68,11 @@ void Player::addFolderToQueue(const QString &directory) {
 }
 
 void Player::next() {
+    auto curSource = source();
+    if (!curSource.isEmpty()) {
+        history.append(Song(curSource));
+    }
+
     if (!priorityQueue.isEmpty()) {
         auto song = priorityQueue.front();
         priorityQueue.pop_front();
@@ -83,6 +88,16 @@ void Player::next() {
     }
 }
 
+void Player::previous() {
+    if (history.isEmpty()) {
+        return;
+    }
+    auto song = history.back();
+    history.pop_back();
+    setSource(song.url);
+    play();
+}
+
 void Player::clearQueue() {
     queue.clear();
     emit queueChanged();
@@ -95,7 +110,7 @@ void Player::clearPriorityQueue() {
 
 /**
  * Set the media source of the player and immediately start playing it.
- * This overwrites the queue and the current song.
+ * This overwrites the queue and the current song but not the priority queue.
  * @param song The Song to play
  */
 void Player::playSong(const Song &song) {
@@ -128,6 +143,13 @@ void Player::songEnded() {
 }
 
 void Player::togglePlayPause() {
+    qDebug() << source();
+    qDebug() << history;
+    if (source().isEmpty()) {
+        next();
+        return;
+    }
+
     if (isPlaying() == QMediaPlayer::PlayingState) {
         pause();
     } else {
