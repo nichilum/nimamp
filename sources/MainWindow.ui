@@ -27,7 +27,7 @@
      <string>Queue</string>
     </property>
    </widget>
-   <widget class="QListWidget" name="listWidget">
+   <widget class="QListWidget" name="queueListWidget">
     <property name="geometry">
      <rect>
       <x>500</x>
@@ -127,6 +127,9 @@
          </item>
          <item>
           <widget class="QPushButton" name="playButton">
+           <property name="styleSheet">
+            <string notr="true"/>
+           </property>
            <property name="text">
             <string/>
            </property>

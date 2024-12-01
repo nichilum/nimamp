@@ -29,7 +29,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
     // update queue
     connect(player, &Player::queueChanged, this, &MainWindow::updateQueue);
-    connect(ui->listWidget->model(), &QAbstractItemModel::rowsMoved, this, &MainWindow::onRowsMoved);
+    connect(ui->queueListWidget->model(), &QAbstractItemModel::rowsMoved, this, &MainWindow::onRowsMoved);
 
     // volume slider
     connect(ui->volumeSlider, &QSlider::valueChanged, this, &MainWindow::updateVolume);
@@ -76,15 +76,15 @@ void MainWindow::updateVolume(int volume) const {
 
 void MainWindow::updateQueue() {
     auto player = Player::getInstance();
-    ui->listWidget->clear();
+    ui->queueListWidget->clear();
 
     for (const auto &song : *player->getPriorityQueue()) {
         auto *songWidget = new SongItem(song.getFilename(), this);
 
-        auto *item = new QListWidgetItem(ui->listWidget);
+        auto *item = new QListWidgetItem(ui->queueListWidget);
         item->setSizeHint(songWidget->sizeHint());
-        ui->listWidget->addItem(item);
-        ui->listWidget->setItemWidget(item, songWidget);
+        ui->queueListWidget->addItem(item);
+        ui->queueListWidget->setItemWidget(item, songWidget);
     }
     if (!player->isPriorityQueueEmpty()) {  // hline between queues
         auto line = new QFrame();
@@ -92,19 +92,19 @@ void MainWindow::updateQueue() {
         line->setFrameShape(QFrame::HLine);
         line->setFrameShadow(QFrame::Sunken);
 
-        auto *item = new QListWidgetItem(ui->listWidget);
+        auto *item = new QListWidgetItem(ui->queueListWidget);
         item->setFlags(item->flags() & ~Qt::ItemIsSelectable);
         item->setSizeHint(line->sizeHint());
-        ui->listWidget->addItem(item);
-        ui->listWidget->setItemWidget(item, line);
+        ui->queueListWidget->addItem(item);
+        ui->queueListWidget->setItemWidget(item, line);
     }
     for (const auto &song : *player->getQueue()) {
         auto *songWidget = new SongItem(song.getFilename(), this);
 
-        auto *item = new QListWidgetItem(ui->listWidget);
+        auto *item = new QListWidgetItem(ui->queueListWidget);
         item->setSizeHint(songWidget->sizeHint());
-        ui->listWidget->addItem(item);
-        ui->listWidget->setItemWidget(item, songWidget);
+        ui->queueListWidget->addItem(item);
+        ui->queueListWidget->setItemWidget(item, songWidget);
     }
 }
 
