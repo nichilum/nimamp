@@ -9,7 +9,7 @@ SongItem::SongItem(const QString &songName, QWidget *parent)
     name = songName;
 
     // Connect remove button
-    connect(ui->pushButton, &QPushButton::clicked, [this, songName]() {
+    connect(ui->deleteButton, &QPushButton::clicked, [this, songName]() {
         emit removeRequested(songName);
     });
 }
