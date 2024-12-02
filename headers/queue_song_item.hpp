@@ -6,21 +6,21 @@
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
-class SongItem;
+class QueueSongItem;
 }
 QT_END_NAMESPACE
 
-class SongItem : public QWidget {
+class QueueSongItem : public QWidget {
     Q_OBJECT
    public:
     QString name;
-    explicit SongItem(const Song &song, QWidget *parent = nullptr);
+    explicit QueueSongItem(const Song &song, QWidget *parent = nullptr);
 
-    ~SongItem() override;
+    ~QueueSongItem() override;
 
    signals:
     void removeRequested(const QString &songName);
 
    private:
-    Ui::SongItem *ui;
+    Ui::QueueSongItem *ui;
 };

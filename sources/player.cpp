@@ -156,7 +156,7 @@ void Player::setLoop(const bool loop) {
 
 void Player::clearQueueUpToSong(const Song &song) {
     if (auto it = std::ranges::find(queue, song); it != queue.end()) {
-        queue.erase(queue.begin(), it);
+        queue.erase(queue.begin(), ++it);
     }
 
     emit queueChanged();

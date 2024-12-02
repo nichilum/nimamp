@@ -4,7 +4,7 @@
 #include <QMediaMetaData>
 
 #include "../headers/player.hpp"
-#include "../headers/song_item.hpp"
+#include "../headers/queue_song_item.hpp"
 #include "../headers/utils.hpp"
 #include "ui_MainWindow.h"
 
@@ -80,7 +80,7 @@ void MainWindow::updateQueue() {
     ui->queueListWidget->clear();
 
     for (const auto &song : *player->getPriorityQueue()) {
-        auto *songWidget = new SongItem(song, this);
+        auto *songWidget = new QueueSongItem(song, this);
 
         auto *item = new QListWidgetItem(ui->queueListWidget);
         item->setSizeHint(songWidget->sizeHint());
@@ -100,7 +100,7 @@ void MainWindow::updateQueue() {
         ui->queueListWidget->setItemWidget(item, line);
     }
     for (const auto &song : *player->getQueue()) {
-        auto *songWidget = new SongItem(song, this);
+        auto *songWidget = new QueueSongItem(song, this);
 
         auto *item = new QListWidgetItem(ui->queueListWidget);
         item->setSizeHint(songWidget->sizeHint());
