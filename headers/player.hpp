@@ -25,7 +25,7 @@ class Player final : public QMediaPlayer {
 
    public:
     void addPlaylist(const Playlist &playlist);
-    void addToPlaylist(QListWidgetItem *item, const Playlist &playlist);
+    void addToPlaylist(const QListWidgetItem *item, const Playlist &playlist);
     void saveQueue();
     void playPlaylist(const QString &name);
     void addFolderToQueue(const QString &directory);

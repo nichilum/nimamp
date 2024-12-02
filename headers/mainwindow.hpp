@@ -22,7 +22,7 @@ class MainWindow : public QMainWindow {
     void openFolderDialog();
     void updateSeekSlider(qint64 position) const;
     void updateSeekDuration(qint64 duration) const;
-    void seekToReleasedPosition();
+    void seekToReleasedPosition() const;
     static void updateVolume(int volume);
     static void onRowsMoved(const QModelIndex &parent, int start, int end, const QModelIndex &destination, int row);
     void onMetadataChanged() const;

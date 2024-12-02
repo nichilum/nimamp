@@ -75,14 +75,14 @@ void MainWindow::updateSeekDuration(const qint64 duration) const {
     ui->seekSlider->setRange(0, static_cast<int>(duration));
 }
 
-void MainWindow::seekToReleasedPosition() {
+void MainWindow::seekToReleasedPosition() const {
     auto player = Player::getInstance();
     player->setPosition(ui->seekSlider->value());
 }
 
-void MainWindow::updateVolume(int volume) {
+void MainWindow::updateVolume(const int volume) {
     auto player = Player::getInstance();
-    player->setVolume(volume / 100.);
+    player->setVolume(static_cast<float>(volume) / 100);
 }
 
 void MainWindow::updateQueue() {
