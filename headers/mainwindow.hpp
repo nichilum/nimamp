@@ -26,7 +26,9 @@ class MainWindow : public QMainWindow {
     void onMetadataChanged() const;
     void toggleLoop() const;
     void changePlayPauseIcon() const;
+    void createPlaylistButtonClicked();
 
    public slots:
     void updateQueue();
+    void updatePlaylists();
 };

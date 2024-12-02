@@ -58,4 +58,5 @@ class Player final : public QMediaPlayer {
 
    signals:
     void queueChanged();
+    void playlistsChanged();
 };

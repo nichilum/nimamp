@@ -34,6 +34,9 @@ qt_add_executable(appnimamp
         sources/queue_song_item.cpp
         headers/queue_song_item.hpp
         sources/QueueSongItem.ui
+        sources/playlist_item.cpp
+        headers/playlist_item.hpp
+        sources/PlaylistItem.ui
 )
 
 qt_add_resources(appnimamp "appnimamp_resources"

@@ -1,10 +1,12 @@
 #include "../headers/mainwindow.hpp"
 
 #include <QFileDialog>
+#include <QInputDialog>
 #include <QMediaMetaData>
 
 #include "../headers/player.hpp"
 #include "../headers/queue_song_item.hpp"
+#include "../headers/playlist_item.hpp"
 #include "../headers/utils.hpp"
 #include "ui_MainWindow.h"
 
@@ -34,6 +36,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
     // volume slider
     connect(ui->volumeSlider, &QSlider::valueChanged, this, &MainWindow::updateVolume);
+
+    // playlists
+    connect(ui->createPlaylistButton, &QPushButton::clicked, this, &MainWindow::createPlaylistButtonClicked);
+    connect(player, &Player::playlistsChanged, this, &MainWindow::updatePlaylists);
 
     connect(player, &QMediaPlayer::metaDataChanged, this, &MainWindow::onMetadataChanged);
     connect(player, &QMediaPlayer::playingChanged, this, &MainWindow::changePlayPauseIcon);
@@ -109,6 +115,20 @@ void MainWindow::updateQueue() {
     }
 }
 
+void MainWindow::updatePlaylists() {
+    auto player = Player::getInstance();
+    ui->playlistListWidget->clear();
+
+    for (const auto &playlist : player->getPlaylists()) {
+        auto *playlistWidget = new PlaylistItem(playlist, this);
+
+        auto *item = new QListWidgetItem(ui->playlistListWidget);
+        item->setSizeHint(playlistWidget->sizeHint());
+        ui->playlistListWidget->addItem(item);
+        ui->playlistListWidget->setItemWidget(item, playlistWidget);
+    }
+}
+
 void MainWindow::onRowsMoved(const QModelIndex &parent, int start, int end, const QModelIndex &destination, int row) {
     Q_UNUSED(parent);
     Q_UNUSED(end);
@@ -159,5 +179,24 @@ void MainWindow::changePlayPauseIcon() const {
         ui->playButton->setIcon(QIcon(":/resources/pause.svg"));
     } else {
         ui->playButton->setIcon(QIcon(":/resources/play.svg"));
+    }
+}
+
+void MainWindow::createPlaylistButtonClicked() {
+    bool ok;
+    auto playlistName = QInputDialog::getText(this,
+                                                 tr("Create Playlist"),
+                                                 tr("Enter playlist name:"),
+                                                 QLineEdit::Normal,
+                                                 "",
+                                                 &ok);
+    if (ok && !playlistName.isEmpty()) {
+        auto player = Player::getInstance();
+        auto playlist = Playlist(playlistName);
+        player->addPlaylist(playlist);
+
+        qDebug() << "Playlist created:" << playlistName;
+    } else {
+        qDebug() << "User canceled or entered an empty name.";
     }
 }

@@ -29,6 +29,7 @@ Player::Player() {
  */
 void Player::addPlaylist(const Playlist &playlist) {
     playlists.push_back(playlist);
+    emit playlistsChanged();
 }
 
 /*
