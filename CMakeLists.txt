@@ -42,6 +42,8 @@ qt_add_executable(appnimamp
         headers/playlist_view_widget.hpp
         sources/transport_widget.cpp
         headers/transport_widget.hpp
+        sources/playlist_tabs_widget.cpp
+        headers/playlist_tabs_widget.hpp
 
         ui/MainWindow.ui
         ui/QueueSongItem.ui
@@ -49,6 +51,7 @@ qt_add_executable(appnimamp
         ui/QueueWidget.ui
         ui/PlaylistViewWidget.ui
         ui/TransportWidget.ui
+        ui/PlaylistTabsWidget.ui
 )
 
 qt_add_resources(appnimamp "appnimamp_resources"
