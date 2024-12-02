@@ -267,13 +267,16 @@ void MainWindow::onPlaylistSelected(const QListWidgetItem *item) const {
         return;
     }
 
-    // Check if the tab is already open
-    // for (int i = 0; i < ui->playlistTabs->count(); ++i) {
-    //    if (ui->playlistTabs->tabText(i) == playlistName) {
-    //        ui->playlistTabs->setCurrentIndex(i); // Switch to the tab
-    //        return;
-    //    }
-    //}
+    // switch to the tab if it's already open
+    for (int i = 0; i < ui->playlistTabs->count(); ++i) {
+        if (auto *playlistView = qobject_cast<QListWidget *>(ui->playlistTabs->widget(i))) {
+            auto tabPlaylist = playlistView->property("playlistUuid").toUuid();
+            if (tabPlaylist == playlist.getUuid()) {
+                ui->playlistTabs->setCurrentIndex(i);
+                 return;
+            }
+        }
+    }
 
     auto *playlistView = new QListWidget;
     playlistView->setProperty("playlistUuid", playlist.getUuid());
