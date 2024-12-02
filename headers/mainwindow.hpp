@@ -1,11 +1,11 @@
 #pragma once
 
-#include <QListWidgetItem>
 #include <QMainWindow>
 
 #include "playlist.hpp"
 #include "playlist_view_widget.hpp"
 #include "queue_widget.hpp"
+#include "transport_widget.hpp"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -25,15 +25,10 @@ class MainWindow : public QMainWindow {
     Ui::MainWindow *ui;
     QueueWidget *queueWidget;
     PlaylistViewWidget *playlistViewWidget;
+    TransportWidget *transportWidget;
 
     void openFolderDialog();
-    void updateSeekSlider(qint64 position) const;
-    void updateSeekDuration(qint64 duration) const;
-    void seekToReleasedPosition() const;
     static void updateVolume(int volume);
-    void onMetadataChanged() const;
-    void toggleLoop() const;
-    void changePlayPauseIcon() const;
     void onPlaylistTabCloseRequested(int index) const;
 
    public slots:
