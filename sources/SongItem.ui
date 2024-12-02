@@ -24,6 +24,19 @@
       </widget>
      </item>
      <item>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Orientation::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
       <widget class="QPushButton" name="playButton">
        <property name="text">
         <string/>
@@ -37,7 +50,11 @@
      <item>
       <widget class="QPushButton" name="deleteButton">
        <property name="text">
-        <string>PushButton</string>
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset>
+         <normaloff>../resources/trash.svg</normaloff>../resources/trash.svg</iconset>
        </property>
       </widget>
      </item>
