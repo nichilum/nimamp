@@ -1,10 +1,10 @@
 #pragma once
 #include <QAudioOutput>
+#include <QListWidgetItem>
 #include <QMediaPlayer>
 #include <QObject>
 #include <QSettings>
 #include <QStack>
-#include <QListWidgetItem>
 
 #include "playlist.hpp"
 
@@ -61,4 +61,5 @@ class Player final : public QMediaPlayer {
    signals:
     void queueChanged();
     void playlistsChanged();
+    void playlistChanged(const Playlist &playlist);
 };

@@ -13,7 +13,7 @@ class Song : public QVariant {
 
     Song() = default;
     Song(const QUrl &url, const QString &filename) : url(url), filename(filename) {}
-    Song(const QUrl &url) : url(url), filename(url.fileName()) {}
+    explicit Song(const QUrl &url) : url(url), filename(url.fileName()) {}
     [[nodiscard]] QUrl getUrl() const { return url; }
     [[nodiscard]] QString getFilename() const { return filename; }
 

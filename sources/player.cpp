@@ -115,10 +115,12 @@ void Player::addToPlaylist(QListWidgetItem *item, const Playlist &playlist) {
 
     if (it != playlists.end()) {
         it->addSong(song);
+        emit playlistChanged(*it);
         qDebug() << "Added song:" << song.getFilename() << "to playlist:" << it->getName();
     } else {
         qDebug() << "Playlist not found!";
     }
+
 }
 
 /**

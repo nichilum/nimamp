@@ -41,6 +41,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     // playlists
     connect(ui->createPlaylistButton, &QPushButton::clicked, this, &MainWindow::createPlaylistButtonClicked);
     connect(player, &Player::playlistsChanged, this, &MainWindow::updatePlaylists);
+    connect(ui->playlistListWidget, &QListWidget::itemClicked, this, &MainWindow::onPlaylistSelected);
+    connect(ui->playlistTabs, &QTabWidget::tabCloseRequested, this, &MainWindow::onPlaylistTabCloseRequested);
+    connect(player, &Player::playlistChanged, this, &MainWindow::updatePlaylist);
 
     connect(player, &QMediaPlayer::metaDataChanged, this, &MainWindow::onMetadataChanged);
     connect(player, &QMediaPlayer::playingChanged, this, &MainWindow::changePlayPauseIcon);
@@ -127,8 +130,26 @@ void MainWindow::updatePlaylists() {
 
         auto *item = new QListWidgetItem(ui->playlistListWidget);
         item->setSizeHint(playlistWidget->sizeHint());
+        item->setData(Qt::UserRole, QVariant::fromValue(playlist));
         ui->playlistListWidget->addItem(item);
         ui->playlistListWidget->setItemWidget(item, playlistWidget);
+    }
+}
+
+void MainWindow::updatePlaylist(const Playlist &playlist) const {
+    for (int i = 0; i < ui->playlistTabs->count(); ++i) {
+        if (auto *playlistView = qobject_cast<QListWidget *>(ui->playlistTabs->widget(i))) {
+            auto tabPlaylist = playlistView->property("playlistUuid").toUuid();
+            if (tabPlaylist == playlist.getUuid()) {
+                qDebug() << "Updating playlist:" << playlist.getName();
+                playlistView->clear();
+                for (const auto &song : playlist.getSongs()) {
+                    auto *songItem = new QListWidgetItem(song.getFilename(), playlistView);
+                    songItem->setData(Qt::UserRole, QVariant::fromValue(song));
+                }
+                break;
+            }
+        }
     }
 }
 
@@ -224,10 +245,49 @@ void MainWindow::onQueueItemRightClicked(const QPoint &pos) {
 
     // Add other context menu actions
     menu.addSeparator();
-    //menu.addAction("Remove from Queue", [this, item]() {
-    //    removeFromQueue(item);
-    //});
+    // menu.addAction("Remove from Queue", [this, item]() {
+    //     removeFromQueue(item);
+    // });
 
-    // Show the menu
     menu.exec(ui->queueListWidget->mapToGlobal(pos));
+}
+
+void MainWindow::onPlaylistSelected(const QListWidgetItem *item) const {
+    auto player = Player::getInstance();
+    auto playlists = player->getPlaylists();
+
+    auto playlist = item->data(Qt::UserRole).value<Playlist>();
+    auto uuid = playlist.getUuid();
+    auto it = std::find_if(playlists.begin(), playlists.end(), [&uuid](const Playlist &p) {
+        return p.getUuid() == uuid;
+    });
+
+    if (it == playlists.end()) {
+        qDebug() << "Playlist not found!";
+        return;
+    }
+
+    // Check if the tab is already open
+    // for (int i = 0; i < ui->playlistTabs->count(); ++i) {
+    //    if (ui->playlistTabs->tabText(i) == playlistName) {
+    //        ui->playlistTabs->setCurrentIndex(i); // Switch to the tab
+    //        return;
+    //    }
+    //}
+
+    auto *playlistView = new QListWidget;
+    playlistView->setProperty("playlistUuid", playlist.getUuid());
+    for (const auto &song : it->getSongs()) {
+        auto *songItem = new QListWidgetItem(song.getFilename(), playlistView);
+        songItem->setData(Qt::UserRole, QVariant::fromValue(song));
+    }
+
+    ui->playlistTabs->addTab(playlistView, playlist.getName());
+    ui->playlistTabs->setCurrentWidget(playlistView);
+}
+
+void MainWindow::onPlaylistTabCloseRequested(const int index) const {
+    auto *widget = ui->playlistTabs->widget(index);
+    ui->playlistTabs->removeTab(index);
+    delete widget;
 }

@@ -1,6 +1,8 @@
 #pragma once
 
 #include <QMainWindow>
+#include <QListWidgetItem>
+#include "playlist.hpp"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -28,8 +30,11 @@ class MainWindow : public QMainWindow {
     void changePlayPauseIcon() const;
     void createPlaylistButtonClicked();
     void onQueueItemRightClicked(const QPoint &pos);
+    void onPlaylistSelected(const QListWidgetItem *item) const;
+    void onPlaylistTabCloseRequested(int index) const;
 
    public slots:
     void updateQueue();
     void updatePlaylists();
+    void updatePlaylist(const Playlist &playlist) const;
 };

@@ -7,6 +7,7 @@
 int main(int argc, char *argv[]) {
     QApplication app(argc, argv);
     qRegisterMetaType<Song>("Song");
+    qRegisterMetaType<Playlist>("Playlist");
 
     auto player = Player::getInstance();
     player->setVolume(0.1);  // gehoerschutz

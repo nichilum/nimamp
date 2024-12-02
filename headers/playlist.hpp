@@ -3,6 +3,7 @@
 #include "song.hpp"
 #include "utils.hpp"
 #include <QUuid>
+#include <QMetaType>
 
 class Playlist {
    private:
@@ -11,6 +12,7 @@ class Playlist {
     QString name;
 
    public:
+    Playlist() = default;
     explicit Playlist(const QString &name);
     Playlist(const QString &name, const QUrl &directory);
     Playlist(const QString &name, const QVector<Song> &songs);
@@ -23,3 +25,5 @@ class Playlist {
     [[nodiscard]] QUuid getUuid() const { return uuid; }
     [[nodiscard]] QVector<Song> getSongs() const { return songs; }
 };
+
+Q_DECLARE_METATYPE(Playlist)
