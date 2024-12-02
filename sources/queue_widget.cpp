@@ -24,27 +24,6 @@ void QueueWidget::updateQueue() {
     auto player = Player::getInstance();
     ui->queueListWidget->clear();
 
-    for (const auto &song : *player->getPriorityQueue()) {
-        auto *songWidget = new QueueSongItem(song, this);
-
-        auto *item = new QListWidgetItem(ui->queueListWidget);
-        item->setSizeHint(songWidget->sizeHint());
-        item->setData(Qt::UserRole, QVariant::fromValue(song));
-        ui->queueListWidget->addItem(item);
-        ui->queueListWidget->setItemWidget(item, songWidget);
-    }
-    if (!player->isPriorityQueueEmpty()) {  // hline between queues
-        auto line = new QFrame();
-        line->setObjectName(QString::fromUtf8("line"));
-        line->setFrameShape(QFrame::HLine);
-        line->setFrameShadow(QFrame::Sunken);
-
-        auto *item = new QListWidgetItem(ui->queueListWidget);
-        item->setFlags(item->flags() & ~Qt::ItemIsSelectable);
-        item->setSizeHint(line->sizeHint());
-        ui->queueListWidget->addItem(item);
-        ui->queueListWidget->setItemWidget(item, line);
-    }
     for (const auto &song : *player->getQueue()) {
         auto *songWidget = new QueueSongItem(song, this);
 

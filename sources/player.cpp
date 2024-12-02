@@ -61,7 +61,6 @@ void Player::addFolderToQueue(const QString &directory) {
                                       QDir::Files);
     for (const auto &filename : files) {
         auto song = Song(QUrl::fromLocalFile(dir.absoluteFilePath(filename)));
-        // queuePrioritySong(song);
         queueSong(song);
     }
 
@@ -69,24 +68,17 @@ void Player::addFolderToQueue(const QString &directory) {
 }
 
 void Player::next() {
-    auto curSource = source();
-    if (!curSource.isEmpty()) {
-        history.append(Song(curSource));
+    if (queue.isEmpty()) {
+        setPosition(duration());  // skip song to end
+        return;
     }
 
-    if (!priorityQueue.isEmpty()) {
-        auto song = priorityQueue.front();
-        priorityQueue.pop_front();
-        setSource(song.url);
-        play();
-        emit queueChanged();
-    } else if (!queue.isEmpty()) {
-        auto song = queue.front();
-        queue.pop_front();
-        setSource(song.url);
-        play();
-        emit queueChanged();
-    }
+    addToHistory();
+    auto song = queue.front();
+    queue.pop_front();
+    setSource(song.url);
+    play();
+    emit queueChanged();
 }
 
 void Player::previous() {
@@ -104,11 +96,6 @@ void Player::clearQueue() {
     emit queueChanged();
 }
 
-void Player::clearPriorityQueue() {
-    priorityQueue.clear();
-    emit queueChanged();
-}
-
 void Player::addToPlaylist(const Song &song, const Playlist &playlist) {
     auto it = std::ranges::find(playlists, playlist.getUuid(), &Playlist::getUuid);
 
@@ -119,7 +106,6 @@ void Player::addToPlaylist(const Song &song, const Playlist &playlist) {
     } else {
         qDebug() << "Playlist not found!";
     }
-
 }
 
 /**
@@ -128,34 +114,20 @@ void Player::addToPlaylist(const Song &song, const Playlist &playlist) {
  * @param song The Song to play
  */
 void Player::playSong(const Song &song) {
-    clearQueue();  // idk is this good????
-    // maybe ditch prio queue and just not clear is here?
-    auto curSource = source();
-    if (!curSource.isEmpty()) {
-        history.append(Song(curSource));
-    }
+    addToHistory();
     setSource(song.url);
     play();
 }
 
 void Player::playSongFromQueue(const Song &song) {
     clearQueueUpToSong(song);
-
-    auto curSource = source();
-    if (!curSource.isEmpty()) {
-        history.append(Song(curSource));
-    }
+    addToHistory();
     setSource(song.url);
     play();
 }
 
 void Player::queueSong(const Song &song) {
     queue.push_back(song);
-    emit queueChanged();
-}
-
-void Player::queuePrioritySong(const Song &song) {
-    priorityQueue.push_back(song);
     emit queueChanged();
 }
 
@@ -207,6 +179,12 @@ void Player::togglePlayPause() {
         pause();
     } else {
         play();
+    }
+}
+
+void Player::addToHistory() {
+    if (!source().isEmpty()) {
+        history.append(Song(source()));
     }
 }
 
