@@ -19,6 +19,8 @@ set(CMAKE_AUTORCC ON)
 
 qt_standard_project_setup(REQUIRES 6.5)
 
+set(CMAKE_AUTOUIC_SEARCH_PATHS ${CMAKE_SOURCE_DIR}/ui)
+
 qt_add_executable(appnimamp
         sources/main.cpp
         headers/player.hpp
@@ -30,16 +32,17 @@ qt_add_executable(appnimamp
         sources/song.cpp
         sources/mainwindow.cpp
         headers/mainwindow.hpp
-        sources/MainWindow.ui
         sources/queue_song_item.cpp
         headers/queue_song_item.hpp
-        sources/QueueSongItem.ui
         sources/playlist_item.cpp
         headers/playlist_item.hpp
-        sources/PlaylistItem.ui
         sources/queue_widget.cpp
         headers/queue_widget.hpp
-        sources/QueueWidget.ui
+
+        ui/MainWindow.ui
+        ui/QueueSongItem.ui
+        ui/PlaylistItem.ui
+        ui/QueueWidget.ui
 )
 
 qt_add_resources(appnimamp "appnimamp_resources"
