@@ -4,6 +4,7 @@
 #include <QMainWindow>
 
 #include "playlist.hpp"
+#include "playlist_view_widget.hpp"
 #include "queue_widget.hpp"
 
 QT_BEGIN_NAMESPACE
@@ -18,10 +19,13 @@ class MainWindow : public QMainWindow {
    public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow() override;
+    void onPlaylistSelected(const QListWidgetItem *item) const;
 
    private:
     Ui::MainWindow *ui;
     QueueWidget *queueWidget;
+    PlaylistViewWidget *playlistViewWidget;
+
     void openFolderDialog();
     void updateSeekSlider(qint64 position) const;
     void updateSeekDuration(qint64 duration) const;
@@ -30,11 +34,8 @@ class MainWindow : public QMainWindow {
     void onMetadataChanged() const;
     void toggleLoop() const;
     void changePlayPauseIcon() const;
-    void createPlaylistButtonClicked();
-    void onPlaylistSelected(const QListWidgetItem *item) const;
     void onPlaylistTabCloseRequested(int index) const;
 
    public slots:
-    void updatePlaylists();
     void updatePlaylist(const Playlist &playlist) const;
 };

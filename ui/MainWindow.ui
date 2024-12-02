@@ -155,48 +155,6 @@
       </item>
      </layout>
     </item>
-    <item row="1" column="3">
-     <layout class="QVBoxLayout" name="verticalLayout_2">
-      <item>
-       <layout class="QHBoxLayout" name="horizontalLayout_4">
-        <item>
-         <widget class="QLabel" name="label">
-          <property name="text">
-           <string>Playlists</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <spacer name="horizontalSpacer">
-          <property name="orientation">
-           <enum>Qt::Orientation::Horizontal</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>40</width>
-            <height>20</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-        <item>
-         <widget class="QPushButton" name="createPlaylistButton">
-          <property name="text">
-           <string/>
-          </property>
-          <property name="icon">
-           <iconset>
-            <normaloff>../resources/plus.svg</normaloff>../resources/plus.svg</iconset>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </item>
-      <item>
-       <widget class="QListWidget" name="playlistListWidget"/>
-      </item>
-     </layout>
-    </item>
     <item row="0" column="2">
      <widget class="QSlider" name="volumeSlider">
       <property name="maximum">
@@ -234,6 +192,9 @@
     </item>
     <item row="0" column="3">
      <widget class="QWidget" name="queueWidgetPlaceholder" native="true"/>
+    </item>
+    <item row="1" column="3">
+     <widget class="QWidget" name="playlistViewWidgetPlaceholder" native="true"/>
     </item>
    </layout>
   </widget>

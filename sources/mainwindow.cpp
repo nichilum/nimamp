@@ -1,5 +1,7 @@
 #include "../headers/mainwindow.hpp"
 
+#include <ui_PlaylistViewWidget.h>
+
 #include <QFileDialog>
 #include <QInputDialog>
 #include <QMediaMetaData>
@@ -7,18 +9,20 @@
 #include "../headers/player.hpp"
 #include "../headers/playlist_item.hpp"
 #include "../headers/queue_song_item.hpp"
-#include "../headers/utils.hpp"
 #include "../headers/queue_widget.hpp"
+#include "../headers/utils.hpp"
 #include "ui_MainWindow.h"
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow) {
     ui->setupUi(this);
 
     queueWidget = new QueueWidget(this);
-
+    playlistViewWidget = new PlaylistViewWidget(this);
 
     ui->queueWidgetPlaceholder->setLayout(new QVBoxLayout);
     ui->queueWidgetPlaceholder->layout()->addWidget(queueWidget);
+    ui->playlistViewWidgetPlaceholder->setLayout(new QVBoxLayout);
+    ui->playlistViewWidgetPlaceholder->layout()->addWidget(playlistViewWidget);
 
     auto player = Player::getInstance();
 
@@ -40,12 +44,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     // volume slider
     connect(ui->volumeSlider, &QSlider::valueChanged, this, &MainWindow::updateVolume);
 
-    // playlists
-    connect(ui->createPlaylistButton, &QPushButton::clicked, this, &MainWindow::createPlaylistButtonClicked);
-    connect(player, &Player::playlistsChanged, this, &MainWindow::updatePlaylists);
-    connect(ui->playlistListWidget, &QListWidget::itemClicked, this, &MainWindow::onPlaylistSelected);
+    // tabs
     connect(ui->playlistTabs, &QTabWidget::tabCloseRequested, this, &MainWindow::onPlaylistTabCloseRequested);
     connect(player, &Player::playlistChanged, this, &MainWindow::updatePlaylist);
+    connect(playlistViewWidget->getUi()->playlistListWidget, &QListWidget::itemClicked, this, &MainWindow::onPlaylistSelected);
 
     connect(player, &QMediaPlayer::metaDataChanged, this, &MainWindow::onMetadataChanged);
     connect(player, &QMediaPlayer::playingChanged, this, &MainWindow::changePlayPauseIcon);
@@ -53,6 +55,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
 MainWindow::~MainWindow() {
     delete ui;
+    delete queueWidget;
+    delete playlistViewWidget;
 }
 
 void MainWindow::openFolderDialog() {
@@ -85,21 +89,6 @@ void MainWindow::seekToReleasedPosition() const {
 void MainWindow::updateVolume(const int volume) {
     auto player = Player::getInstance();
     player->setVolume(static_cast<float>(volume) / 100);
-}
-
-void MainWindow::updatePlaylists() {
-    auto player = Player::getInstance();
-    ui->playlistListWidget->clear();
-
-    for (const auto &playlist : player->getPlaylists()) {
-        auto *playlistWidget = new PlaylistItem(playlist, this);
-
-        auto *item = new QListWidgetItem(ui->playlistListWidget);
-        item->setSizeHint(playlistWidget->sizeHint());
-        item->setData(Qt::UserRole, QVariant::fromValue(playlist));
-        ui->playlistListWidget->addItem(item);
-        ui->playlistListWidget->setItemWidget(item, playlistWidget);
-    }
 }
 
 void MainWindow::updatePlaylist(const Playlist &playlist) const {
@@ -151,25 +140,6 @@ void MainWindow::changePlayPauseIcon() const {
         ui->playButton->setIcon(QIcon(":/resources/pause.svg"));
     } else {
         ui->playButton->setIcon(QIcon(":/resources/play.svg"));
-    }
-}
-
-void MainWindow::createPlaylistButtonClicked() {
-    bool ok;
-    auto playlistName = QInputDialog::getText(this,
-                                              tr("Create Playlist"),
-                                              tr("Enter playlist name:"),
-                                              QLineEdit::Normal,
-                                              "",
-                                              &ok);
-    if (ok && !playlistName.isEmpty()) {
-        auto player = Player::getInstance();
-        auto playlist = Playlist(playlistName);
-        player->addPlaylist(playlist);
-
-        qDebug() << "Playlist created:" << playlistName;
-    } else {
-        qDebug() << "User canceled or entered an empty name.";
     }
 }
 
