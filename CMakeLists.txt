@@ -37,6 +37,9 @@ qt_add_executable(appnimamp
         sources/playlist_item.cpp
         headers/playlist_item.hpp
         sources/PlaylistItem.ui
+        sources/queue_widget.cpp
+        headers/queue_widget.hpp
+        sources/QueueWidget.ui
 )
 
 qt_add_resources(appnimamp "appnimamp_resources"
@@ -46,8 +49,6 @@ qt_add_resources(appnimamp "appnimamp_resources"
             resources/play.svg
             resources/repeat.svg
             resources/shuffle.svg
-            resources/skip-back.svg
-            resources/skip-forward.svg
 )
 
 

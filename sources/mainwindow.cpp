@@ -8,10 +8,17 @@
 #include "../headers/playlist_item.hpp"
 #include "../headers/queue_song_item.hpp"
 #include "../headers/utils.hpp"
+#include "../headers/queue_widget.hpp"
 #include "ui_MainWindow.h"
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow) {
     ui->setupUi(this);
+
+    queueWidget = new QueueWidget(this);
+
+
+    ui->queueWidgetPlaceholder->setLayout(new QVBoxLayout);
+    ui->queueWidgetPlaceholder->layout()->addWidget(queueWidget);
 
     auto player = Player::getInstance();
 
@@ -29,11 +36,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     connect(player, &QMediaPlayer::positionChanged, this, &MainWindow::updateSeekSlider);
     connect(player, &QMediaPlayer::durationChanged, this, &MainWindow::updateSeekDuration);
     connect(ui->seekSlider, &QSlider::sliderReleased, this, &MainWindow::seekToReleasedPosition);
-
-    // queue
-    connect(player, &Player::queueChanged, this, &MainWindow::updateQueue);
-    connect(ui->queueListWidget->model(), &QAbstractItemModel::rowsMoved, this, &MainWindow::onRowsMoved);
-    connect(ui->queueListWidget, &QListWidget::customContextMenuRequested, this, &MainWindow::onQueueItemRightClicked);
 
     // volume slider
     connect(ui->volumeSlider, &QSlider::valueChanged, this, &MainWindow::updateVolume);
@@ -85,42 +87,6 @@ void MainWindow::updateVolume(const int volume) {
     player->setVolume(static_cast<float>(volume) / 100);
 }
 
-void MainWindow::updateQueue() {
-    auto player = Player::getInstance();
-    ui->queueListWidget->clear();
-
-    for (const auto &song : *player->getPriorityQueue()) {
-        auto *songWidget = new QueueSongItem(song, this);
-
-        auto *item = new QListWidgetItem(ui->queueListWidget);
-        item->setSizeHint(songWidget->sizeHint());
-        item->setData(Qt::UserRole, QVariant::fromValue(song));
-        ui->queueListWidget->addItem(item);
-        ui->queueListWidget->setItemWidget(item, songWidget);
-    }
-    if (!player->isPriorityQueueEmpty()) {  // hline between queues
-        auto line = new QFrame();
-        line->setObjectName(QString::fromUtf8("line"));
-        line->setFrameShape(QFrame::HLine);
-        line->setFrameShadow(QFrame::Sunken);
-
-        auto *item = new QListWidgetItem(ui->queueListWidget);
-        item->setFlags(item->flags() & ~Qt::ItemIsSelectable);
-        item->setSizeHint(line->sizeHint());
-        ui->queueListWidget->addItem(item);
-        ui->queueListWidget->setItemWidget(item, line);
-    }
-    for (const auto &song : *player->getQueue()) {
-        auto *songWidget = new QueueSongItem(song, this);
-
-        auto *item = new QListWidgetItem(ui->queueListWidget);
-        item->setSizeHint(songWidget->sizeHint());
-        item->setData(Qt::UserRole, QVariant::fromValue(song));
-        ui->queueListWidget->addItem(item);
-        ui->queueListWidget->setItemWidget(item, songWidget);
-    }
-}
-
 void MainWindow::updatePlaylists() {
     auto player = Player::getInstance();
     ui->playlistListWidget->clear();
@@ -151,24 +117,6 @@ void MainWindow::updatePlaylist(const Playlist &playlist) const {
             }
         }
     }
-}
-
-void MainWindow::onRowsMoved(const QModelIndex &parent, int start, int end, const QModelIndex &destination, int row) {
-    Q_UNUSED(parent);
-    Q_UNUSED(end);
-
-    auto player = Player::getInstance();
-
-    if (row > start) {
-        row -= 1;
-    }
-
-    if (start >= 0 && row >= 0 && start < player->getQueue()->size() && row <= player->getQueue()->size()) {
-        auto movedItem = player->getQueue()->takeAt(start);
-        player->getQueue()->insert(row, movedItem);
-    }
-
-    qDebug() << "Updated queue:" << *player->getQueue();
 }
 
 void MainWindow::onMetadataChanged() const {
@@ -225,33 +173,6 @@ void MainWindow::createPlaylistButtonClicked() {
     }
 }
 
-void MainWindow::onQueueItemRightClicked(const QPoint &pos) {
-    auto player = Player::getInstance();
-
-    QListWidgetItem *item = ui->queueListWidget->itemAt(pos);
-    if (!item) return;  // Ignore if no item was clicked
-
-    QMenu menu(this);
-    auto song = item->data(Qt::UserRole).value<Song>();
-    auto *addToPlaylistMenu = menu.addMenu("Add to Playlist");
-
-    auto playlists = player->getPlaylists();
-    for (const auto &playlist : playlists) {
-        QAction *action = addToPlaylistMenu->addAction(playlist.getName());
-        connect(action, &QAction::triggered, [playlist, player, song]() {
-            player->addToPlaylist(song, playlist);
-        });
-    }
-
-    // Add other context menu actions
-    menu.addSeparator();
-    menu.addAction("Remove from Queue", [this, player, song]() {
-        player->removeSongFromQueue(song);
-    });
-
-    menu.exec(ui->queueListWidget->mapToGlobal(pos));
-}
-
 void MainWindow::onPlaylistSelected(const QListWidgetItem *item) const {
     auto player = Player::getInstance();
     auto playlists = player->getPlaylists();
@@ -273,7 +194,7 @@ void MainWindow::onPlaylistSelected(const QListWidgetItem *item) const {
             auto tabPlaylist = playlistView->property("playlistUuid").toUuid();
             if (tabPlaylist == playlist.getUuid()) {
                 ui->playlistTabs->setCurrentIndex(i);
-                 return;
+                return;
             }
         }
     }

@@ -155,16 +155,6 @@
       </item>
      </layout>
     </item>
-    <item row="0" column="3">
-     <widget class="QListWidget" name="queueListWidget">
-      <property name="contextMenuPolicy">
-       <enum>Qt::ContextMenuPolicy::CustomContextMenu</enum>
-      </property>
-      <property name="dragDropMode">
-       <enum>QAbstractItemView::DragDropMode::InternalMove</enum>
-      </property>
-     </widget>
-    </item>
     <item row="1" column="3">
      <layout class="QVBoxLayout" name="verticalLayout_2">
       <item>
@@ -241,6 +231,9 @@
        <bool>true</bool>
       </property>
      </widget>
+    </item>
+    <item row="0" column="3">
+     <widget class="QWidget" name="queueWidgetPlaceholder" native="true"/>
     </item>
    </layout>
   </widget>
