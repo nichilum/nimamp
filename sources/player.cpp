@@ -109,8 +109,7 @@ void Player::clearPriorityQueue() {
     emit queueChanged();
 }
 
-void Player::addToPlaylist(const QListWidgetItem *item, const Playlist &playlist) {
-    auto song = item->data(Qt::UserRole).value<Song>();
+void Player::addToPlaylist(const Song &song, const Playlist &playlist) {
     auto it = std::ranges::find(playlists, playlist.getUuid(), &Playlist::getUuid);
 
     if (it != playlists.end()) {

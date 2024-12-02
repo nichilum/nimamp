@@ -232,22 +232,22 @@ void MainWindow::onQueueItemRightClicked(const QPoint &pos) {
     if (!item) return;  // Ignore if no item was clicked
 
     QMenu menu(this);
-
+    auto song = item->data(Qt::UserRole).value<Song>();
     auto *addToPlaylistMenu = menu.addMenu("Add to Playlist");
 
     auto playlists = player->getPlaylists();
     for (const auto &playlist : playlists) {
         QAction *action = addToPlaylistMenu->addAction(playlist.getName());
-        connect(action, &QAction::triggered, [playlist, item, player]() {
-            player->addToPlaylist(item, playlist);
+        connect(action, &QAction::triggered, [playlist, player, song]() {
+            player->addToPlaylist(song, playlist);
         });
     }
 
     // Add other context menu actions
     menu.addSeparator();
-    // menu.addAction("Remove from Queue", [this, item]() {
-    //     removeFromQueue(item);
-    // });
+    menu.addAction("Remove from Queue", [this, player, song]() {
+        player->removeSongFromQueue(song);
+    });
 
     menu.exec(ui->queueListWidget->mapToGlobal(pos));
 }

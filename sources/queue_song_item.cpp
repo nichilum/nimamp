@@ -10,12 +10,6 @@ QueueSongItem::QueueSongItem(const Song &song, QWidget *parent)
     name = song.getFilename();
     auto player = Player::getInstance();
 
-    // Connect remove button
-    connect(ui->deleteButton, &QPushButton::clicked, [player, song]() {
-        player->removeSongFromQueue(song);
-    });
-
-
     // connect play button
     connect(ui->playButton, &QPushButton::clicked, [player, song]() {
         player->playSongFromQueue(song);
