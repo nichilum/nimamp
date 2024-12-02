@@ -125,8 +125,8 @@ void Player::playSong(const Song &song) {
 }
 
 void Player::playSongFromQueue(const Song &song) {
-    // TODO: clear queue up to song
-    // TODO: make this to own private function:???
+    clearQueueUpToSong(song);
+
     auto curSource = source();
     if (!curSource.isEmpty()) {
         history.append(Song(curSource));
@@ -152,6 +152,22 @@ void Player::setLoop(const bool loop) {
     } else {
         setLoops(Once);
     }
+}
+
+void Player::clearQueueUpToSong(const Song &song) {
+    if (auto it = std::ranges::find(queue, song); it != queue.end()) {
+        queue.erase(queue.begin(), it);
+    }
+
+    emit queueChanged();
+}
+
+void Player::removeSongFromQueue(const Song &song) {
+    if (auto it = std::ranges::find(queue, song); it != queue.end()) {
+        queue.erase(it);
+    }
+
+    emit queueChanged();
 }
 
 Player *Player::getInstance() {

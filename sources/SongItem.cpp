@@ -8,17 +8,17 @@ SongItem::SongItem(const Song &song, QWidget *parent)
     ui->label->setText(song.getFilename());
 
     name = song.getFilename();
+    auto player = Player::getInstance();
 
     // Connect remove button
-    connect(ui->deleteButton, &QPushButton::clicked, [this, song]() {
-        emit removeRequested(song.getFilename());
+    connect(ui->deleteButton, &QPushButton::clicked, [player, song]() {
+        player->removeSongFromQueue(song);
     });
 
-    auto player = Player::getInstance();
 
     // connect play button
     connect(ui->playButton, &QPushButton::clicked, [player, song]() {
-        player->playSong(song);
+        player->playSongFromQueue(song);
     });
 }
 

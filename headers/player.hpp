@@ -37,6 +37,8 @@ class Player final : public QMediaPlayer {
     void queuePrioritySong(const Song &song);
     void setVolume(const float volume) { audioOutput.setVolume(volume); }
     void setLoop(bool loop);
+    void clearQueueUpToSong(const Song &song);
+    void removeSongFromQueue(const Song &song);
 
     [[nodiscard]] QAudioOutput *getAudioOutput() { return &audioOutput; }
     [[nodiscard]] float getVolume() const { return audioOutput.volume(); }
