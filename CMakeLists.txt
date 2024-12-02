@@ -61,6 +61,7 @@ qt_add_resources(appnimamp "appnimamp_resources"
             resources/play.svg
             resources/repeat.svg
             resources/shuffle.svg
+            resources/empty_cover.jpg
 )
 
 

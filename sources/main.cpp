@@ -10,7 +10,7 @@ int main(int argc, char *argv[]) {
     qRegisterMetaType<Playlist>("Playlist");
 
     auto player = Player::getInstance();
-    player->setVolume(0.1);  // gehoerschutz
+    player->setVolume(0.);  // gehoerschutz
 
     MainWindow window;
     window.show();

@@ -1,8 +1,9 @@
 #include "../headers/transport_widget.hpp"
-#include "../headers/player.hpp"
-#include "ui_TransportWidget.h"
 
 #include <QMediaMetaData>
+
+#include "../headers/player.hpp"
+#include "ui_TransportWidget.h"
 
 TransportWidget::TransportWidget(QWidget *parent) : QWidget(parent), ui(new Ui::TransportWidget) {
     ui->setupUi(this);
@@ -56,6 +57,10 @@ void TransportWidget::onMetadataChanged() const {
     auto title = data.stringValue(QMediaMetaData::Title);
     auto artist = data.stringValue(QMediaMetaData::ContributingArtist);
     auto thumbnail = data.value(QMediaMetaData::ThumbnailImage).value<QImage>();
+    if (thumbnail.isNull()) {
+        thumbnail = QImage(":/resources/empty_cover.jpg");
+    }
+    thumbnail = thumbnail.scaled(QSize(100, 100), Qt::KeepAspectRatio, Qt::SmoothTransformation);
     auto duration = data.value(QMediaMetaData::Duration).toInt();
 
     ui->songNameLabel->setText(title);
