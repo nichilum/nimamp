@@ -2,11 +2,11 @@
 
 #include <QDir>
 
-Playlist::Playlist(const QString &name) : name(name) {}
+Playlist::Playlist(const QString &name) : name(name), uuid(QUuid::createUuid()) {}
 
-Playlist::Playlist(const QString &name, const QVector<Song> &songs) : name(name), songs(songs) {}
+Playlist::Playlist(const QString &name, const QVector<Song> &songs) : name(name), songs(songs), uuid(QUuid::createUuid()) {}
 
-Playlist::Playlist(const QString &name, const QUrl &directory) : name(name) {
+Playlist::Playlist(const QString &name, const QUrl &directory) : name(name), uuid(QUuid::createUuid()) {
     const QDir dir(directory.toLocalFile());
     QStringList files = dir.entryList(QStringList() << "*.wav"
                                                     << "*.mp3",
@@ -27,4 +27,8 @@ void Playlist::addSongs(const QVector<Song> &songs) {
 
 void Playlist::removeSong(const Song &song) {
     songs.removeOne(song);
+}
+
+bool operator==(const Playlist &lhs, const Playlist &rhs) {
+    return lhs.getUuid() == rhs.getUuid();
 }

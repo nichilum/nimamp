@@ -27,6 +27,7 @@ class MainWindow : public QMainWindow {
     void toggleLoop() const;
     void changePlayPauseIcon() const;
     void createPlaylistButtonClicked();
+    void onQueueItemRightClicked(const QPoint &pos);
 
    public slots:
     void updateQueue();

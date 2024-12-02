@@ -5,8 +5,8 @@
 #include <QMediaMetaData>
 
 #include "../headers/player.hpp"
-#include "../headers/queue_song_item.hpp"
 #include "../headers/playlist_item.hpp"
+#include "../headers/queue_song_item.hpp"
 #include "../headers/utils.hpp"
 #include "ui_MainWindow.h"
 
@@ -30,9 +30,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     connect(player, &QMediaPlayer::durationChanged, this, &MainWindow::updateSeekDuration);
     connect(ui->seekSlider, &QSlider::sliderReleased, this, &MainWindow::seekToReleasedPosition);
 
-    // update queue
+    // queue
     connect(player, &Player::queueChanged, this, &MainWindow::updateQueue);
     connect(ui->queueListWidget->model(), &QAbstractItemModel::rowsMoved, this, &MainWindow::onRowsMoved);
+    connect(ui->queueListWidget, &QListWidget::customContextMenuRequested, this, &MainWindow::onQueueItemRightClicked);
 
     // volume slider
     connect(ui->volumeSlider, &QSlider::valueChanged, this, &MainWindow::updateVolume);
@@ -90,6 +91,7 @@ void MainWindow::updateQueue() {
 
         auto *item = new QListWidgetItem(ui->queueListWidget);
         item->setSizeHint(songWidget->sizeHint());
+        item->setData(Qt::UserRole, QVariant::fromValue(song));
         ui->queueListWidget->addItem(item);
         ui->queueListWidget->setItemWidget(item, songWidget);
     }
@@ -110,6 +112,7 @@ void MainWindow::updateQueue() {
 
         auto *item = new QListWidgetItem(ui->queueListWidget);
         item->setSizeHint(songWidget->sizeHint());
+        item->setData(Qt::UserRole, QVariant::fromValue(song));
         ui->queueListWidget->addItem(item);
         ui->queueListWidget->setItemWidget(item, songWidget);
     }
@@ -185,11 +188,11 @@ void MainWindow::changePlayPauseIcon() const {
 void MainWindow::createPlaylistButtonClicked() {
     bool ok;
     auto playlistName = QInputDialog::getText(this,
-                                                 tr("Create Playlist"),
-                                                 tr("Enter playlist name:"),
-                                                 QLineEdit::Normal,
-                                                 "",
-                                                 &ok);
+                                              tr("Create Playlist"),
+                                              tr("Enter playlist name:"),
+                                              QLineEdit::Normal,
+                                              "",
+                                              &ok);
     if (ok && !playlistName.isEmpty()) {
         auto player = Player::getInstance();
         auto playlist = Playlist(playlistName);
@@ -199,4 +202,32 @@ void MainWindow::createPlaylistButtonClicked() {
     } else {
         qDebug() << "User canceled or entered an empty name.";
     }
+}
+
+void MainWindow::onQueueItemRightClicked(const QPoint &pos) {
+    auto player = Player::getInstance();
+
+    QListWidgetItem *item = ui->queueListWidget->itemAt(pos);
+    if (!item) return;  // Ignore if no item was clicked
+
+    QMenu menu(this);
+
+    auto *addToPlaylistMenu = menu.addMenu("Add to Playlist");
+
+    auto playlists = player->getPlaylists();
+    for (const auto &playlist : playlists) {
+        QAction *action = addToPlaylistMenu->addAction(playlist.getName());
+        connect(action, &QAction::triggered, [playlist, item, player]() {
+            player->addToPlaylist(item, playlist);
+        });
+    }
+
+    // Add other context menu actions
+    menu.addSeparator();
+    //menu.addAction("Remove from Queue", [this, item]() {
+    //    removeFromQueue(item);
+    //});
+
+    // Show the menu
+    menu.exec(ui->queueListWidget->mapToGlobal(pos));
 }

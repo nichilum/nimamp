@@ -2,9 +2,11 @@
 
 #include "song.hpp"
 #include "utils.hpp"
+#include <QUuid>
 
 class Playlist {
    private:
+    QUuid uuid;
     QVector<Song> songs;
     QString name;
 
@@ -18,5 +20,6 @@ class Playlist {
 
     [[nodiscard]] QStringList getSongUrls() const { return convertToQStringList(songs); }
     [[nodiscard]] QString getName() const { return name; }
+    [[nodiscard]] QUuid getUuid() const { return uuid; }
     [[nodiscard]] QVector<Song> getSongs() const { return songs; }
 };

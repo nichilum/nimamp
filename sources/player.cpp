@@ -109,6 +109,18 @@ void Player::clearPriorityQueue() {
     emit queueChanged();
 }
 
+void Player::addToPlaylist(QListWidgetItem *item, const Playlist &playlist) {
+    auto song = item->data(Qt::UserRole).value<Song>();
+    auto it = std::ranges::find(playlists, playlist.getUuid(), &Playlist::getUuid);
+
+    if (it != playlists.end()) {
+        it->addSong(song);
+        qDebug() << "Added song:" << song.getFilename() << "to playlist:" << it->getName();
+    } else {
+        qDebug() << "Playlist not found!";
+    }
+}
+
 /**
  * Set the media source of the player and immediately start playing it.
  * This overwrites the queue and the current song but not the priority queue.

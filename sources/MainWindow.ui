@@ -179,6 +179,9 @@
     </item>
     <item row="0" column="2">
      <widget class="QListWidget" name="queueListWidget">
+      <property name="contextMenuPolicy">
+       <enum>Qt::ContextMenuPolicy::CustomContextMenu</enum>
+      </property>
       <property name="dragDropMode">
        <enum>QAbstractItemView::DragDropMode::InternalMove</enum>
       </property>

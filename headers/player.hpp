@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QSettings>
 #include <QStack>
+#include <QListWidgetItem>
 
 #include "playlist.hpp"
 
@@ -24,6 +25,7 @@ class Player final : public QMediaPlayer {
 
    public:
     void addPlaylist(const Playlist &playlist);
+    void addToPlaylist(QListWidgetItem *item, const Playlist &playlist);
     void saveQueue();
     void playPlaylist(const QString &name);
     void addFolderToQueue(const QString &directory);
