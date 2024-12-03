@@ -2,6 +2,7 @@
 
 #include "../headers/player.hpp"
 #include "../headers/playlist_view_widget.hpp"
+#include "../headers/queue_song_item.hpp"
 #include "ui_PlaylistTabsWidget.h"
 #include "ui_PlaylistViewWidget.h"
 
@@ -33,8 +34,16 @@ void PlaylistTabsWidget::updatePlaylist(const Playlist &playlist) const {
                 qDebug() << "Updating playlist:" << playlist.getName();
                 playlistView->clear();
                 for (const auto &song : playlist.getSongs()) {
-                    auto *songItem = new QListWidgetItem(song.getFilename(), playlistView);
-                    songItem->setData(Qt::UserRole, QVariant::fromValue(song));
+                    auto *songWidget = new QueueSongItem(song);
+
+                    auto *item = new QListWidgetItem(playlistView);
+                    item->setSizeHint(songWidget->sizeHint());
+                    item->setData(Qt::UserRole, QVariant::fromValue(song));
+                    playlistView->addItem(item);
+                    playlistView->setItemWidget(item, songWidget);
+
+                    // auto *songItem = new QListWidgetItem(song.getFilename(), playlistView);
+                    // songItem->setData(Qt::UserRole, QVariant::fromValue(song));
                 }
                 break;
             }
@@ -71,8 +80,16 @@ void PlaylistTabsWidget::onPlaylistSelected(const QListWidgetItem *item) const {
     auto *playlistView = new QListWidget;
     playlistView->setProperty("playlistUuid", playlist.getUuid());
     for (const auto &song : it->getSongs()) {
-        auto *songItem = new QListWidgetItem(song.getFilename(), playlistView);
-        songItem->setData(Qt::UserRole, QVariant::fromValue(song));
+        auto *songWidget = new QueueSongItem(song);
+
+        auto *item = new QListWidgetItem(playlistView);
+        item->setSizeHint(songWidget->sizeHint());
+        item->setData(Qt::UserRole, QVariant::fromValue(song));
+        playlistView->addItem(item);
+        playlistView->setItemWidget(item, songWidget);
+
+        // auto *songItem = new QListWidgetItem(song.getFilename(), playlistView);
+        // songItem->setData(Qt::UserRole, QVariant::fromValue(song));
     }
 
     ui->playlistTabs->addTab(playlistView, playlist.getName());
