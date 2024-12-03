@@ -29,5 +29,6 @@ class MainWindow : public QMainWindow {
     PlaylistTabsWidget *playlistTabsWidget;
 
     void openFolderDialog();
+    void openFileDialog();
     static void updateVolume(int volume);
 };

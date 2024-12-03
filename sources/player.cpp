@@ -82,7 +82,8 @@ void Player::next() {
 }
 
 void Player::previous() {
-    if (history.isEmpty()) {
+    if (history.isEmpty() || position() > duration() * 0.1) {
+        setPosition(0);
         return;
     }
     auto song = history.back();

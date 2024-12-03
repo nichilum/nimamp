@@ -65,6 +65,7 @@
      <string>File</string>
     </property>
     <addaction name="actionFolderToQueue"/>
+    <addaction name="actionFilesToQueue"/>
    </widget>
    <widget class="QMenu" name="menuEdit">
     <property name="title">
@@ -78,6 +79,11 @@
   <action name="actionFolderToQueue">
    <property name="text">
     <string>FolderToQueue</string>
+   </property>
+  </action>
+  <action name="actionFilesToQueue">
+   <property name="text">
+    <string>FilesToQueue</string>
    </property>
   </action>
  </widget>

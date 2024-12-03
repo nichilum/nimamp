@@ -29,8 +29,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
     ui->volumeSlider->setValue(static_cast<int>(player->getVolume() * 100.));
 
-    // buttons
+    // menu buttons
     connect(ui->actionFolderToQueue, &QAction::triggered, this, &MainWindow::openFolderDialog);
+    connect(ui->actionFilesToQueue, &QAction::triggered, this, &MainWindow::openFileDialog);
 
     // volume slider
     connect(ui->volumeSlider, &QSlider::valueChanged, this, &MainWindow::updateVolume);
@@ -48,6 +49,21 @@ void MainWindow::openFolderDialog() {
                                                     "",
                                                     QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
     Player::getInstance()->addFolderToQueue(dir);
+}
+
+void MainWindow::openFileDialog() {
+    // QString fileFilter = "Audio Files (*.mp3 *.wav *.ogg *.flac);;All Files (*)";
+    QString fileFilter = "Audio Files (*.mp3 *.wav)";
+    QStringList filePaths = QFileDialog::getOpenFileNames(
+        this,
+        "Select an Audio File",
+        "",
+        fileFilter);
+
+    auto player = Player::getInstance();
+    for (QString filePath : filePaths) {
+        player->queueSong(Song(filePath));
+    }
 }
 
 void MainWindow::updateVolume(const int volume) {
