@@ -15,6 +15,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     playlistViewWidget = new PlaylistViewWidget(this);
     transportWidget = new TransportWidget(this);
     playlistTabsWidget = new PlaylistTabsWidget(playlistViewWidget, this);
+    metadataWidget = new MetadataWidget(this);
 
     ui->queueWidgetPlaceholder->setLayout(new QVBoxLayout);
     ui->queueWidgetPlaceholder->layout()->addWidget(queueWidget);
@@ -24,6 +25,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     ui->transportWidgetPlaceholder->layout()->addWidget(transportWidget);
     ui->playlistTabsWidgetPlaceholder->setLayout(new QVBoxLayout);
     ui->playlistTabsWidgetPlaceholder->layout()->addWidget(playlistTabsWidget);
+    ui->metadataWidgetPlaceholder->setLayout(new QVBoxLayout);
+    ui->metadataWidgetPlaceholder->layout()->addWidget(metadataWidget);
 
     auto player = Player::getInstance();
 

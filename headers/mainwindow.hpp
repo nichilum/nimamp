@@ -2,6 +2,7 @@
 
 #include <QMainWindow>
 
+#include "metadata_widget.hpp"
 #include "playlist.hpp"
 #include "playlist_tabs_widget.hpp"
 #include "playlist_view_widget.hpp"
@@ -27,6 +28,7 @@ class MainWindow : public QMainWindow {
     PlaylistViewWidget *playlistViewWidget;
     TransportWidget *transportWidget;
     PlaylistTabsWidget *playlistTabsWidget;
+    MetadataWidget *metadataWidget;
 
     void openFolderDialog();
     void openFileDialog();
