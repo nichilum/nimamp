@@ -8,6 +8,8 @@
 MetadataWidget::MetadataWidget(QWidget *parent) : QWidget(parent), ui(new Ui::MetadataWidget) {
     ui->setupUi(this);
 
+    ui->tableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+
     auto player = Player::getInstance();
     connect(player, &QMediaPlayer::metaDataChanged, this, &MetadataWidget::onMetadataChanged);
 }
