@@ -23,6 +23,7 @@ set(CMAKE_AUTOUIC_SEARCH_PATHS ${CMAKE_SOURCE_DIR}/ui)
 
 qt_add_executable(appnimamp
         sources/main.cpp
+        headers/key_events.hpp
         headers/player.hpp
         sources/player.cpp
         headers/playlist.hpp
