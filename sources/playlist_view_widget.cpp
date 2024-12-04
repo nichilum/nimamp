@@ -1,8 +1,8 @@
 #include "../headers/playlist_view_widget.hpp"
 
 #include <QInputDialog>
+#include <QMenu>
 
-#include "../headers/mainwindow.hpp"
 #include "../headers/player.hpp"
 #include "../headers/playlist_item.hpp"
 #include "ui_PlaylistViewWidget.h"
@@ -13,6 +13,7 @@ PlaylistViewWidget::PlaylistViewWidget(QWidget *parent) : QWidget(parent), ui(ne
     auto player = Player::getInstance();
     connect(ui->createPlaylistButton, &QPushButton::clicked, this, &PlaylistViewWidget::createPlaylistButtonClicked);
     connect(player, &Player::playlistsChanged, this, &PlaylistViewWidget::updatePlaylists);
+    connect(ui->playlistListWidget, &QListWidget::customContextMenuRequested, this, &PlaylistViewWidget::onPlaylistItemRightClicked);
 }
 
 PlaylistViewWidget::~PlaylistViewWidget() {
@@ -51,4 +52,20 @@ void PlaylistViewWidget::createPlaylistButtonClicked() {
     } else {
         qDebug() << "User canceled or entered an empty name.";
     }
+}
+
+void PlaylistViewWidget::onPlaylistItemRightClicked(const QPoint &pos) {
+    auto player = Player::getInstance();
+
+    QListWidgetItem *item = ui->playlistListWidget->itemAt(pos);
+    if (!item) return;
+
+    QMenu menu(this);
+    auto playlist = item->data(Qt::UserRole).value<Playlist>();
+
+    menu.addAction("Delete", [this, player, playlist]() {
+        player->removePlaylist(playlist);
+    });
+
+    menu.exec(ui->playlistListWidget->mapToGlobal(pos));
 }

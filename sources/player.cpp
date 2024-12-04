@@ -35,21 +35,54 @@ void Player::addPlaylist(const Playlist &playlist) {
 /*
  * replace queue with playlist
  */
-void Player::playPlaylist(const QString &name) {
-    for (const auto &playlist : playlists) {
-        if (playlist.getName() == name) {
-            clearQueue();
+void Player::playPlaylist(const Playlist &playlist) {
+    auto p = std::find_if(playlists.begin(), playlists.end(), [&playlist](const Playlist &p) {
+        return p.getUuid() == playlist.getUuid();
+    });
 
-            queue.append(playlist.getSongs());
-            emit queueChanged();
+    if (p != playlists.end()) {
+        clearQueue();
 
-            setSource(queue.front().getUrl());
-            play();
-            return;
-        }
+        queue.append(p->getSongs());
+        emit queueChanged();
+
+        setSource(queue.front().getUrl());
+        play();
     }
+}
 
-    emit queueChanged();
+/*
+ * prepend queue with playlist
+ */
+void Player::queuePlaylist(const Playlist &playlist) {
+    auto p = std::find_if(playlists.begin(), playlists.end(), [&playlist](const Playlist &p) {
+        return p.getUuid() == playlist.getUuid();
+    });
+
+    if (p != playlists.end()) {
+        // append songs to front of queue
+        auto playlistSongs = p->getSongs();
+        std::reverse(playlistSongs.begin(), playlistSongs.end());
+        for (const auto &song : playlistSongs) {
+            queue.prepend(song);
+        }
+        emit queueChanged();
+
+        setSource(queue.front().getUrl());
+        play();
+    }
+}
+
+/*
+ * remove playlist from playlists
+ */
+void Player::removePlaylist(const Playlist &playlist) {
+    auto it = std::ranges::find(playlists, playlist.getUuid(), &Playlist::getUuid);
+
+    if (it != playlists.end()) {
+        playlists.erase(it);
+        emit playlistsChanged();
+    }
 }
 
 void Player::addFolderToQueue(const QString &directory) {

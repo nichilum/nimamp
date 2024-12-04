@@ -21,6 +21,7 @@ class PlaylistViewWidget : public QWidget {
    private:
     Ui::PlaylistViewWidget *ui;
     void createPlaylistButtonClicked();
+    void onPlaylistItemRightClicked(const QPoint &pos);
 
    public slots:
     void updatePlaylists();

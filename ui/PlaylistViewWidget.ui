@@ -52,7 +52,11 @@
       </layout>
      </item>
      <item>
-      <widget class="QListWidget" name="playlistListWidget"/>
+      <widget class="QListWidget" name="playlistListWidget">
+       <property name="contextMenuPolicy">
+        <enum>Qt::ContextMenuPolicy::CustomContextMenu</enum>
+       </property>
+      </widget>
      </item>
     </layout>
    </item>
