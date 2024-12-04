@@ -33,8 +33,8 @@ qt_add_executable(appnimamp
         sources/song.cpp
         sources/mainwindow.cpp
         headers/mainwindow.hpp
-        sources/queue_song_item.cpp
-        headers/queue_song_item.hpp
+        sources/song_item.cpp
+        headers/song_item.hpp
         sources/playlist_item.cpp
         headers/playlist_item.hpp
         sources/queue_widget.cpp
@@ -49,7 +49,7 @@ qt_add_executable(appnimamp
         headers/metadata_widget.hpp
 
         ui/MainWindow.ui
-        ui/QueueSongItem.ui
+        ui/SongItem.ui
         ui/PlaylistItem.ui
         ui/QueueWidget.ui
         ui/PlaylistViewWidget.ui

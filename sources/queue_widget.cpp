@@ -3,7 +3,7 @@
 #include <QMenu>
 
 #include "../headers/player.hpp"
-#include "../headers/queue_song_item.hpp"
+#include "../headers/song_item.hpp"
 #include "ui_QueueWidget.h"
 
 QueueWidget::QueueWidget(QWidget *parent) : QWidget(parent), ui(new Ui::QueueWidget) {
@@ -25,7 +25,7 @@ void QueueWidget::updateQueue() {
     ui->queueListWidget->clear();
 
     for (const auto &song : *player->getQueue()) {
-        auto *songWidget = new QueueSongItem(song, this);
+        auto *songWidget = new SongItem(song, SongItemType::Queue, this);
 
         auto *item = new QListWidgetItem(ui->queueListWidget);
         item->setSizeHint(songWidget->sizeHint());

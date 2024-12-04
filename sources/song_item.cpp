@@ -1,9 +1,10 @@
-#include "../headers/player.hpp"
-#include "../headers/queue_song_item.hpp"
-#include "ui_QueueSongItem.h"
+#include "../headers/song_item.hpp"
 
-QueueSongItem::QueueSongItem(const Song &song, QWidget *parent)
-    : QWidget(parent), ui(new Ui::QueueSongItem) {
+#include "../headers/player.hpp"
+#include "ui_SongItem.h"
+
+SongItem::SongItem(const Song &song, SongItemType songItemType, QWidget *parent)
+    : QWidget(parent), ui(new Ui::SongItem) {
     ui->setupUi(this);
     ui->label->setText(song.getFilename());
 
@@ -16,6 +17,6 @@ QueueSongItem::QueueSongItem(const Song &song, QWidget *parent)
     });
 }
 
-QueueSongItem::~QueueSongItem() {
+SongItem::~SongItem() {
     delete ui;
 }

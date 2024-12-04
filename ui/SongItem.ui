@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>QueueSongItem</class>
- <widget class="QWidget" name="QueueSongItem">
+ <class>SongItem</class>
+ <widget class="QWidget" name="SongItem">
   <property name="geometry">
    <rect>
     <x>0</x>

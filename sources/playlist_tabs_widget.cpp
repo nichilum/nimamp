@@ -2,7 +2,7 @@
 
 #include "../headers/player.hpp"
 #include "../headers/playlist_view_widget.hpp"
-#include "../headers/queue_song_item.hpp"
+#include "../headers/song_item.hpp"
 #include "ui_PlaylistTabsWidget.h"
 #include "ui_PlaylistViewWidget.h"
 
@@ -34,7 +34,7 @@ void PlaylistTabsWidget::updatePlaylist(const Playlist &playlist) const {
                 qDebug() << "Updating playlist:" << playlist.getName();
                 playlistView->clear();
                 for (const auto &song : playlist.getSongs()) {
-                    auto *songWidget = new QueueSongItem(song);
+                    auto *songWidget = new SongItem(song, SongItemType::Playlist);
 
                     auto *item = new QListWidgetItem(playlistView);
                     item->setSizeHint(songWidget->sizeHint());
@@ -80,7 +80,7 @@ void PlaylistTabsWidget::onPlaylistSelected(const QListWidgetItem *item) const {
     auto *playlistView = new QListWidget;
     playlistView->setProperty("playlistUuid", playlist.getUuid());
     for (const auto &song : it->getSongs()) {
-        auto *songWidget = new QueueSongItem(song);
+        auto *songWidget = new SongItem(song, SongItemType::Playlist);
 
         auto *item = new QListWidgetItem(playlistView);
         item->setSizeHint(songWidget->sizeHint());
