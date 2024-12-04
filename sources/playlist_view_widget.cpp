@@ -1,5 +1,6 @@
 #include "../headers/playlist_view_widget.hpp"
 
+#include <QFileDialog>
 #include <QInputDialog>
 #include <QMenu>
 
@@ -62,6 +63,11 @@ void PlaylistViewWidget::onPlaylistItemRightClicked(const QPoint &pos) {
 
     QMenu menu(this);
     auto playlist = item->data(Qt::UserRole).value<Playlist>();
+
+    menu.addAction("Add Folder to Playlist", [this, player, playlist]() {
+        auto folderPath = QFileDialog::getExistingDirectory(this, tr("Select Folder to Add"), QDir::homePath(), QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
+        player->addFolderToPlaylist(folderPath, playlist);
+    });
 
     menu.addAction("Delete", [this, player, playlist]() {
         player->removePlaylist(playlist);

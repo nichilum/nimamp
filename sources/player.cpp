@@ -85,6 +85,27 @@ void Player::removePlaylist(const Playlist &playlist) {
     }
 }
 
+void Player::addFolderToPlaylist(const QString &directory, const Playlist &playlist) {
+    const QDir dir(directory);
+    QStringList files = dir.entryList(QStringList() << "*.wav"
+                                                    << "*.mp3",
+                                      QDir::Files);
+
+    auto it = std::find_if(playlists.begin(), playlists.end(), [&playlist](const Playlist &p) {
+        return p.getUuid() == playlist.getUuid();
+    });
+
+    if (it != playlists.end()) {
+        for (const auto &filename : files) {
+            auto song = Song(QUrl::fromLocalFile(dir.absoluteFilePath(filename)));
+            it->addSong(song);
+        }
+
+        emit playlistChanged(*it);
+        qDebug() << "Added folder to playlist: " << playlist.getName();
+    }
+}
+
 void Player::addFolderToQueue(const QString &directory) {
     clearQueue();
 
