@@ -9,8 +9,18 @@ int main(int argc, char *argv[]) {
     QApplication app(argc, argv);
     qRegisterMetaType<Song>("Song");
     qRegisterMetaType<Playlist>("Playlist");
+
+    // key events
     GlobalKeyFilter *keyFilter = new GlobalKeyFilter();
     app.installEventFilter(keyFilter);
+
+    // style sheet
+    QFile styleFile(":/qss/style.qss");
+    styleFile.open(QFile::ReadOnly);
+
+    // Apply the loaded stylesheet
+    QString style(styleFile.readAll());
+    app.setStyleSheet(style);
 
     auto player = Player::getInstance();
     player->setVolume(0.);  // gehoerschutz
