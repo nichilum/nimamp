@@ -12,9 +12,18 @@ SongItem::SongItem(const Song &song, SongItemType songItemType, QWidget *parent)
     auto player = Player::getInstance();
 
     // connect play button
-    connect(ui->playButton, &QPushButton::clicked, [player, song]() {
-        player->playSongFromQueue(song);
-    });
+    switch (songItemType) {
+        case SongItemType::Queue: {
+            connect(ui->playButton, &QPushButton::clicked, [player, song]() {
+                player->playSongFromQueue(song);
+            });
+        }
+        case SongItemType::Playlist: {
+            connect(ui->playButton, &QPushButton::clicked, [player, song]() {
+                player->playSong(song);
+            });
+        }
+    }
 }
 
 SongItem::~SongItem() {
