@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1359</width>
-    <height>685</height>
+    <height>756</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -35,11 +35,36 @@
       </item>
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout_2">
-        <item>
-         <widget class="QWidget" name="eq" native="true"/>
+        <item alignment="Qt::AlignmentFlag::AlignTop">
+         <widget class="QWidget" name="eq" native="true">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>128</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>200</height>
+           </size>
+          </property>
+         </widget>
         </item>
-        <item>
+        <item alignment="Qt::AlignmentFlag::AlignTop">
          <widget class="QSlider" name="volumeSlider">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>128</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>200</height>
+           </size>
+          </property>
           <property name="maximum">
            <number>100</number>
           </property>
