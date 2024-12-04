@@ -14,14 +14,14 @@ Player::Player() {
     connect(this, &QMediaPlayer::mediaStatusChanged, this, &Player::songEnded);
     connect(QCoreApplication::instance(), &QCoreApplication::aboutToQuit, this, &Player::saveQueue);
 
-    // auto songList = settings.value("queue").toList();
-    // QVector<Song> loadedQueue;
-    // for (const QVariant &songVariant : songList) {
-    //     if (songVariant.canConvert<Song>()) {
-    //         loadedQueue.append(songVariant.value<Song>());
-    //     }
-    // }
-    // qDebug() << "Loaded songs: " << loadedQueue;
+    qDebug() << "playerCTOR";
+    QByteArray data = settings.value("songs").toByteArray();
+    if (!data.isEmpty()) {
+        QDataStream in(&data, QIODevice::ReadOnly);
+        in >> queue;
+        qDebug() << "loaded queue" << queue;
+        emit queueChanged();  // TODO: this doesn't prob because queue widget doesn't really exist yet? idk
+    }
 }
 
 /*
@@ -246,9 +246,10 @@ void Player::addToHistory() {
 // Saving and Loading
 
 void Player::saveQueue() {
-    QVariantList songList;
-    for (const Song &song : queue) {
-        songList.append(QVariant::fromValue(song));
-    }
-    settings.setValue("queue", songList);
+    QByteArray data;
+    QDataStream out(&data, QIODevice::WriteOnly);
+    out << queue;
+    // qDebug() << data;
+    settings.setValue("songs", data);
+    settings.sync();
 }

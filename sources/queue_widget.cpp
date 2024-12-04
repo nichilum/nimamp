@@ -11,6 +11,9 @@ QueueWidget::QueueWidget(QWidget *parent) : QWidget(parent), ui(new Ui::QueueWid
 
     auto player = Player::getInstance();
 
+    qDebug() << "queueCTOR";
+    updateQueue();  // TODO: i hate it here
+
     connect(player, &Player::queueChanged, this, &QueueWidget::updateQueue);
     connect(ui->queueListWidget->model(), &QAbstractItemModel::rowsMoved, this, &QueueWidget::onRowsMoved);
     connect(ui->queueListWidget, &QListWidget::customContextMenuRequested, this, &QueueWidget::onQueueItemRightClicked);
@@ -21,6 +24,7 @@ QueueWidget::~QueueWidget() {
 }
 
 void QueueWidget::updateQueue() {
+    qDebug() << "updateQueue";
     auto player = Player::getInstance();
     ui->queueListWidget->clear();
 
