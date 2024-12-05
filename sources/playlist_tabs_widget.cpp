@@ -57,7 +57,7 @@ void PlaylistTabsWidget::onPlaylistSelected(const QListWidgetItem *item) const {
 
     auto playlist = item->data(Qt::UserRole).value<Playlist>();
     auto uuid = playlist.getUuid();
-    auto it = std::ranges::find_if(playlists, [&uuid](const Playlist &p) {
+    auto it = std::find_if(playlists.begin(), playlists.end(), [&uuid](const Playlist &p) {
         return p.getUuid() == uuid;
     });
 

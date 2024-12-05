@@ -77,7 +77,9 @@ void Player::queuePlaylist(const Playlist &playlist) {
  * remove playlist from playlists
  */
 void Player::removePlaylist(const Playlist &playlist) {
-    auto it = std::ranges::find(playlists, playlist.getUuid(), &Playlist::getUuid);
+    auto it = std::find_if(playlists.begin(), playlists.end(), [&playlist](const Playlist &p) {
+        return p.getUuid() == playlist.getUuid();
+    });
 
     if (it != playlists.end()) {
         playlists.erase(it);
@@ -152,7 +154,9 @@ void Player::clearQueue() {
 }
 
 void Player::addToPlaylist(const Song &song, const Playlist &playlist) {
-    auto it = std::ranges::find(playlists, playlist.getUuid(), &Playlist::getUuid);
+    auto it = std::find_if(playlists.begin(), playlists.end(), [&playlist](const Playlist &p) {
+        return p.getUuid() == playlist.getUuid();
+    });
 
     if (it != playlists.end()) {
         it->addSong(song);
@@ -196,7 +200,7 @@ void Player::setLoop(const bool loop) {
 }
 
 void Player::clearQueueUpToSong(const Song &song) {
-    if (auto it = std::ranges::find(queue, song); it != queue.end()) {
+    if (auto it = std::find(queue.begin(), queue.end(), song); it != queue.end()) {
         queue.erase(queue.begin(), ++it);
     }
 
@@ -204,7 +208,7 @@ void Player::clearQueueUpToSong(const Song &song) {
 }
 
 void Player::removeSongFromQueue(const Song &song) {
-    if (auto it = std::ranges::find(queue, song); it != queue.end()) {
+    if (auto it = std::find(queue.begin(), queue.end(), song); it != queue.end()) {
         queue.erase(it);
     }
 
