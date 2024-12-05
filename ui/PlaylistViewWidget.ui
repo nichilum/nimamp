@@ -44,8 +44,8 @@
           <string/>
          </property>
          <property name="icon">
-          <iconset>
-           <normaloff>../resources/plus.svg</normaloff>../resources/plus.svg</iconset>
+          <iconset resource="../resources.qrc">
+           <normaloff>:/resources/plus.svg</normaloff>:/resources/plus.svg</iconset>
          </property>
         </widget>
        </item>
@@ -62,6 +62,8 @@
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="../resources.qrc"/>
+ </resources>
  <connections/>
 </ui>

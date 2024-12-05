@@ -1,0 +1,14 @@
+<RCC>
+    <qresource prefix="/">
+        <file>resources/pause.svg</file>
+        <file>resources/play.svg</file>
+        <file>resources/plus.svg</file>
+        <file>resources/queue.svg</file>
+        <file>resources/skip-back.svg</file>
+        <file>resources/skip-forward.svg</file>
+        <file>resources/repeat.svg</file>
+        <file>resources/shuffle.svg</file>
+        <file>resources/empty_cover.jpg</file>
+        <file>qss/style.qss</file>
+    </qresource>
+</RCC>

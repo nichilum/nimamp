@@ -56,17 +56,8 @@ qt_add_executable(appnimamp
         ui/TransportWidget.ui
         ui/PlaylistTabsWidget.ui
         ui/MetadataWidget.ui
-)
 
-qt_add_resources(appnimamp "appnimamp_resources"
-        PREFIX "/"
-        FILES
-            resources/pause.svg
-            resources/play.svg
-            resources/repeat.svg
-            resources/shuffle.svg
-            resources/empty_cover.jpg
-            qss/style.qss
+        resources.qrc
 )
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.

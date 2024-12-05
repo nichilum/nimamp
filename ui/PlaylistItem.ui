@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>431</width>
-    <height>79</height>
+    <height>90</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -49,8 +49,8 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset>
-         <normaloff>../resources/play.svg</normaloff>../resources/play.svg</iconset>
+        <iconset resource="../resources.qrc">
+         <normaloff>:/resources/play.svg</normaloff>:/resources/play.svg</iconset>
        </property>
       </widget>
      </item>
@@ -60,8 +60,8 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset>
-         <normaloff>../resources/queue.svg</normaloff>../resources/queue.svg</iconset>
+        <iconset resource="../resources.qrc">
+         <normaloff>:/resources/queue.svg</normaloff>:/resources/queue.svg</iconset>
        </property>
       </widget>
      </item>
@@ -69,6 +69,8 @@
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="../resources.qrc"/>
+ </resources>
  <connections/>
 </ui>
