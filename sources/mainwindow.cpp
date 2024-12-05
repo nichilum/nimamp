@@ -19,14 +19,23 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
     ui->queueWidgetPlaceholder->setLayout(new QVBoxLayout);
     ui->queueWidgetPlaceholder->layout()->addWidget(queueWidget);
+    ui->queueWidgetPlaceholder->layout()->setContentsMargins(0, 0, 0, 0);
+
     ui->playlistViewWidgetPlaceholder->setLayout(new QVBoxLayout);
     ui->playlistViewWidgetPlaceholder->layout()->addWidget(playlistViewWidget);
+    ui->playlistViewWidgetPlaceholder->layout()->setContentsMargins(0, 0, 0, 0);
+
     ui->transportWidgetPlaceholder->setLayout(new QVBoxLayout);
     ui->transportWidgetPlaceholder->layout()->addWidget(transportWidget);
+    ui->transportWidgetPlaceholder->layout()->setContentsMargins(0, 0, 0, 0);
+
     ui->playlistTabsWidgetPlaceholder->setLayout(new QVBoxLayout);
     ui->playlistTabsWidgetPlaceholder->layout()->addWidget(playlistTabsWidget);
+    ui->playlistTabsWidgetPlaceholder->layout()->setContentsMargins(0, 0, 0, 0);
+
     ui->metadataWidgetPlaceholder->setLayout(new QVBoxLayout);
     ui->metadataWidgetPlaceholder->layout()->addWidget(metadataWidget);
+    ui->metadataWidgetPlaceholder->layout()->setContentsMargins(0, 0, 0, 0);
 
     auto player = Player::getInstance();
 
