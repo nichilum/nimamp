@@ -11,6 +11,9 @@
 PlaylistViewWidget::PlaylistViewWidget(QWidget *parent) : QWidget(parent), ui(new Ui::PlaylistViewWidget) {
     ui->setupUi(this);
 
+    ui->playlistListWidget->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    ui->playlistListWidget->setWordWrap(true);
+
     auto player = Player::getInstance();
     connect(ui->createPlaylistButton, &QPushButton::clicked, this, &PlaylistViewWidget::createPlaylistButtonClicked);
     connect(player, &Player::playlistsChanged, this, &PlaylistViewWidget::updatePlaylists);
@@ -31,7 +34,9 @@ void PlaylistViewWidget::updatePlaylists() {
         auto *playlistWidget = new PlaylistItem(playlist, this);
 
         auto *item = new QListWidgetItem(ui->playlistListWidget);
-        item->setSizeHint(playlistWidget->sizeHint());
+        auto size = playlistWidget->sizeHint().boundedTo(ui->playlistListWidget->size());
+        size.setHeight(100);
+        item->setSizeHint(size);
         item->setData(Qt::UserRole, QVariant::fromValue(playlist));
         ui->playlistListWidget->addItem(item);
         ui->playlistListWidget->setItemWidget(item, playlistWidget);

@@ -2,6 +2,8 @@
     <qresource prefix="/">
         <file>resources/pause.svg</file>
         <file>resources/play.svg</file>
+        <file>resources/pause_b.svg</file>
+        <file>resources/play_b.svg</file>
         <file>resources/plus.svg</file>
         <file>resources/queue.svg</file>
         <file>resources/skip-back.svg</file>

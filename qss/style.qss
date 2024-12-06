@@ -6,6 +6,10 @@ QLabel {
 QWidget#MainWindow {
     background-color: #000000;
 }
+QPushButton {
+    background-color: transparent;
+    border: none;
+}
 
 /* Push Buttons */
 /* QPushButton {
@@ -122,12 +126,18 @@ QLabel#songNameLabel {
 QLabel#artistNameLabel {
     color: gray;
 }
+QPushButton#transportplayButton {
+    background-color: white;
+    border-radius: 20px;
+}
+QFrame#transportFrame {
+    padding: 10px;
+    background-color: #1c1c1c;
+    border-radius: 10px;
+}
+
 
 /* SongItem */
-QPushButton#songItemPlayButton {
-    background-color: transparent;
-    border: none;
-}
 QLabel#songItemNumber {
     padding-right: 10px;
     color: #666666;
@@ -153,6 +163,21 @@ QFrame#queueFrame {
     border-radius: 10px;
 }
 QLabel#queueLabel {
-    background-color: #1c1c1c;
     font-size: 20pt;
 }
+
+/* Playlist */
+QFrame#playlistViewFrame {
+    padding: 10px;
+    background-color: #1c1c1c;
+    border-radius: 10px;
+}
+QLabel#playlistLabel {
+    font-size: 20pt;
+}
+QWidget#PlaylistItemFrame {
+    border: none;
+    padding: 10px;
+}
+
+/* TODO: when playing songs sometimes to position isn't reset to 0 */

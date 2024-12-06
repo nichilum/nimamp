@@ -11,15 +11,15 @@ TransportWidget::TransportWidget(QWidget *parent) : QWidget(parent), ui(new Ui::
     auto player = Player::getInstance();
 
     // buttons
-    connect(ui->playButton, &QPushButton::clicked, player, &Player::togglePlayPause);
-    connect(ui->nextButton, &QPushButton::clicked, player, &Player::next);
-    connect(ui->prevButton, &QPushButton::clicked, player, &Player::previous);
-    connect(ui->loopButton, &QPushButton::clicked, this, &TransportWidget::toggleLoop);
+    connect(ui->transportplayButton, &QPushButton::clicked, player, &Player::togglePlayPause);
+    connect(ui->transportnextButton, &QPushButton::clicked, player, &Player::next);
+    connect(ui->transportprevButton, &QPushButton::clicked, player, &Player::previous);
+    connect(ui->transportloopButton, &QPushButton::clicked, this, &TransportWidget::toggleLoop);
 
     // seek slider
     connect(player, &QMediaPlayer::positionChanged, this, &TransportWidget::updateSeekSlider);
     connect(player, &QMediaPlayer::durationChanged, this, &TransportWidget::updateSeekDuration);
-    connect(ui->seekSlider, &QSlider::sliderReleased, this, &TransportWidget::seekToReleasedPosition);
+    connect(ui->transportseekSlider, &QSlider::sliderReleased, this, &TransportWidget::seekToReleasedPosition);
 
     connect(player, &QMediaPlayer::metaDataChanged, this, &TransportWidget::onMetadataChanged);
     connect(player, &QMediaPlayer::playingChanged, this, &TransportWidget::changePlayPauseIcon);
@@ -30,23 +30,23 @@ TransportWidget::~TransportWidget() {
 }
 
 void TransportWidget::updateSeekSlider(const qint64 position) const {
-    if (ui->seekSlider->isSliderDown()) {
+    if (ui->transportseekSlider->isSliderDown()) {
         return;
     }
-    ui->seekSlider->setValue(static_cast<int>(position));
+    ui->transportseekSlider->setValue(static_cast<int>(position));
 
     auto formattedTime = msToString(position);
 
-    ui->currentTimeLabel->setText(formattedTime);
+    ui->transportcurrentTimeLabel->setText(formattedTime);
 }
 
 void TransportWidget::updateSeekDuration(const qint64 duration) const {
-    ui->seekSlider->setRange(0, static_cast<int>(duration));
+    ui->transportseekSlider->setRange(0, static_cast<int>(duration));
 }
 
 void TransportWidget::seekToReleasedPosition() const {
     auto player = Player::getInstance();
-    player->setPosition(ui->seekSlider->value());
+    player->setPosition(ui->transportseekSlider->value());
 }
 
 void TransportWidget::onMetadataChanged() const {
@@ -63,10 +63,10 @@ void TransportWidget::onMetadataChanged() const {
     thumbnail = thumbnail.scaled(QSize(100, 100), Qt::KeepAspectRatio, Qt::SmoothTransformation);
     auto duration = data.value(QMediaMetaData::Duration).toInt();
 
-    ui->songNameLabel->setText(title);
-    ui->artistNameLabel->setText(artist);
-    ui->coverLabel->setPixmap(QPixmap::fromImage(thumbnail));
-    ui->durationLabel->setText(msToString(duration));
+    ui->transportsongNameLabel->setText(title);
+    ui->transportartistNameLabel->setText(artist);
+    ui->transportcoverLabel->setPixmap(QPixmap::fromImage(thumbnail));
+    ui->transportdurationLabel->setText(msToString(duration));
 
     // auto r = getSongThumbnail(player->source().toString());
     // qDebug() << "Thumbnail: " << r;
@@ -76,14 +76,14 @@ void TransportWidget::onMetadataChanged() const {
 void TransportWidget::toggleLoop() const {
     auto player = Player::getInstance();
     player->setLoop(!player->isLooping());
-    ui->loopButton->setFlat(!ui->loopButton->isFlat());
+    ui->transportloopButton->setFlat(!ui->transportloopButton->isFlat());
 }
 
 void TransportWidget::changePlayPauseIcon() const {
     auto player = Player::getInstance();
     if (player->isPlaying() == QMediaPlayer::PlayingState) {
-        ui->playButton->setIcon(QIcon(":/resources/pause.svg"));
+        ui->transportplayButton->setIcon(QIcon(":/resources/pause_b.svg"));
     } else {
-        ui->playButton->setIcon(QIcon(":/resources/play.svg"));
+        ui->transportplayButton->setIcon(QIcon(":/resources/play_b.svg"));
     }
 }

@@ -7,10 +7,10 @@ PlaylistItem::PlaylistItem(const Playlist &playlist, QWidget *parent)
     : QWidget(parent), ui(new Ui::PlaylistItem), playlist(playlist) {
     ui->setupUi(this);
 
-    ui->nameLabel->setText(playlist.getName());
+    ui->playlistItemNameLabel->setText(playlist.getName());
 
-    connect(ui->playButton, &QPushButton::clicked, this, &PlaylistItem::playPlaylist);
-    connect(ui->queueButton, &QPushButton::clicked, this, &PlaylistItem::queuePlaylist);
+    connect(ui->playlistItemPlayButton, &QPushButton::clicked, this, &PlaylistItem::playPlaylist);
+    connect(ui->playlistItemQueueButton, &QPushButton::clicked, this, &PlaylistItem::queuePlaylist);
 }
 
 PlaylistItem::~PlaylistItem() {
