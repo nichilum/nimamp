@@ -15,6 +15,8 @@ PlaylistViewWidget::PlaylistViewWidget(QWidget *parent) : QWidget(parent), ui(ne
     connect(ui->createPlaylistButton, &QPushButton::clicked, this, &PlaylistViewWidget::createPlaylistButtonClicked);
     connect(player, &Player::playlistsChanged, this, &PlaylistViewWidget::updatePlaylists);
     connect(ui->playlistListWidget, &QListWidget::customContextMenuRequested, this, &PlaylistViewWidget::onPlaylistItemRightClicked);
+
+    updatePlaylists();
 }
 
 PlaylistViewWidget::~PlaylistViewWidget() {

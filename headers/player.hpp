@@ -26,6 +26,8 @@ class Player final : public QMediaPlayer {
     void addPlaylist(const Playlist &playlist);
     void addToPlaylist(const Song &song, const Playlist &playlist);
     void saveQueue();
+    void savePlayer();
+    void loadPlayer();
     void playPlaylist(const Playlist &playlist);
     void queuePlaylist(const Playlist &playlist);
     void removePlaylist(const Playlist &playlist);
@@ -49,10 +51,38 @@ class Player final : public QMediaPlayer {
     [[nodiscard]] QVector<Song> *getQueue() { return &queue; }
     [[nodiscard]] bool isQueueEmpty() const { return queue.isEmpty(); }
     [[nodiscard]] bool isLooping() const { return loops() == Infinite; }
+    [[nodiscard]] QVector<Song> getQueueCopy() const { return queue; }
+    [[nodiscard]] QVector<Song> getHistory() const { return history.toVector(); }
 
     static Player *getInstance();
 
     void togglePlayPause();
+
+    friend QDataStream &operator<<(QDataStream &out, const Player &player) {
+        out << player.history << player.queue << player.playlists << player.getVolume() << player.isLooping() << player.source() << static_cast<float>(player.position());
+        return out;
+    }
+
+    friend QDataStream &operator>>(QDataStream &in, Player &player) {
+        auto volume = 0.f;
+        auto loop = false;
+        auto position = 0.f;
+        auto source = QUrl();
+
+        in >> player.history >> player.queue >> player.playlists >> volume >> loop >> source >> position;
+
+        player.setVolume(volume);
+        player.setLoop(loop);
+        player.setSource(source);
+
+        connect(&player, &QMediaPlayer::mediaStatusChanged, [position](QMediaPlayer::MediaStatus status) {
+            if (status == QMediaPlayer::LoadedMedia) {
+                getInstance()->setPosition(static_cast<qint64>(position));
+            }
+        });
+
+        return in;
+    }
 
    public slots:
     void songEnded();

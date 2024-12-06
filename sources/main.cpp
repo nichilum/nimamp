@@ -11,6 +11,8 @@ int main(int argc, char *argv[]) {
     qRegisterMetaType<Song>("Song");
     qRegisterMetaType<Playlist>("Playlist");
     qRegisterMetaType<QVector<Song>>("QVector<Song>");
+    qRegisterMetaType<QVector<Playlist>>("QVector<Playlist>");
+    qRegisterMetaType<Player>("Player");
 
     // key events
     GlobalKeyFilter *keyFilter = new GlobalKeyFilter();

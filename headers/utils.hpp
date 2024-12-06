@@ -1,15 +1,16 @@
 #pragma once
 
+#include <taglib/apetag.h>
+#include <taglib/attachedpictureframe.h>
+#include <taglib/fileref.h>
+#include <taglib/id3v2tag.h>
+#include <taglib/mpegfile.h>
+#include <taglib/tag.h>
+
+#include <QImage>
 #include <QPixmap>
 #include <QVector>
 #include <algorithm>
-#include <taglib/fileref.h>
-#include <taglib/tag.h>
-#include <taglib/mpegfile.h>
-#include <taglib/id3v2tag.h>
-#include <taglib/apetag.h>
-#include <taglib/attachedpictureframe.h>
-#include <QImage>
 
 inline QStringList convertToQStringList(const QVector<Song>& songVector) {
     QStringList stringList;
@@ -42,21 +43,21 @@ inline QString msToString(const qint64 position) {
     return formattedTime;
 }
 
-inline QPixmap getSongThumbnail(const QString &filePath) {
-    TagLib::MPEG::File file(filePath.toUtf8().data());
-    if (file.ID3v2Tag()) {
-        TagLib::ID3v2::Tag *tag = file.ID3v2Tag();
-        TagLib::ID3v2::FrameList frames = tag->frameList("APIC");  // APIC is the frame for album art
-        if (!frames.isEmpty()) {
-            auto *pictureFrame = dynamic_cast<TagLib::ID3v2::AttachedPictureFrame *>(frames.front());
-            if (pictureFrame) {
-                QByteArray imageData = QByteArray::fromRawData(pictureFrame->picture().data(), pictureFrame->picture().size());
-                QImage albumArt = QImage::fromData(imageData);
-                if (!albumArt.isNull()) {
-                    // Display the album art or use it as needed
-                    return QPixmap::fromImage(albumArt);
-                }
-            }
-        }
-    }
-}
+// inline QPixmap getSongThumbnail(const QString &filePath) {
+//     TagLib::MPEG::File file(filePath.toUtf8().data());
+//     if (file.ID3v2Tag()) {
+//         TagLib::ID3v2::Tag *tag = file.ID3v2Tag();
+//         TagLib::ID3v2::FrameList frames = tag->frameList("APIC");  // APIC is the frame for album art
+//         if (!frames.isEmpty()) {
+//             auto *pictureFrame = dynamic_cast<TagLib::ID3v2::AttachedPictureFrame *>(frames.front());
+//             if (pictureFrame) {
+//                 QByteArray imageData = QByteArray::fromRawData(pictureFrame->picture().data(), pictureFrame->picture().size());
+//                 QImage albumArt = QImage::fromData(imageData);
+//                 if (!albumArt.isNull()) {
+//                     // Display the album art or use it as needed
+//                     return QPixmap::fromImage(albumArt);
+//                 }
+//             }
+//         }
+//     }
+// }

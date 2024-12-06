@@ -19,7 +19,6 @@ class Song : public QVariant {
 
     bool operator==(Song const &) const = default;
 
-    // Serialization
     friend QDataStream &operator<<(QDataStream &out, const Song &song) {
         out << song.url << song.filename;
         return out;

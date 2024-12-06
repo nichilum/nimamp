@@ -11,7 +11,6 @@ QueueWidget::QueueWidget(QWidget *parent) : QWidget(parent), ui(new Ui::QueueWid
 
     auto player = Player::getInstance();
 
-    qDebug() << "queueCTOR";
     updateQueue();  // TODO: i hate it here
 
     connect(player, &Player::queueChanged, this, &QueueWidget::updateQueue);
@@ -24,7 +23,6 @@ QueueWidget::~QueueWidget() {
 }
 
 void QueueWidget::updateQueue() {
-    qDebug() << "updateQueue";
     auto player = Player::getInstance();
     ui->queueListWidget->clear();
 

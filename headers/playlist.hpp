@@ -1,9 +1,10 @@
 #pragma once
 
+#include <QMetaType>
+#include <QUuid>
+
 #include "song.hpp"
 #include "utils.hpp"
-#include <QUuid>
-#include <QMetaType>
 
 class Playlist {
    private:
@@ -24,6 +25,16 @@ class Playlist {
     [[nodiscard]] QString getName() const { return name; }
     [[nodiscard]] QUuid getUuid() const { return uuid; }
     [[nodiscard]] QVector<Song> getSongs() const { return songs; }
+
+    friend QDataStream &operator<<(QDataStream &out, const Playlist &playlist) {
+        out << playlist.uuid << playlist.songs << playlist.name;
+        return out;
+    }
+
+    friend QDataStream &operator>>(QDataStream &in, Playlist &playlist) {
+        in >> playlist.uuid >> playlist.songs >> playlist.name;
+        return in;
+    }
 };
 
 Q_DECLARE_METATYPE(Playlist)

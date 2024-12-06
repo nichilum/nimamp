@@ -12,16 +12,9 @@ Player::Player() {
     setAudioOutput(&audioOutput);
 
     connect(this, &QMediaPlayer::mediaStatusChanged, this, &Player::songEnded);
-    connect(QCoreApplication::instance(), &QCoreApplication::aboutToQuit, this, &Player::saveQueue);
+    connect(QCoreApplication::instance(), &QCoreApplication::aboutToQuit, this, &Player::savePlayer);
 
-    qDebug() << "playerCTOR";
-    QByteArray data = settings.value("songs").toByteArray();
-    if (!data.isEmpty()) {
-        QDataStream in(&data, QIODevice::ReadOnly);
-        in >> queue;
-        qDebug() << "loaded queue" << queue;
-        emit queueChanged();  // TODO: this doesn't prob because queue widget doesn't really exist yet? idk
-    }
+    loadPlayer();
 }
 
 /*
@@ -247,13 +240,20 @@ void Player::addToHistory() {
     }
 }
 
-// Saving and Loading
-
-void Player::saveQueue() {
+void Player::savePlayer() {
     QByteArray data;
     QDataStream out(&data, QIODevice::WriteOnly);
-    out << queue;
-    // qDebug() << data;
-    settings.setValue("songs", data);
+    out << *this;
+    settings.setValue("player", data);
     settings.sync();
+}
+
+void Player::loadPlayer() {
+    QByteArray data = settings.value("player").toByteArray();
+
+    qDebug() << "Saved QSettings data: " << QString(data.toHex());
+    if (!data.isEmpty()) {
+        QDataStream in(&data, QIODevice::ReadOnly);
+        in >> *this;
+    }
 }
