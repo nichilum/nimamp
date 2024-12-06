@@ -17,12 +17,14 @@ int main(int argc, char *argv[]) {
     app.installEventFilter(keyFilter);
 
     // style sheet
-    // QFile styleFile(":/qss/style.qss");
-    // styleFile.open(QFile::ReadOnly);
+    // QFile styleFile("/home/jonathankr/Github/nimamp/qss/style.qss");
+    QFile styleFile(":/qss/style.qss");
+
+    styleFile.open(QFile::ReadOnly);
 
     // Apply the loaded stylesheet
-    // QString style(styleFile.readAll());
-    // app.setStyleSheet(style);
+    QString style(styleFile.readAll());
+    app.setStyleSheet(style);
 
     auto player = Player::getInstance();
     player->setVolume(0.);  // gehoerschutz

@@ -1,3 +1,139 @@
-QMainWindow {
-    background-color:#1c1c1c;
+/* General styling */
+QWidget {
+    background-color: #121212; /* Dark background */
+    color: #ffffff; /* White text */
+    font-family: Arial, sans-serif;
+    font-size: 12pt;
+}
+
+/* Push Buttons */
+QPushButton {
+    background-color: #1f1f1f;
+    border: 1px solid #333333;
+    border-radius: 5px;
+    padding: 5px 10px;
+    color: red;
+}
+QPushButton:hover {
+    background-color: #2b2b2b;
+}
+QPushButton:pressed {
+    background-color: #333333;
+}
+
+/* Sliders (e.g., for the equalizer) */
+QSlider::groove:horizontal {
+    background: #333333;
+    height: 5px;
+    border-radius: 2px;
+}
+QSlider::handle:horizontal {
+    background: #ffffff;
+    width: 10px;
+    height: 10px;
+    border-radius: 5px;
+}
+QSlider::sub-page:horizontal {
+    background: #ffffff;
+}
+
+/* QTabWidget (Playlist Tabs) */
+QTabWidget::pane {
+    border: 1px solid #333333;
+    background: #1a1a1a;
+    border-radius: 5px;
+}
+QTabBar::tab {
+    background: #1f1f1f;
+    border: 1px solid #333333;
+    padding: 5px 10px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    color: #ffffff;
+}
+QTabBar::tab:selected {
+    background: #2b2b2b;
+    border-bottom: none;
+}
+QTabBar::tab:hover {
+    background: #2a2a2a;
+}
+
+/* Table View */
+QTableView {
+    background-color: #1a1a1a;
+    gridline-color: #333333;
+    border: 1px solid #333333;
+}
+QTableView::item {
+    color: #ffffff;
+    border: none;
+    padding: 5px;
+}
+QTableView::item:selected {
+    background-color: #2a2a2a;
+    color: #ffffff;
+}
+QHeaderView::section {
+    background-color: #2b2b2b;
+    color: #ffffff;
+    border: none;
+    padding: 5px;
+}
+
+/* List Widgets (e.g., Queue) */
+QListWidget {
+    background-color: #1a1a1a;
+    border: 1px solid #333333;
+    border-radius: 5px;
+}
+QListWidget::item {
+    color: #ffffff;
+    padding: 5px;
+}
+QListWidget::item:selected {
+    background-color: #333333;
+    color: #ffffff;
+}
+
+/* Text Areas */
+QTextEdit, QLineEdit {
+    background-color: #1f1f1f;
+    color: #ffffff;
+    border: 1px solid #333333;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+/* Progress Bar (e.g., Music progress)
+QProgressBar {
+    border: 1px solid #333333;
+    border-radius: 5px;
+    text-align: center;
+    background-color: #1f1f1f;
+    color: #ffffff;
+}
+QProgressBar::chunk {
+    background-color: #0078d4;
+    width: 20px;
+} */
+
+/* Search Bar */
+/* QLineEdit {
+    background-color: #1a1a1a;
+    border: 1px solid #333333;
+    border-radius: 5px;
+    padding: 5px;
+    color: #ffffff;
+} */
+
+
+/* Labels */
+
+QLabel#songNameLabel {
+    font-size: 20pt;
+    font-weight: bold;
+}
+QLabel#artistNameLabel {
+    color: gray;
 }
