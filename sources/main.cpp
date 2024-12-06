@@ -19,9 +19,8 @@ int main(int argc, char *argv[]) {
     app.installEventFilter(keyFilter);
 
     // style sheet
-    // QFile styleFile("/home/jonathankr/Github/nimamp/qss/style.qss");
+    // QFile styleFile("/home/jojo/Github/nimamp/qss/style.qss");
     QFile styleFile(":/qss/style.qss");
-
     styleFile.open(QFile::ReadOnly);
 
     // Apply the loaded stylesheet

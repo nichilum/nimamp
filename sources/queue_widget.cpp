@@ -9,6 +9,9 @@
 QueueWidget::QueueWidget(QWidget *parent) : QWidget(parent), ui(new Ui::QueueWidget) {
     ui->setupUi(this);
 
+    ui->queueListWidget->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    ui->queueListWidget->setWordWrap(true);
+
     auto player = Player::getInstance();
 
     updateQueue();  // TODO: i hate it here
@@ -26,11 +29,14 @@ void QueueWidget::updateQueue() {
     auto player = Player::getInstance();
     ui->queueListWidget->clear();
 
+    int index = 0;
     for (const auto &song : *player->getQueue()) {
-        auto *songWidget = new SongItem(song, SongItemType::Queue, this);
+        auto *songWidget = new SongItem(song, SongItemType::Queue, ++index, this);
 
         auto *item = new QListWidgetItem(ui->queueListWidget);
-        item->setSizeHint(songWidget->sizeHint());
+        auto size = songWidget->sizeHint().boundedTo(ui->queueListWidget->size());
+        size.setHeight(50);
+        item->setSizeHint(size);
         item->setData(Qt::UserRole, QVariant::fromValue(song));
         ui->queueListWidget->addItem(item);
         ui->queueListWidget->setItemWidget(item, songWidget);

@@ -4,9 +4,18 @@
 #include "ui_SongItem.h"
 
 SongItem::SongItem(const Song &song, SongItemType songItemType, QWidget *parent)
+    : SongItem(song, songItemType, -1, parent) {
+}
+
+SongItem::SongItem(const Song &song, SongItemType songItemType, int index, QWidget *parent)
     : QWidget(parent), ui(new Ui::SongItem) {
     ui->setupUi(this);
-    ui->label->setText(song.getFilename());
+    ui->songItemSongLabel->setText(song.getFilename());
+    if (index >= 0) {
+        ui->songItemNumber->setText(QString::number(index));
+    } else {
+        ui->songItemNumber->setText("");
+    }
 
     name = song.getFilename();
     auto player = Player::getInstance();
@@ -14,12 +23,12 @@ SongItem::SongItem(const Song &song, SongItemType songItemType, QWidget *parent)
     // connect play button
     switch (songItemType) {
         case SongItemType::Queue: {
-            connect(ui->playButton, &QPushButton::clicked, [player, song]() {
+            connect(ui->songItemPlayButton, &QPushButton::clicked, [player, song]() {
                 player->playSongFromQueue(song);
             });
         }
         case SongItemType::Playlist: {
-            connect(ui->playButton, &QPushButton::clicked, [player, song]() {
+            connect(ui->songItemPlayButton, &QPushButton::clicked, [player, song]() {
                 player->playSong(song);
             });
         }

@@ -1,13 +1,14 @@
 /* General styling */
-QWidget {
-    background-color: #121212; /* Dark background */
-    color: #ffffff; /* White text */
-    font-family: Arial, sans-serif;
-    font-size: 12pt;
+QLabel {
+    color: #ffffff;
+    font-family: sans-serif;
+}
+QWidget#MainWindow {
+    background-color: #000000;
 }
 
 /* Push Buttons */
-QPushButton {
+/* QPushButton {
     background-color: #1f1f1f;
     border: 1px solid #333333;
     border-radius: 5px;
@@ -19,10 +20,10 @@ QPushButton:hover {
 }
 QPushButton:pressed {
     background-color: #333333;
-}
+} */
 
 /* Sliders (e.g., for the equalizer) */
-QSlider::groove:horizontal {
+/* QSlider::groove:horizontal {
     background: #333333;
     height: 5px;
     border-radius: 2px;
@@ -35,10 +36,10 @@ QSlider::handle:horizontal {
 }
 QSlider::sub-page:horizontal {
     background: #ffffff;
-}
+} */
 
 /* QTabWidget (Playlist Tabs) */
-QTabWidget::pane {
+/* QTabWidget::pane {
     border: 1px solid #333333;
     background: #1a1a1a;
     border-radius: 5px;
@@ -57,10 +58,10 @@ QTabBar::tab:selected {
 }
 QTabBar::tab:hover {
     background: #2a2a2a;
-}
+} */
 
 /* Table View */
-QTableView {
+/* QTableView {
     background-color: #1a1a1a;
     gridline-color: #333333;
     border: 1px solid #333333;
@@ -79,31 +80,16 @@ QHeaderView::section {
     color: #ffffff;
     border: none;
     padding: 5px;
-}
-
-/* List Widgets (e.g., Queue) */
-QListWidget {
-    background-color: #1a1a1a;
-    border: 1px solid #333333;
-    border-radius: 5px;
-}
-QListWidget::item {
-    color: #ffffff;
-    padding: 5px;
-}
-QListWidget::item:selected {
-    background-color: #333333;
-    color: #ffffff;
-}
+} */
 
 /* Text Areas */
-QTextEdit, QLineEdit {
+/* QTextEdit, QLineEdit {
     background-color: #1f1f1f;
     color: #ffffff;
     border: 1px solid #333333;
     border-radius: 5px;
     padding: 5px;
-}
+} */
 
 /* Progress Bar (e.g., Music progress)
 QProgressBar {
@@ -128,12 +114,45 @@ QProgressBar::chunk {
 } */
 
 
-/* Labels */
-
+/* Transport Widget */
 QLabel#songNameLabel {
     font-size: 20pt;
-    font-weight: bold;
+    /* font-weight: bold; */
 }
 QLabel#artistNameLabel {
     color: gray;
+}
+
+/* SongItem */
+QPushButton#songItemPlayButton {
+    background-color: transparent;
+    border: none;
+}
+QLabel#songItemNumber {
+    padding-right: 10px;
+    color: #666666;
+}
+QLabel#songItemArtistLabel {
+    color: #666666;
+}
+
+/* Queue */
+QListWidget {
+    background-color: #1c1c1c;
+    border: none;
+}
+QListWidget::item:hover {
+    background-color: #202020;
+}
+QListWidget::item:selected {
+    background-color: #303030;
+}
+QFrame#queueFrame {
+    padding: 10px;
+    background-color: #1c1c1c;
+    border-radius: 10px;
+}
+QLabel#queueLabel {
+    background-color: #1c1c1c;
+    font-size: 20pt;
 }
