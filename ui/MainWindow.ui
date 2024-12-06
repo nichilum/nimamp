@@ -88,21 +88,12 @@
        </layout>
       </item>
       <item>
-       <widget class="QWidget" name="playlistTabsWidgetPlaceholder" native="true"/>
+       <widget class="QWidget" name="metadataWidgetPlaceholder" native="true"/>
       </item>
      </layout>
     </item>
     <item>
      <layout class="QVBoxLayout" name="verticalLayout_2">
-      <item>
-       <widget class="QTreeWidget" name="treeWidget">
-        <column>
-         <property name="text">
-          <string notr="true">1</string>
-         </property>
-        </column>
-       </widget>
-      </item>
       <item>
        <widget class="QWidget" name="queueWidgetPlaceholder" native="true"/>
       </item>
@@ -111,23 +102,10 @@
     <item>
      <layout class="QVBoxLayout" name="verticalLayout_3">
       <item>
-       <widget class="QTreeWidget" name="treeWidget_2">
-        <column>
-         <property name="text">
-          <string notr="true">1</string>
-         </property>
-        </column>
-       </widget>
+       <widget class="QWidget" name="playlistViewWidgetPlaceholder" native="true"/>
       </item>
       <item>
-       <layout class="QHBoxLayout" name="horizontalLayout_3">
-        <item>
-         <widget class="QWidget" name="playlistViewWidgetPlaceholder" native="true"/>
-        </item>
-        <item>
-         <widget class="QWidget" name="metadataWidgetPlaceholder" native="true"/>
-        </item>
-       </layout>
+       <widget class="QWidget" name="playlistTabsWidgetPlaceholder" native="true"/>
       </item>
      </layout>
     </item>
@@ -139,7 +117,7 @@
      <x>0</x>
      <y>0</y>
      <width>1359</width>
-     <height>33</height>
+     <height>24</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuMain">
