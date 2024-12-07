@@ -10,14 +10,15 @@ SongItem::SongItem(const Song &song, SongItemType songItemType, QWidget *parent)
 SongItem::SongItem(const Song &song, SongItemType songItemType, int index, QWidget *parent)
     : QWidget(parent), ui(new Ui::SongItem) {
     ui->setupUi(this);
-    ui->songItemSongLabel->setText(song.getFilename());
+
+    ui->songItemSongLabel->setText(song.title == "" ? song.getFilename() : song.title);
+    ui->songItemArtistLabel->setText(song.artist == "" ? "Unknown artist" : song.artist);
     if (index >= 0) {
         ui->songItemNumber->setText(QString::number(index));
     } else {
         ui->songItemNumber->setText("");
     }
 
-    name = song.getFilename();
     auto player = Player::getInstance();
 
     // connect play button
