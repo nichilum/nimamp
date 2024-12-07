@@ -26,6 +26,7 @@ class Player final : public QMediaPlayer {
     void addPlaylist(const Playlist &playlist);
     void addToPlaylist(const Song &song, const Playlist &playlist);
     void removeSongFromPlaylist(const Song &song, const Playlist &playlist);
+    void moveSongInPlaylist(const Playlist &playlist, int from, int to);
     void savePlayer();
     void loadPlayer();
     void playPlaylist(const Playlist &playlist);

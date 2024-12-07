@@ -80,12 +80,28 @@ void PlaylistTabsWidget::onPlaylistSelected(const QListWidgetItem *item) const {
     playlistView->setProperty("playlistUuid", playlist.getUuid());
     playlistView->setObjectName("playlistTabListWidget");
     playlistView->setContextMenuPolicy(Qt::CustomContextMenu);
+    playlistView->setDragDropMode(QAbstractItemView::InternalMove);
 
     connect(playlistView, &QListWidget::customContextMenuRequested, this, [this, playlist, playlistView](const QPoint &pos) {
         auto songItem = playlistView->itemAt(pos);
         auto song = songItem->data(Qt::UserRole).value<Song>();
         auto globalPos = playlistView->mapToGlobal(pos);
         onPlaylistItemRightClicked(globalPos, playlist, song);
+    });
+
+    connect(playlistView->model(), &QAbstractItemModel::rowsMoved, this, [this, playlist](const QModelIndex &parent, int start, int end, const QModelIndex &destination, int row) {
+        Q_UNUSED(parent);
+        Q_UNUSED(end);
+
+        auto player = Player::getInstance();
+
+        if (row > start) {
+            row -= 1;
+        }
+
+        if (start >= 0 && row >= 0 && start < playlist.getSongs().size() && row <= playlist.getSongs().size()) {
+            player->moveSongInPlaylist(playlist, start, row);
+        }
     });
 
     for (const auto &song : it->getSongs()) {

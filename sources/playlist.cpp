@@ -29,6 +29,15 @@ void Playlist::removeSong(const Song &song) {
     songs.removeOne(song);
 }
 
+void Playlist::moveSong(int from, int to) {
+    if (from < 0 || from >= songs.size() || to < 0 || to >= songs.size()) {
+        return;
+    }
+
+    auto movedItem = songs.takeAt(from);
+    songs.insert(to, movedItem);
+}
+
 bool operator==(const Playlist &lhs, const Playlist &rhs) {
     return lhs.getUuid() == rhs.getUuid();
 }

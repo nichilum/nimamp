@@ -20,10 +20,12 @@ class Playlist {
     void addSong(const Song &song);
     void addSongs(const QVector<Song> &songs);
     void removeSong(const Song &song);
+    void moveSong(int from, int to);
 
     [[nodiscard]] QString getName() const { return name; }
     [[nodiscard]] QUuid getUuid() const { return uuid; }
     [[nodiscard]] QVector<Song> getSongs() const { return songs; }
+    [[nodiscard]] QVector<Song> *getSongsPointer() { return &songs; }
 
     friend QDataStream &operator<<(QDataStream &out, const Playlist &playlist) {
         out << playlist.uuid << playlist.songs << playlist.name;

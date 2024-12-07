@@ -162,11 +162,24 @@ void Player::addToPlaylist(const Song &song, const Playlist &playlist) {
 
 void Player::removeSongFromPlaylist(const Song &song, const Playlist &playlist) {
     auto it = std::find_if(playlists.begin(), playlists.end(), [&playlist](const Playlist &p) {
-       return p.getUuid() == playlist.getUuid();
-   });
+        return p.getUuid() == playlist.getUuid();
+    });
 
     if (it != playlists.end()) {
         it->removeSong(song);
+        emit playlistChanged(*it);
+    } else {
+        qDebug() << "Playlist not found!";
+    }
+}
+
+void Player::moveSongInPlaylist(const Playlist &playlist, int from, int to) {
+    auto it = std::find_if(playlists.begin(), playlists.end(), [&playlist](const Playlist &p) {
+        return p.getUuid() == playlist.getUuid();
+    });
+
+    if (it != playlists.end()) {
+        it->moveSong(from, to);
         emit playlistChanged(*it);
     } else {
         qDebug() << "Playlist not found!";
