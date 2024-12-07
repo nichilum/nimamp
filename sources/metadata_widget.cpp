@@ -8,7 +8,7 @@
 MetadataWidget::MetadataWidget(QWidget *parent) : QWidget(parent), ui(new Ui::MetadataWidget) {
     ui->setupUi(this);
 
-    ui->tableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    ui->metadataTableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 
     auto player = Player::getInstance();
     connect(player, &QMediaPlayer::metaDataChanged, this, &MetadataWidget::onMetadataChanged);
@@ -26,11 +26,11 @@ void MetadataWidget::onMetadataChanged() const {
     for (const auto &key : metadata.keys()) {
         auto value = metadata.stringValue(key);
         if (!value.isEmpty()) {
-            ui->tableWidget->setRowCount(row + 1);
+            ui->metadataTableWidget->setRowCount(row + 1);
             QTableWidgetItem *keyItem = new QTableWidgetItem(QMediaMetaData::metaDataKeyToString(key));
             QTableWidgetItem *valueItem = new QTableWidgetItem(value);
-            ui->tableWidget->setItem(row, 0, keyItem);
-            ui->tableWidget->setItem(row, 1, valueItem);
+            ui->metadataTableWidget->setItem(row, 0, keyItem);
+            ui->metadataTableWidget->setItem(row, 1, valueItem);
             row++;
         }
     }

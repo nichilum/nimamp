@@ -1,7 +1,7 @@
 /* General styling */
 QLabel {
     color: #ffffff;
-    font-family: sans-serif;
+    font-family: "inter";
 }
 QWidget#MainWindow {
     background-color: #000000;
@@ -10,6 +10,23 @@ QPushButton {
     background-color: transparent;
     border: none;
 }
+QScrollBar:horizontal, QScrollBar:vertical {
+    border: none;
+    background: #1c1c1c;
+    width: 8px;
+    height: 8px;
+}
+
+QScrollBar::handle:horizontal, QScrollBar::handle:vertical {
+    background: #666666;
+    border: none;
+    border-radius: 4px;
+}
+
+QScrollBar::add-line, QScrollBar::sub-line {
+    background: transparent;
+}
+
 
 /* Push Buttons */
 /* QPushButton {
@@ -24,66 +41,6 @@ QPushButton:hover {
 }
 QPushButton:pressed {
     background-color: #333333;
-} */
-
-/* Sliders (e.g., for the equalizer) */
-/* QSlider::groove:horizontal {
-    background: #333333;
-    height: 5px;
-    border-radius: 2px;
-}
-QSlider::handle:horizontal {
-    background: #ffffff;
-    width: 10px;
-    height: 10px;
-    border-radius: 5px;
-}
-QSlider::sub-page:horizontal {
-    background: #ffffff;
-} */
-
-/* QTabWidget (Playlist Tabs) */
-/* QTabWidget::pane {
-    border: 1px solid #333333;
-    background: #1a1a1a;
-    border-radius: 5px;
-}
-QTabBar::tab {
-    background: #1f1f1f;
-    border: 1px solid #333333;
-    padding: 5px 10px;
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
-    color: #ffffff;
-}
-QTabBar::tab:selected {
-    background: #2b2b2b;
-    border-bottom: none;
-}
-QTabBar::tab:hover {
-    background: #2a2a2a;
-} */
-
-/* Table View */
-/* QTableView {
-    background-color: #1a1a1a;
-    gridline-color: #333333;
-    border: 1px solid #333333;
-}
-QTableView::item {
-    color: #ffffff;
-    border: none;
-    padding: 5px;
-}
-QTableView::item:selected {
-    background-color: #2a2a2a;
-    color: #ffffff;
-}
-QHeaderView::section {
-    background-color: #2b2b2b;
-    color: #ffffff;
-    border: none;
-    padding: 5px;
 } */
 
 /* Text Areas */
@@ -119,11 +76,12 @@ QProgressBar::chunk {
 
 
 /* Transport Widget */
-QLabel#songNameLabel {
+QLabel#transportsongNameLabel {
     font-size: 20pt;
     /* font-weight: bold; */
 }
-QLabel#artistNameLabel {
+QLabel#transportartistNameLabel {
+    font-size: 12pt;
     color: gray;
 }
 QPushButton#transportplayButton {
@@ -135,15 +93,59 @@ QFrame#transportFrame {
     background-color: #1c1c1c;
     border-radius: 10px;
 }
-
+/* Sliders  */
+QSlider::groove:horizontal {
+    background: transparent;
+    height: 6px;
+    margin: 0px;
+}
+QSlider::handle:horizontal {
+    background: #d9d9d9;
+    width: 12px;
+    height: 12px;
+    border-radius: 6px;
+    margin: -3px 0;
+}
+QSlider::sub-page:horizontal {
+    background: #545454;
+    border-radius: 3px;
+    margin: 0px;
+}
+QSlider::add-page:horizontal {
+    background: #909090;
+    border-radius: 3px;
+    margin: 0px;
+}
+QSlider::groove:vertical {
+    background: transparent;
+    width: 6px;
+    margin: 0px;
+}
+QSlider::handle:vertical {
+    background: #d9d9d9;
+    width: 12px;
+    height: 12px;
+    border-radius: 6px;
+    margin: 0px -3px;
+}
+QSlider::sub-page:vertical {
+    background: #909090;
+    border-radius: 3px;
+    margin: 0px;
+}
+QSlider::add-page:vertical {
+    background: #545454;
+    border-radius: 3px;
+    margin: 0px;
+}
 
 /* SongItem */
 QLabel#songItemNumber {
     padding-right: 10px;
-    color: #666666;
+    color: #b4b4b4;
 }
 QLabel#songItemArtistLabel {
-    color: #666666;
+    color: #b4b4b4;
 }
 
 /* Queue */
@@ -178,6 +180,65 @@ QLabel#playlistLabel {
 QWidget#PlaylistItemFrame {
     border: none;
     padding: 10px;
+}
+QLabel#playlistItemNameLabel {
+    font-size: 12pt;
+}
+
+/* Metadata */
+QLabel#metadataLabel {
+    font-size: 20pt;
+}
+QFrame#metadataFrame {
+    padding: 10px;
+    background-color: #1c1c1c;
+    border-radius: 10px;
+}
+QTableView {
+    padding-top: 10px;
+    background-color: transparent;
+    border: none;
+    color: #b4b4b4;
+}
+QTableView::item:selected {
+    background-color: #2a2a2a;
+    color: #ffffff;
+}
+QHeaderView::section {
+    background-color: #1c1c1c;
+    border: none;
+    color: white;
+}
+
+/* Tabs */
+QTabWidget::pane {
+    border: none;
+    background: #1c1c1c;
+    border-radius: 10px;
+}
+QTabBar::tab {
+    background: #2b2b2b;
+    border: none;
+    padding: 5px 20px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    color: #ffffff;
+}
+QTabBar::tab:selected {
+    background: #1c1c1c;
+}
+QTabBar::close-button {
+    image: url(:/resources/x.svg);
+    subcontrol-position: right; /* Position on the right side of the tab */
+    subcontrol-origin: padding;
+    background: transparent;
+    margin: 2px;
+}
+QListWidget#playlistTabListWidget {
+    border-top-left-radius: 0px;
+    border-top-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
 }
 
 /* TODO: when playing songs sometimes to position isn't reset to 0 */

@@ -30,27 +30,48 @@
     <number>0</number>
    </property>
    <item>
-    <widget class="QLabel" name="label">
-     <property name="text">
-      <string>Metadata</string>
+    <widget class="QFrame" name="metadataFrame">
+     <property name="frameShape">
+      <enum>QFrame::Shape::StyledPanel</enum>
      </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QTableWidget" name="tableWidget">
-     <property name="editTriggers">
-      <set>QAbstractItemView::EditTrigger::NoEditTriggers</set>
+     <property name="frameShadow">
+      <enum>QFrame::Shadow::Raised</enum>
      </property>
-     <column>
-      <property name="text">
-       <string>Property</string>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>Value</string>
-      </property>
-     </column>
+     <layout class="QVBoxLayout" name="verticalLayout_2">
+      <item>
+       <widget class="QLabel" name="metadataLabel">
+        <property name="text">
+         <string>Metadata</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QTableWidget" name="metadataTableWidget">
+        <property name="editTriggers">
+         <set>QAbstractItemView::EditTrigger::NoEditTriggers</set>
+        </property>
+        <property name="showGrid">
+         <bool>false</bool>
+        </property>
+        <property name="cornerButtonEnabled">
+         <bool>false</bool>
+        </property>
+        <attribute name="verticalHeaderVisible">
+         <bool>false</bool>
+        </attribute>
+        <column>
+         <property name="text">
+          <string>Property</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Value</string>
+         </property>
+        </column>
+       </widget>
+      </item>
+     </layout>
     </widget>
    </item>
   </layout>

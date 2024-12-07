@@ -79,6 +79,7 @@ void PlaylistTabsWidget::onPlaylistSelected(const QListWidgetItem *item) const {
 
     auto *playlistView = new QListWidget;
     playlistView->setProperty("playlistUuid", playlist.getUuid());
+    playlistView->setObjectName("playlistTabListWidget");
     for (const auto &song : it->getSongs()) {
         auto *songWidget = new SongItem(song, SongItemType::Playlist);
 

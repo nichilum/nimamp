@@ -38,7 +38,7 @@
       <item>
        <widget class="QLabel" name="playlistItemImageLabel">
         <property name="text">
-         <string>Image</string>
+         <string/>
         </property>
        </widget>
       </item>
