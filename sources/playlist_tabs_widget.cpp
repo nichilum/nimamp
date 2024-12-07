@@ -6,7 +6,7 @@
 #include "ui_PlaylistTabsWidget.h"
 #include "ui_PlaylistViewWidget.h"
 
-PlaylistTabsWidget::PlaylistTabsWidget(PlaylistViewWidget *playlistViewWidget, QWidget *parent) : QWidget(parent), ui(new Ui::PlaylistTabsWidget) {
+PlaylistTabsWidget::PlaylistTabsWidget(const PlaylistViewWidget *playlistViewWidget, QWidget *parent) : QWidget(parent), ui(new Ui::PlaylistTabsWidget) {
     ui->setupUi(this);
 
     auto player = Player::getInstance();
@@ -88,9 +88,6 @@ void PlaylistTabsWidget::onPlaylistSelected(const QListWidgetItem *item) const {
         item->setData(Qt::UserRole, QVariant::fromValue(song));
         playlistView->addItem(item);
         playlistView->setItemWidget(item, songWidget);
-
-        // auto *songItem = new QListWidgetItem(song.getFilename(), playlistView);
-        // songItem->setData(Qt::UserRole, QVariant::fromValue(song));
     }
 
     ui->playlistTabs->addTab(playlistView, playlist.getName());

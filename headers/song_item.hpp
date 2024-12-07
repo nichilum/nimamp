@@ -20,7 +20,6 @@ enum class SongItemType {
 class SongItem : public QWidget {
     Q_OBJECT
    public:
-    QString name;
     explicit SongItem(const Song &song, SongItemType songItemType, QWidget *parent = nullptr);
     explicit SongItem(const Song &song, SongItemType songItemType, int index, QWidget *parent = nullptr);
 

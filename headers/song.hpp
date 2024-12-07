@@ -2,30 +2,33 @@
 
 #include <QDataStream>
 #include <QDebug>
+#include <QImage>
 #include <QMetaType>
 #include <QUrl>
 #include <QVariant>
 
-class Song : public QVariant {
+class Song {
    public:
     QUrl url;
     QString filename;
+    QString title;
+    QString artist;
+    QImage albumArt;
 
     Song() = default;
-    Song(const QUrl &url, const QString &filename) : url(url), filename(filename) {}
-    explicit Song(const QUrl &url) : url(url), filename(url.fileName()) {}
+    explicit Song(const QUrl &url);
     [[nodiscard]] QUrl getUrl() const { return url; }
     [[nodiscard]] QString getFilename() const { return filename; }
 
     bool operator==(Song const &) const = default;
 
     friend QDataStream &operator<<(QDataStream &out, const Song &song) {
-        out << song.url << song.filename;
+        out << song.url << song.filename << song.title << song.artist;
         return out;
     }
 
     friend QDataStream &operator>>(QDataStream &in, Song &song) {
-        in >> song.url >> song.filename;
+        in >> song.url >> song.filename >> song.title >> song.artist;
         return in;
     }
 };

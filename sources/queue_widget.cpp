@@ -59,7 +59,7 @@ void QueueWidget::onRowsMoved(const QModelIndex &parent, int start, int end, con
         player->getQueue()->insert(row, movedItem);
     }
 
-    qDebug() << "Updated queue:" << *player->getQueue();
+    emit player->queueChanged();
 }
 
 void QueueWidget::onQueueItemRightClicked(const QPoint &pos) {
