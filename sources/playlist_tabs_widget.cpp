@@ -1,5 +1,7 @@
 #include "../headers/playlist_tabs_widget.hpp"
 
+#include <QMenu>
+
 #include "../headers/player.hpp"
 #include "../headers/playlist_view_widget.hpp"
 #include "../headers/song_item.hpp"
@@ -41,9 +43,6 @@ void PlaylistTabsWidget::updatePlaylist(const Playlist &playlist) const {
                     item->setData(Qt::UserRole, QVariant::fromValue(song));
                     playlistView->addItem(item);
                     playlistView->setItemWidget(item, songWidget);
-
-                    // auto *songItem = new QListWidgetItem(song.getFilename(), playlistView);
-                    // songItem->setData(Qt::UserRole, QVariant::fromValue(song));
                 }
                 break;
             }
@@ -80,6 +79,15 @@ void PlaylistTabsWidget::onPlaylistSelected(const QListWidgetItem *item) const {
     auto *playlistView = new QListWidget;
     playlistView->setProperty("playlistUuid", playlist.getUuid());
     playlistView->setObjectName("playlistTabListWidget");
+    playlistView->setContextMenuPolicy(Qt::CustomContextMenu);
+
+    connect(playlistView, &QListWidget::customContextMenuRequested, this, [this, playlist, playlistView](const QPoint &pos) {
+        auto songItem = playlistView->itemAt(pos);
+        auto song = songItem->data(Qt::UserRole).value<Song>();
+        auto globalPos = playlistView->mapToGlobal(pos);
+        onPlaylistItemRightClicked(globalPos, playlist, song);
+    });
+
     for (const auto &song : it->getSongs()) {
         auto *songWidget = new SongItem(song, SongItemType::Playlist);
 
@@ -92,4 +100,15 @@ void PlaylistTabsWidget::onPlaylistSelected(const QListWidgetItem *item) const {
 
     ui->playlistTabs->addTab(playlistView, playlist.getName());
     ui->playlistTabs->setCurrentWidget(playlistView);
+}
+
+void PlaylistTabsWidget::onPlaylistItemRightClicked(const QPoint &globalPos, const Playlist &playlist, const Song &song) const {
+    auto player = Player::getInstance();
+    QMenu menu;
+
+    menu.addAction("Delete", [this, player, playlist, song]() {
+        player->removeSongFromPlaylist(song, playlist);
+    });
+
+    menu.exec(globalPos);
 }

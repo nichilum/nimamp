@@ -160,6 +160,19 @@ void Player::addToPlaylist(const Song &song, const Playlist &playlist) {
     }
 }
 
+void Player::removeSongFromPlaylist(const Song &song, const Playlist &playlist) {
+    auto it = std::find_if(playlists.begin(), playlists.end(), [&playlist](const Playlist &p) {
+       return p.getUuid() == playlist.getUuid();
+   });
+
+    if (it != playlists.end()) {
+        it->removeSong(song);
+        emit playlistChanged(*it);
+    } else {
+        qDebug() << "Playlist not found!";
+    }
+}
+
 /**
  * Set the media source of the player and immediately start playing it.
  * This also adds the song to the history.

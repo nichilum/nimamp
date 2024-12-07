@@ -23,6 +23,7 @@ class PlaylistTabsWidget : public QWidget {
     Ui::PlaylistTabsWidget *ui;
     void onPlaylistTabCloseRequested(int index) const;
     void onPlaylistSelected(const QListWidgetItem *item) const;
+    void onPlaylistItemRightClicked(const QPoint &globalPos, const Playlist &playlist, const Song &song) const;
 
    public slots:
     void updatePlaylist(const Playlist &playlist) const;
