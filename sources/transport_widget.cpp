@@ -63,7 +63,12 @@ void TransportWidget::onMetadataChanged() const {
     thumbnail = thumbnail.scaled(QSize(100, 100), Qt::KeepAspectRatio, Qt::SmoothTransformation);
     auto duration = data.value(QMediaMetaData::Duration).toInt();
 
-    ui->transportsongNameLabel->setText(title);
+    if (title != "") {
+        ui->transportsongNameLabel->setText(title);
+    } else {
+        ui->transportsongNameLabel->setText(player->source().fileName());
+    }
+
     ui->transportartistNameLabel->setText(artist);
     ui->transportcoverLabel->setPixmap(QPixmap::fromImage(thumbnail));
     ui->transportdurationLabel->setText(msToString(duration));
