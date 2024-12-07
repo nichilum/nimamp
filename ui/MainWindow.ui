@@ -135,7 +135,6 @@
    <addaction name="menuMain"/>
    <addaction name="menuEdit"/>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
   <action name="actionFolderToQueue">
    <property name="text">
     <string>FolderToQueue</string>
