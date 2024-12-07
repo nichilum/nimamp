@@ -25,4 +25,5 @@ class PlaylistItem : public QWidget {
     void playPlaylist() const;
     void queuePlaylist() const;
     void removePlaylist() const;
+    void loadPlaylistImage() const;
 };
