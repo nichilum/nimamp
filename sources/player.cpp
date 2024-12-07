@@ -11,22 +11,24 @@ Player *Player::instance = nullptr;
 Player::Player() {
     setAudioOutput(&audioOutput);
 
-    connect(this, &QMediaPlayer::mediaStatusChanged, this, &Player::songEnded);
+    connect(this, &QMediaPlayer::positionChanged, this, &Player::songEnded);
     connect(QCoreApplication::instance(), &QCoreApplication::aboutToQuit, this, &Player::savePlayer);
 
     loadPlayer();
 }
 
-/*
- * Add Playlist to playlist vector
+/**
+ * Add a new playlist to the collection of playlists
+ * @param playlist The playlist to add
  */
 void Player::addPlaylist(const Playlist &playlist) {
     playlists.push_back(playlist);
     emit playlistsChanged();
 }
 
-/*
- * replace queue with playlist
+/**
+ * Replace the queue with a given playlist
+ * @param playlist The playlist to queue
  */
 void Player::playPlaylist(const Playlist &playlist) {
     auto p = std::find_if(playlists.begin(), playlists.end(), [&playlist](const Playlist &p) {
@@ -44,8 +46,9 @@ void Player::playPlaylist(const Playlist &playlist) {
     }
 }
 
-/*
- * prepend queue with playlist
+/**
+ * Add a playlist to the end of the queue
+ * @param playlist The playlist to add
  */
 void Player::queuePlaylist(const Playlist &playlist) {
     auto p = std::find_if(playlists.begin(), playlists.end(), [&playlist](const Playlist &p) {
@@ -66,8 +69,9 @@ void Player::queuePlaylist(const Playlist &playlist) {
     }
 }
 
-/*
- * remove playlist from playlists
+/**
+ * Remove a given playlist from the collection of playlists
+ * @param playlist The playlist to remove
  */
 void Player::removePlaylist(const Playlist &playlist) {
     auto it = std::find_if(playlists.begin(), playlists.end(), [&playlist](const Playlist &p) {
@@ -121,7 +125,6 @@ void Player::next() {
         setPosition(duration());  // skip song to end
         return;
     }
-
     addToHistory();
     auto song = queue.front();
     queue.pop_front();
@@ -162,7 +165,7 @@ void Player::addToPlaylist(const Song &song, const Playlist &playlist) {
 
 /**
  * Set the media source of the player and immediately start playing it.
- * This overwrites the queue and the current song but not the priority queue.
+ * This also adds the song to the history.
  * @param song The Song to play
  */
 void Player::playSong(const Song &song) {
@@ -216,7 +219,7 @@ Player *Player::getInstance() {
 }
 
 void Player::songEnded() {
-    if (mediaStatus() == EndOfMedia) {
+    if (position() >= duration()) {
         next();
     }
 }
