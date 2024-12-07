@@ -63,9 +63,6 @@ void Player::queuePlaylist(const Playlist &playlist) {
             queue.prepend(song);
         }
         emit queueChanged();
-
-        setSource(queue.front().getUrl());
-        play();
     }
 }
 
