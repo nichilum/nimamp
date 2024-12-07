@@ -10,6 +10,7 @@
         <file>resources/repeat.svg</file>
         <file>resources/shuffle.svg</file>
         <file>resources/x.svg</file>
+        <file>resources/trash.svg</file>
         <file>resources/empty_cover.jpg</file>
         <file>qss/style.qss</file>
         <file>resources/inter.ttf</file>

@@ -19,6 +19,7 @@ QueueWidget::QueueWidget(QWidget *parent) : QWidget(parent), ui(new Ui::QueueWid
     connect(player, &Player::queueChanged, this, &QueueWidget::updateQueue);
     connect(ui->queueListWidget->model(), &QAbstractItemModel::rowsMoved, this, &QueueWidget::onRowsMoved);
     connect(ui->queueListWidget, &QListWidget::customContextMenuRequested, this, &QueueWidget::onQueueItemRightClicked);
+    connect(ui->queueClearButton, &QPushButton::pressed, player, &Player::clearQueue);
 }
 
 QueueWidget::~QueueWidget() {
