@@ -82,7 +82,7 @@ void TransportWidget::toggleLoop() const {
 void TransportWidget::changePlayPauseIcon() const {
     auto player = Player::getInstance();
     if (player->isPlaying() == QMediaPlayer::PlayingState) {
-        ui->transportplayButton->setIcon(QIcon(":/resources/pause_b.svg"));
+        ui->transportplayButton->setIcon(QIcon(":/resources/pause.svg"));
     } else {
         ui->transportplayButton->setIcon(QIcon(":/resources/play_b.svg"));
     }
