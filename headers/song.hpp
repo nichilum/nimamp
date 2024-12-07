@@ -2,6 +2,7 @@
 
 #include <QDataStream>
 #include <QDebug>
+#include <QImage>
 #include <QMetaType>
 #include <QUrl>
 #include <QVariant>
@@ -12,6 +13,7 @@ class Song {
     QString filename;
     QString title;
     QString artist;
+    QImage albumArt;
 
     Song() = default;
     explicit Song(const QUrl &url);
