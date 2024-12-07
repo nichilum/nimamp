@@ -16,7 +16,7 @@ class PlaylistTabsWidget : public QWidget {
     Q_OBJECT
 
    public:
-    explicit PlaylistTabsWidget(PlaylistViewWidget *playlistViewWidget, QWidget *parent = nullptr);
+    explicit PlaylistTabsWidget(const PlaylistViewWidget *playlistViewWidget, QWidget *parent = nullptr);
     ~PlaylistTabsWidget() override;
 
    private:

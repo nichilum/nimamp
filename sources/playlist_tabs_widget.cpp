@@ -6,7 +6,7 @@
 #include "ui_PlaylistTabsWidget.h"
 #include "ui_PlaylistViewWidget.h"
 
-PlaylistTabsWidget::PlaylistTabsWidget(PlaylistViewWidget *playlistViewWidget, QWidget *parent) : QWidget(parent), ui(new Ui::PlaylistTabsWidget) {
+PlaylistTabsWidget::PlaylistTabsWidget(const PlaylistViewWidget *playlistViewWidget, QWidget *parent) : QWidget(parent), ui(new Ui::PlaylistTabsWidget) {
     ui->setupUi(this);
 
     auto player = Player::getInstance();
