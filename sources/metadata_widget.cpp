@@ -19,7 +19,6 @@ MetadataWidget::~MetadataWidget() {
 }
 
 void MetadataWidget::onMetadataChanged() const {
-    // TODO: do we really need another title and artist label??
     auto player = Player::getInstance();
     auto metadata = player->metaData();
     int row = 0;
