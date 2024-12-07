@@ -163,13 +163,16 @@ QListWidget::item:hover {
 QListWidget::item:selected {
     background-color: #303030;
 }
+QListWidget::item{
+    border-radius: 5px;
+}
 QFrame#queueFrame {
     padding: 10px;
     background-color: #1c1c1c;
     border-radius: 10px;
 }
 QLabel#queueLabel {
-    font-size: 20pt;
+    font-size: 16pt;
 }
 
 /* Playlist */
@@ -179,7 +182,7 @@ QFrame#playlistViewFrame {
     border-radius: 10px;
 }
 QLabel#playlistLabel {
-    font-size: 20pt;
+    font-size: 16pt;
 }
 QWidget#PlaylistItemFrame {
     border: none;
@@ -191,7 +194,7 @@ QLabel#playlistItemNameLabel {
 
 /* Metadata */
 QLabel#metadataLabel {
-    font-size: 20pt;
+    font-size: 16pt;
 }
 QFrame#metadataFrame {
     padding: 10px;
@@ -243,4 +246,9 @@ QListWidget#playlistTabListWidget {
     border-top-right-radius: 10px;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
+
+    padding: 10px 0px;
+}
+QListWidget#playlistTabListWidget::item {
+    margin: 0px 10px;
 }
