@@ -251,7 +251,6 @@ void Player::savePlayer() {
 void Player::loadPlayer() {
     QByteArray data = settings.value("player").toByteArray();
 
-    qDebug() << "Saved QSettings data: " << QString(data.toHex());
     if (!data.isEmpty()) {
         QDataStream in(&data, QIODevice::ReadOnly);
         in >> *this;
