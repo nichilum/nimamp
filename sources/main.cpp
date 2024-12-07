@@ -24,8 +24,8 @@ int main(int argc, char *argv[]) {
     QString fontFamily = QFontDatabase::applicationFontFamilies(fontId).at(0);
 
     // style sheet
-    QFile styleFile("/home/jojo/Github/nimamp/qss/style.qss");
-    // QFile styleFile(":/qss/style.qss");
+    // QFile styleFile("/home/jojo/Github/nimamp/qss/style.qss");
+    QFile styleFile(":/qss/style.qss");
     styleFile.open(QFile::ReadOnly);
 
     // Apply the loaded stylesheet

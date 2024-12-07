@@ -80,6 +80,7 @@ class Player final : public QMediaPlayer {
                 getInstance()->setPosition(static_cast<qint64>(position));
             }
         });
+        // TODO: only execute once pls
 
         return in;
     }
