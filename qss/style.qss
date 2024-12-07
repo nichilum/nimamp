@@ -111,12 +111,12 @@ QSlider::handle:horizontal {
     margin: -3px 0;
 }
 QSlider::sub-page:horizontal {
-    background: #545454;
+    background: #909090;
     border-radius: 3px;
     margin: 0px;
 }
 QSlider::add-page:horizontal {
-    background: #909090;
+    background: #545454;
     border-radius: 3px;
     margin: 0px;
 }
@@ -133,12 +133,12 @@ QSlider::handle:vertical {
     margin: 0px -3px;
 }
 QSlider::sub-page:vertical {
-    background: #909090;
+    background: #545454;
     border-radius: 3px;
     margin: 0px;
 }
 QSlider::add-page:vertical {
-    background: #545454;
+    background: #909090;
     border-radius: 3px;
     margin: 0px;
 }
