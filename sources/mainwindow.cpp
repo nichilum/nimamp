@@ -64,7 +64,6 @@ void MainWindow::openFolderDialog() {
 }
 
 void MainWindow::openFileDialog() {
-    // QString fileFilter = "Audio Files (*.mp3 *.wav *.ogg *.flac);;All Files (*)";
     QString fileFilter = "Audio Files (*.mp3 *.wav)";
     QStringList filePaths = QFileDialog::getOpenFileNames(
         this,
