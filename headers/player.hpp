@@ -79,8 +79,8 @@ class Player final : public QMediaPlayer {
             if (status == QMediaPlayer::LoadedMedia) {
                 getInstance()->setPosition(static_cast<qint64>(position));
             }
+            disconnect(getInstance(), &QMediaPlayer::mediaStatusChanged, nullptr, nullptr);
         });
-        // TODO: only execute once pls
 
         return in;
     }
