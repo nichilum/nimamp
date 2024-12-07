@@ -16,6 +16,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     transportWidget = new TransportWidget(this);
     playlistTabsWidget = new PlaylistTabsWidget(playlistViewWidget, this);
     metadataWidget = new MetadataWidget(this);
+    equalizerWidget = new EqualizerWidget(this);
 
     ui->queueWidgetPlaceholder->setLayout(new QVBoxLayout);
     ui->queueWidgetPlaceholder->layout()->addWidget(queueWidget);
@@ -37,16 +38,13 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     ui->metadataWidgetPlaceholder->layout()->addWidget(metadataWidget);
     ui->metadataWidgetPlaceholder->layout()->setContentsMargins(0, 0, 0, 0);
 
-    auto player = Player::getInstance();
-
-    ui->volumeSlider->setValue(static_cast<int>(player->getVolume() * 100.));
+    ui->eqWidgetPlaceholder->setLayout(new QVBoxLayout);
+    ui->eqWidgetPlaceholder->layout()->addWidget(equalizerWidget);
+    ui->eqWidgetPlaceholder->layout()->setContentsMargins(0, 0, 0, 0);
 
     // menu buttons
     connect(ui->actionFolderToQueue, &QAction::triggered, this, &MainWindow::openFolderDialog);
     connect(ui->actionFilesToQueue, &QAction::triggered, this, &MainWindow::openFileDialog);
-
-    // volume slider
-    connect(ui->volumeSlider, &QSlider::valueChanged, this, &MainWindow::updateVolume);
 }
 
 MainWindow::~MainWindow() {
@@ -75,9 +73,4 @@ void MainWindow::openFileDialog() {
     for (QString filePath : filePaths) {
         player->queueSong(Song(filePath));
     }
-}
-
-void MainWindow::updateVolume(const int volume) {
-    auto player = Player::getInstance();
-    player->setVolume(static_cast<float>(volume) / 100);
 }

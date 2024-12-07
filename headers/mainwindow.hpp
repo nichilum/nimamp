@@ -2,6 +2,7 @@
 
 #include <QMainWindow>
 
+#include "equalizer_widget.hpp"
 #include "metadata_widget.hpp"
 #include "playlist.hpp"
 #include "playlist_tabs_widget.hpp"
@@ -29,8 +30,8 @@ class MainWindow : public QMainWindow {
     TransportWidget *transportWidget;
     PlaylistTabsWidget *playlistTabsWidget;
     MetadataWidget *metadataWidget;
+    EqualizerWidget *equalizerWidget;
 
     void openFolderDialog();
     void openFileDialog();
-    static void updateVolume(int volume);
 };

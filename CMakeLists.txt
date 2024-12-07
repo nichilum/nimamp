@@ -47,6 +47,8 @@ qt_add_executable(appnimamp
         headers/playlist_tabs_widget.hpp
         sources/metadata_widget.cpp
         headers/metadata_widget.hpp
+        sources/equalizer_widget.cpp
+        headers/equalizer_widget.hpp
 
         ui/MainWindow.ui
         ui/SongItem.ui
@@ -56,6 +58,7 @@ qt_add_executable(appnimamp
         ui/TransportWidget.ui
         ui/PlaylistTabsWidget.ui
         ui/MetadataWidget.ui
+        ui/EqualizerWidget.ui
 
         resources.qrc
 )
