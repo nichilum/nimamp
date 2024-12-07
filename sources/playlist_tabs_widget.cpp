@@ -88,9 +88,6 @@ void PlaylistTabsWidget::onPlaylistSelected(const QListWidgetItem *item) const {
         item->setData(Qt::UserRole, QVariant::fromValue(song));
         playlistView->addItem(item);
         playlistView->setItemWidget(item, songWidget);
-
-        // auto *songItem = new QListWidgetItem(song.getFilename(), playlistView);
-        // songItem->setData(Qt::UserRole, QVariant::fromValue(song));
     }
 
     ui->playlistTabs->addTab(playlistView, playlist.getName());
