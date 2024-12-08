@@ -68,7 +68,7 @@
          </size>
         </property>
         <property name="text">
-         <string>Cover</string>
+         <string/>
         </property>
         <property name="scaledContents">
          <bool>false</bool>
@@ -87,14 +87,14 @@
          <item>
           <widget class="QLabel" name="transportsongNameLabel">
            <property name="text">
-            <string>Heavy is the Crown</string>
+            <string/>
            </property>
           </widget>
          </item>
          <item>
           <widget class="QLabel" name="transportartistNameLabel">
            <property name="text">
-            <string>Linkin Park</string>
+            <string/>
            </property>
           </widget>
          </item>
