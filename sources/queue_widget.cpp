@@ -36,7 +36,7 @@ void QueueWidget::updateQueue() {
 
         auto *item = new QListWidgetItem(ui->queueListWidget);
         auto size = songWidget->sizeHint().boundedTo(ui->queueListWidget->size());
-        size.setHeight(50);
+        size.setHeight(64);
         item->setSizeHint(size);
         item->setData(Qt::UserRole, QVariant::fromValue(song));
         ui->queueListWidget->addItem(item);
