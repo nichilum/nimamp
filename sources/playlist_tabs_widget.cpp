@@ -22,12 +22,20 @@ PlaylistTabsWidget::~PlaylistTabsWidget() {
     delete ui;
 }
 
+/**
+ * Closes a tab and deletes the widget
+ * @param index The index of the tab to close
+ */
 void PlaylistTabsWidget::onPlaylistTabCloseRequested(const int index) const {
     auto *widget = ui->playlistTabs->widget(index);
     ui->playlistTabs->removeTab(index);
     delete widget;
 }
 
+/**
+ * Re-renders the playlist in the tab
+ * @param playlist The playlist to update
+ */
 void PlaylistTabsWidget::updatePlaylist(const Playlist &playlist) const {
     for (int i = 0; i < ui->playlistTabs->count(); ++i) {
         if (auto *playlistView = qobject_cast<QListWidget *>(ui->playlistTabs->widget(i))) {
@@ -52,6 +60,10 @@ void PlaylistTabsWidget::updatePlaylist(const Playlist &playlist) const {
     }
 }
 
+/**
+ * Opens a playlist in a new tab or switches to it if it's already open
+ * @param item The item that was clicked
+ */
 void PlaylistTabsWidget::onPlaylistSelected(const QListWidgetItem *item) const {
     auto player = Player::getInstance();
     auto playlists = player->getPlaylists();
@@ -122,6 +134,12 @@ void PlaylistTabsWidget::onPlaylistSelected(const QListWidgetItem *item) const {
     ui->playlistTabs->setCurrentWidget(playlistView);
 }
 
+/**
+ * Handles right-click events on playlist items
+ * @param globalPos The global position of the right click
+ * @param playlist The playlist the song belongs to
+ * @param song The song that was clicked
+ */
 void PlaylistTabsWidget::onPlaylistItemRightClicked(const QPoint &globalPos, const Playlist &playlist, const Song &song) const {
     auto player = Player::getInstance();
     QMenu menu;

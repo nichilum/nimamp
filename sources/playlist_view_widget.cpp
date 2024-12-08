@@ -26,6 +26,9 @@ PlaylistViewWidget::~PlaylistViewWidget() {
     delete ui;
 }
 
+/**
+ * Re-renders the list of playlists
+ */
 void PlaylistViewWidget::updatePlaylists() {
     auto player = Player::getInstance();
     ui->playlistListWidget->clear();
@@ -43,6 +46,9 @@ void PlaylistViewWidget::updatePlaylists() {
     }
 }
 
+/**
+ * Handles the creation of a new playlist
+ */
 void PlaylistViewWidget::createPlaylistButtonClicked() {
     bool ok;
     auto playlistName = QInputDialog::getText(this,
@@ -62,6 +68,10 @@ void PlaylistViewWidget::createPlaylistButtonClicked() {
     }
 }
 
+/**
+ * Handles right-click events on playlist items
+ * @param pos The position of the right click (relative to the widget)
+ */
 void PlaylistViewWidget::onPlaylistItemRightClicked(const QPoint &pos) {
     auto player = Player::getInstance();
 

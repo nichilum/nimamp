@@ -18,6 +18,10 @@ MetadataWidget::~MetadataWidget() {
     delete ui;
 }
 
+/**
+ * Slot that is called when the metadata of the player changes.
+ * Sets the metadata of the player to the table widget.
+ */
 void MetadataWidget::onMetadataChanged() const {
     auto player = Player::getInstance();
     auto metadata = player->metaData();

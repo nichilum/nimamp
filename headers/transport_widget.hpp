@@ -23,6 +23,6 @@ class TransportWidget : public QWidget {
     void seekToReleasedPosition() const;
     void onMetadataChanged() const;
     void toggleLoop() const;
-    void toggleShuffle();
+    void toggleShuffle() const;
     void changePlayPauseIcon() const;
 };

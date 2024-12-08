@@ -30,6 +30,11 @@ TransportWidget::~TransportWidget() {
     delete ui;
 }
 
+/**
+ * Set the seek slider to the current position of the song
+ * and update the current time label
+ * @param position The position of the song in milliseconds
+ */
 void TransportWidget::updateSeekSlider(const qint64 position) const {
     if (ui->transportseekSlider->isSliderDown()) {
         return;
@@ -41,15 +46,25 @@ void TransportWidget::updateSeekSlider(const qint64 position) const {
     ui->transportcurrentTimeLabel->setText(formattedTime);
 }
 
+/**
+ * Set the range of the seek slider to the duration of the song
+ * @param duration The duration of the song in milliseconds
+ */
 void TransportWidget::updateSeekDuration(const qint64 duration) const {
     ui->transportseekSlider->setRange(0, static_cast<int>(duration));
 }
 
+/**
+ * Set the player position to the value of the seek slider
+ */
 void TransportWidget::seekToReleasedPosition() const {
     auto player = Player::getInstance();
     player->setPosition(ui->transportseekSlider->value());
 }
 
+/**
+ * Set the metadata of the song to the labels
+ */
 void TransportWidget::onMetadataChanged() const {
     // update main song image, descriptor etc.
     auto player = Player::getInstance();
@@ -73,12 +88,11 @@ void TransportWidget::onMetadataChanged() const {
     ui->transportartistNameLabel->setText(artist);
     ui->transportcoverLabel->setPixmap(QPixmap::fromImage(thumbnail));
     ui->transportdurationLabel->setText(msToString(duration));
-
-    // auto r = getSongThumbnail(player->source().toString());
-    // qDebug() << "Thumbnail: " << r;
-    // ui->coverLabel->setPixmap(r);
 }
 
+/**
+ * Toggle the loop state of the player
+ */
 void TransportWidget::toggleLoop() const {
     auto player = Player::getInstance();
     player->setLoop(!player->isLooping());
@@ -91,6 +105,9 @@ void TransportWidget::toggleLoop() const {
     }
 }
 
+/**
+ * Change the play/pause icon based on the player state
+ */
 void TransportWidget::changePlayPauseIcon() const {
     auto player = Player::getInstance();
     if (player->isPlaying() == QMediaPlayer::PlayingState) {
@@ -100,7 +117,10 @@ void TransportWidget::changePlayPauseIcon() const {
     }
 }
 
-void TransportWidget::toggleShuffle() {
+/**
+ * Toggle the shuffle state of the player
+ */
+void TransportWidget::toggleShuffle() const {
     auto player = Player::getInstance();
     player->toggleShuffleQueue();
     if (player->isShuffled()) {

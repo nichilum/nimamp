@@ -54,6 +54,9 @@ MainWindow::~MainWindow() {
     delete transportWidget;
 }
 
+/**
+ * Opens a folder dialog and adds the selected folder to the queue
+ */
 void MainWindow::openFolderDialog() {
     QString dir = QFileDialog::getExistingDirectory(this, tr("Open Directory"),
                                                     "",
@@ -61,6 +64,9 @@ void MainWindow::openFolderDialog() {
     Player::getInstance()->addFolderToQueue(dir);
 }
 
+/**
+ * Opens a file dialog and adds the selected files to the queue
+ */
 void MainWindow::openFileDialog() {
     QString fileFilter = "Audio Files (*.mp3 *.wav)";
     QStringList filePaths = QFileDialog::getOpenFileNames(

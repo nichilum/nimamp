@@ -27,18 +27,31 @@ PlaylistItem::~PlaylistItem() {
     delete ui;
 }
 
+/**
+ * Play the playlist
+ */
 void PlaylistItem::playPlaylist() const {
     Player::getInstance()->playPlaylist(playlist);
 }
 
+/**
+ * Append the playlist to the end of the queue
+ */
 void PlaylistItem::queuePlaylist() const {
     Player::getInstance()->queuePlaylist(playlist);
 }
 
+/**
+ * Remove the playlist from the collection of playlists
+ */
 void PlaylistItem::removePlaylist() const {
     Player::getInstance()->removePlaylist(playlist);
 }
 
+/**
+ * Load the playlist image
+ * Creates a grid of album arts from the first four songs in the playlist
+ */
 void PlaylistItem::loadPlaylistImage() const {
     auto songs = playlist.getSongs();
 

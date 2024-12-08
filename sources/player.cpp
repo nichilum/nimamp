@@ -89,6 +89,11 @@ void Player::removePlaylist(const Playlist &playlist) {
     }
 }
 
+/**
+ * Add a folder to a playlist
+ * @param directory The directory to add
+ * @param playlist The playlist to add the folder to
+ */
 void Player::addFolderToPlaylist(const QString &directory, const Playlist &playlist) {
     const QDir dir(directory);
     QStringList files = dir.entryList(QStringList() << "*.wav"
@@ -110,6 +115,10 @@ void Player::addFolderToPlaylist(const QString &directory, const Playlist &playl
     }
 }
 
+/**
+ * Add a folder to the queue
+ * @param directory The directory to add
+ */
 void Player::addFolderToQueue(const QString &directory) {
     clearQueue();
 
@@ -125,6 +134,10 @@ void Player::addFolderToQueue(const QString &directory) {
     qDebug() << "Added folder to queue: " << queue;
 }
 
+/**
+ * Plays the next song in the queue.
+ * If the queue is empty, the song is skipped to the end.
+ */
 void Player::next() {
     if (queue.isEmpty()) {
         setPosition(duration());  // skip song to end
@@ -138,6 +151,10 @@ void Player::next() {
     emit queueChanged();
 }
 
+/**
+ * Plays the previous song in the history.
+ * If the history is empty, the song is skipped to the beginning.
+ */
 void Player::previous() {
     if (history.isEmpty() || position() > duration() * 0.1) {
         setPosition(0);
@@ -149,11 +166,19 @@ void Player::previous() {
     play();
 }
 
+/**
+ * Clear the queue
+ */
 void Player::clearQueue() {
     queue.clear();
     emit queueChanged();
 }
 
+/**
+ * Add a song to a playlist
+ * @param song The song to add
+ * @param playlist The playlist to add the song to
+ */
 void Player::addToPlaylist(const Song &song, const Playlist &playlist) {
     auto it = std::find_if(playlists.begin(), playlists.end(), [&playlist](const Playlist &p) {
         return p.getUuid() == playlist.getUuid();
@@ -168,6 +193,11 @@ void Player::addToPlaylist(const Song &song, const Playlist &playlist) {
     }
 }
 
+/**
+ * Remove a song from a playlist
+ * @param song The song to remove
+ * @param playlist The playlist to remove the song from
+ */
 void Player::removeSongFromPlaylist(const Song &song, const Playlist &playlist) {
     auto it = std::find_if(playlists.begin(), playlists.end(), [&playlist](const Playlist &p) {
         return p.getUuid() == playlist.getUuid();
@@ -181,7 +211,13 @@ void Player::removeSongFromPlaylist(const Song &song, const Playlist &playlist) 
     }
 }
 
-void Player::moveSongInPlaylist(const Playlist &playlist, int from, int to) {
+/**
+ * Move a song in a playlist
+ * @param playlist The playlist to move the song in
+ * @param from The index of the song to move
+ * @param to The index to move the song to
+ */
+void Player::moveSongInPlaylist(const Playlist &playlist, const int from, const int to) {
     auto it = std::find_if(playlists.begin(), playlists.end(), [&playlist](const Playlist &p) {
         return p.getUuid() == playlist.getUuid();
     });
@@ -205,6 +241,11 @@ void Player::playSong(const Song &song) {
     play();
 }
 
+/**
+ * Play a song from the queue.
+ * This also clears the queue up to the song.
+ * @param song The song to play
+ */
 void Player::playSongFromQueue(const Song &song) {
     clearQueueUpToSong(song);
     addToHistory();
@@ -212,11 +253,19 @@ void Player::playSongFromQueue(const Song &song) {
     play();
 }
 
+/**
+ * Add a song to the end of the queue
+ * @param song The song to add
+ */
 void Player::queueSong(const Song &song) {
     queue.push_back(song);
     emit queueChanged();
 }
 
+/**
+ * Sets the loop mode of the player
+ * @param loop Set to true to loop the current song indefinitely
+ */
 void Player::setLoop(const bool loop) {
     qInfo() << "Setting loop to " << loop;
     if (loop) {
@@ -226,6 +275,11 @@ void Player::setLoop(const bool loop) {
     }
 }
 
+/**
+ * Clear the queue up to a given song.
+ * If the song is not in the queue, nothing happens.
+ * @param song The song to clear up to
+ */
 void Player::clearQueueUpToSong(const Song &song) {
     if (auto it = std::find(queue.begin(), queue.end(), song); it != queue.end()) {
         queue.erase(queue.begin(), ++it);
@@ -234,6 +288,10 @@ void Player::clearQueueUpToSong(const Song &song) {
     emit queueChanged();
 }
 
+/**
+ * Remove a song from the queue
+ * @param song The song to remove
+ */
 void Player::removeSongFromQueue(const Song &song) {
     if (auto it = std::find(queue.begin(), queue.end(), song); it != queue.end()) {
         queue.erase(it);
@@ -242,6 +300,10 @@ void Player::removeSongFromQueue(const Song &song) {
     emit queueChanged();
 }
 
+/**
+ * Get the instance of the player
+ * @return Singleton instance of the player
+ */
 Player *Player::getInstance() {
     if (instance == nullptr) {
         instance = new Player();
@@ -249,12 +311,18 @@ Player *Player::getInstance() {
     return instance;
 }
 
+/**
+ * Check if the current song has ended and play the next song if it has
+ */
 void Player::songEnded() {
     if (position() >= duration()) {
         next();
     }
 }
 
+/**
+ * Toggle play/pause or play the next song if the player is stopped
+ */
 void Player::togglePlayPause() {
     if (source().isEmpty()) {
         next();
@@ -268,12 +336,18 @@ void Player::togglePlayPause() {
     }
 }
 
+/**
+ * Add current song to the history
+ */
 void Player::addToHistory() {
     if (!source().isEmpty()) {
         history.append(Song(source()));
     }
 }
 
+/**
+ * Save the player state to the settings
+ */
 void Player::savePlayer() {
     QByteArray data;
     QDataStream out(&data, QIODevice::WriteOnly);
@@ -282,6 +356,9 @@ void Player::savePlayer() {
     settings.sync();
 }
 
+/**
+ * Load the player state from the settings
+ */
 void Player::loadPlayer() {
     QByteArray data = settings.value("player").toByteArray();
 

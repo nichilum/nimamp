@@ -26,6 +26,9 @@ QueueWidget::~QueueWidget() {
     delete ui;
 }
 
+/**
+ * Re-renders the queue
+ */
 void QueueWidget::updateQueue() {
     auto player = Player::getInstance();
     ui->queueListWidget->clear();
@@ -44,6 +47,14 @@ void QueueWidget::updateQueue() {
     }
 }
 
+/**
+ * Handles the movement of songs in the queue
+ * @param parent The parent index
+ * @param start The starting row
+ * @param end The ending row
+ * @param destination The destination index
+ * @param row The row to move to
+ */
 void QueueWidget::onRowsMoved(const QModelIndex &parent, int start, int end, const QModelIndex &destination, int row) {
     Q_UNUSED(parent);
     Q_UNUSED(end);
@@ -62,6 +73,10 @@ void QueueWidget::onRowsMoved(const QModelIndex &parent, int start, int end, con
     emit player->queueChanged();
 }
 
+/**
+ * Handles right-click events on queue items
+ * @param pos The position of the right click (relative to the widget)
+ */
 void QueueWidget::onQueueItemRightClicked(const QPoint &pos) {
     auto player = Player::getInstance();
 

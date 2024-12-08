@@ -18,6 +18,10 @@ EqualizerWidget::~EqualizerWidget() {
     delete ui;
 }
 
+/**
+ * Updates the volume of the player
+ * @param volume New volume (0-100)
+ */
 void EqualizerWidget::updateVolume(const int volume) {
     auto player = Player::getInstance();
     player->setVolume(static_cast<float>(volume) / 100);
