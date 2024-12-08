@@ -21,6 +21,7 @@ class Playlist {
     void addSongs(const QVector<Song> &songs);
     void removeSong(const Song &song);
     void moveSong(int from, int to);
+    void sort(const QString sortingType);
 
     [[nodiscard]] QString getName() const { return name; }
     [[nodiscard]] QUuid getUuid() const { return uuid; }

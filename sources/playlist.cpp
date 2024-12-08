@@ -2,6 +2,8 @@
 
 #include <QDir>
 
+#include "../headers/player.hpp"
+
 Playlist::Playlist(const QString &name) : name(name), uuid(QUuid::createUuid()) {}
 
 Playlist::Playlist(const QString &name, const QVector<Song> &songs) : name(name), songs(songs), uuid(QUuid::createUuid()) {}
@@ -63,4 +65,17 @@ void Playlist::moveSong(int from, int to) {
  */
 bool operator==(const Playlist &lhs, const Playlist &rhs) {
     return lhs.getUuid() == rhs.getUuid();
+}
+
+void Playlist::sort(const QString sortingType) {
+    if (sortingType == "Name ASC") {
+        std::sort(songs.begin(), songs.end(), [](const Song &a, const Song &b) {
+            return a.filename < b.filename;
+        });
+    }
+    if (sortingType == "Name DSC") {
+        std::sort(songs.begin(), songs.end(), [](const Song &a, const Song &b) {
+            return a.filename > b.filename;
+        });
+    }
 }

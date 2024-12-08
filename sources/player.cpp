@@ -382,3 +382,15 @@ void Player::toggleShuffleQueue() {
     }
     emit queueChanged();
 }
+
+void Player::sortPlaylist(const QString sortingType, const Playlist &playlist) {
+    auto it = std::find_if(playlists.begin(), playlists.end(), [&playlist](const Playlist &p) {
+        return p.getUuid() == playlist.getUuid();
+    });
+    if (it != playlists.end()) {
+        it->sort(sortingType);
+        emit Player::playlistChanged(*it);
+    } else {
+        qDebug() << "Playlist not found!";
+    }
+}

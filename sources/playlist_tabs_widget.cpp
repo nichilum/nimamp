@@ -1,5 +1,6 @@
 #include "../headers/playlist_tabs_widget.hpp"
 
+#include <QComboBox>
 #include <QMenu>
 
 #include "../headers/player.hpp"
@@ -37,8 +38,10 @@ void PlaylistTabsWidget::onPlaylistTabCloseRequested(const int index) const {
  * @param playlist The playlist to update
  */
 void PlaylistTabsWidget::updatePlaylist(const Playlist &playlist) const {
+    // qDebug() << playlist.getSongs();
     for (int i = 0; i < ui->playlistTabs->count(); ++i) {
-        if (auto *playlistView = qobject_cast<QListWidget *>(ui->playlistTabs->widget(i))) {
+        // if (auto *playlistView = qobject_cast<QListWidget *>(ui->playlistTabs->widget(i))) {
+        if (auto *playlistView = ui->playlistTabs->widget(i)->findChild<QListWidget *>()) {
             auto tabPlaylist = playlistView->property("playlistUuid").toUuid();
             if (tabPlaylist == playlist.getUuid()) {
                 qDebug() << "Updating playlist:" << playlist.getName();
@@ -118,8 +121,9 @@ void PlaylistTabsWidget::onPlaylistSelected(const QListWidgetItem *item) const {
         }
     });
 
+    int index = 0;
     for (const auto &song : it->getSongs()) {
-        auto *songWidget = new SongItem(song, SongItemType::Playlist);
+        auto *songWidget = new SongItem(song, SongItemType::Playlist, ++index);
 
         auto *item = new QListWidgetItem(playlistView);
         auto size = songWidget->sizeHint().boundedTo(playlistView->size());
@@ -130,7 +134,25 @@ void PlaylistTabsWidget::onPlaylistSelected(const QListWidgetItem *item) const {
         playlistView->setItemWidget(item, songWidget);
     }
 
-    ui->playlistTabs->addTab(playlistView, playlist.getName());
+    // ui->playlistTabs->addTab(playlistView, playlist.getName());
+    QComboBox *comboBox = new QComboBox;
+    comboBox->addItem("Default");
+    // comboBox->addItem("Duration ASC");
+    // comboBox->addItem("Duration DSC");
+    comboBox->addItem("Name ASC");
+    comboBox->addItem("Name DSC");
+
+    connect(comboBox, &QComboBox::textActivated, this, [playlist](const QString &text) {
+        Player::getInstance()->sortPlaylist(text, playlist);
+    });
+
+    QVBoxLayout *layout = new QVBoxLayout;
+    layout->addWidget(comboBox);
+    layout->addWidget(playlistView);
+    QWidget *container = new QWidget;
+    container->setObjectName("tabContainer");
+    container->setLayout(layout);
+    ui->playlistTabs->addTab(container, playlist.getName());
     ui->playlistTabs->setCurrentWidget(playlistView);
 }
 
