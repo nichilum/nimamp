@@ -98,10 +98,6 @@ void PlaylistTabsWidget::onPlaylistSelected(const QListWidgetItem *item) const {
 
     connect(playlistView, &QListWidget::customContextMenuRequested, this, [this, playlist, playlistView](const QPoint &pos) {
         auto songItem = playlistView->itemAt(pos);
-        if (!songItem) {
-            return;
-        }
-
         auto song = songItem->data(Qt::UserRole).value<Song>();
         auto globalPos = playlistView->mapToGlobal(pos);
         onPlaylistItemRightClicked(globalPos, playlist, song);
