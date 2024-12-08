@@ -5,6 +5,10 @@
 #include <taglib/attachedpictureframe.h>
 #include <QPixmap>
 
+/**
+ * Create a new song from a file
+ * @param url The file to create the song from
+ */
 Song::Song(const QUrl &url) : url(url), filename(url.fileName()) {
     TagLib::MPEG::File file(url.toLocalFile().toUtf8().data());
 
