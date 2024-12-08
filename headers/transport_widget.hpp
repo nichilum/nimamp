@@ -1,7 +1,7 @@
 #pragma once
 
-#include <QWidget>
 #include <QListWidgetItem>
+#include <QWidget>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -23,5 +23,6 @@ class TransportWidget : public QWidget {
     void seekToReleasedPosition() const;
     void onMetadataChanged() const;
     void toggleLoop() const;
+    void toggleShuffle();
     void changePlayPauseIcon() const;
 };

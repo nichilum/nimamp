@@ -18,9 +18,12 @@ class Player final : public QMediaPlayer {
     QAudioOutput audioOutput;
     QVector<Playlist> playlists;
     QVector<Song> queue;
+    QVector<Song> originalQueue;
     QStack<Song> history;
 
     QSettings settings;
+
+    bool shuffled;
 
    public:
     void addPlaylist(const Playlist &playlist);
@@ -45,6 +48,7 @@ class Player final : public QMediaPlayer {
     void clearQueueUpToSong(const Song &song);
     void removeSongFromQueue(const Song &song);
     void addToHistory();
+    void toggleShuffleQueue();
 
     [[nodiscard]] QAudioOutput *getAudioOutput() { return &audioOutput; }
     [[nodiscard]] float getVolume() const { return audioOutput.volume(); }
@@ -52,6 +56,7 @@ class Player final : public QMediaPlayer {
     [[nodiscard]] QVector<Song> *getQueue() { return &queue; }
     [[nodiscard]] bool isQueueEmpty() const { return queue.isEmpty(); }
     [[nodiscard]] bool isLooping() const { return loops() == Infinite; }
+    [[nodiscard]] bool isShuffled() const { return shuffled; }
     [[nodiscard]] QVector<Song> getQueueCopy() const { return queue; }
     [[nodiscard]] QVector<Song> getHistory() const { return history.toVector(); }
 

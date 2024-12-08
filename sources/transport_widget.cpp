@@ -15,6 +15,7 @@ TransportWidget::TransportWidget(QWidget *parent) : QWidget(parent), ui(new Ui::
     connect(ui->transportnextButton, &QPushButton::clicked, player, &Player::next);
     connect(ui->transportprevButton, &QPushButton::clicked, player, &Player::previous);
     connect(ui->transportloopButton, &QPushButton::clicked, this, &TransportWidget::toggleLoop);
+    connect(ui->transportshuffleButton, &QPushButton::clicked, this, &TransportWidget::toggleShuffle);
 
     // seek slider
     connect(player, &QMediaPlayer::positionChanged, this, &TransportWidget::updateSeekSlider);
@@ -81,7 +82,13 @@ void TransportWidget::onMetadataChanged() const {
 void TransportWidget::toggleLoop() const {
     auto player = Player::getInstance();
     player->setLoop(!player->isLooping());
-    ui->transportloopButton->setFlat(!ui->transportloopButton->isFlat());
+    if (player->isLooping()) {
+        ui->transportloopButton->setStyleSheet("QPushButton { background-color: white; border-radius: 15px }");
+        ui->transportloopButton->setIcon(QIcon(":/resources/repeat_b.svg"));
+    } else {
+        ui->transportloopButton->setStyleSheet("QPushButton { background-color: transparent; }");
+        ui->transportloopButton->setIcon(QIcon(":/resources/repeat.svg"));
+    }
 }
 
 void TransportWidget::changePlayPauseIcon() const {
@@ -90,5 +97,17 @@ void TransportWidget::changePlayPauseIcon() const {
         ui->transportplayButton->setIcon(QIcon(":/resources/pause.svg"));
     } else {
         ui->transportplayButton->setIcon(QIcon(":/resources/play_b.svg"));
+    }
+}
+
+void TransportWidget::toggleShuffle() {
+    auto player = Player::getInstance();
+    player->toggleShuffleQueue();
+    if (player->isShuffled()) {
+        ui->transportshuffleButton->setStyleSheet("QPushButton { background-color: white; border-radius: 15px }");
+        ui->transportshuffleButton->setIcon(QIcon(":/resources/shuffle_b.svg"));
+    } else {
+        ui->transportshuffleButton->setStyleSheet("QPushButton { background-color: transparent; }");
+        ui->transportshuffleButton->setIcon(QIcon(":/resources/shuffle.svg"));
     }
 }

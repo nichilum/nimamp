@@ -3,6 +3,7 @@
 #include <QCoreApplication>
 #include <QDebug>
 #include <QDir>
+#include <QRandomGenerator>
 #include <QVariantList>
 #include <iostream>
 
@@ -11,8 +12,15 @@ Player *Player::instance = nullptr;
 Player::Player() {
     setAudioOutput(&audioOutput);
 
+    shuffled = false;
+
     connect(this, &QMediaPlayer::positionChanged, this, &Player::songEnded);
     connect(QCoreApplication::instance(), &QCoreApplication::aboutToQuit, this, &Player::savePlayer);
+    connect(this, &Player::queueChanged, this, [this]() {
+        if (!shuffled) {
+            originalQueue = queue;
+        };
+    });
 
     loadPlayer();
 }
@@ -281,4 +289,19 @@ void Player::loadPlayer() {
         QDataStream in(&data, QIODevice::ReadOnly);
         in >> *this;
     }
+}
+
+void Player::toggleShuffleQueue() {
+    shuffled = !shuffled;
+
+    if (shuffled) {
+        auto rng = std::default_random_engine{};
+        // rng.seed(std::chrono::system_clock::now().time_since_epoch().count()); // this just deletes the queue at some point?
+        std::shuffle(std::begin(queue), std::end(queue), rng);
+        // TODO: how to best save the queues?
+        // also seed stays the same, do we like that?
+    } else {
+        queue = originalQueue;
+    }
+    emit queueChanged();
 }

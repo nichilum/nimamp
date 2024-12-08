@@ -8,7 +8,9 @@
         <file>resources/skip-back.svg</file>
         <file>resources/skip-forward.svg</file>
         <file>resources/repeat.svg</file>
+        <file>resources/repeat_b.svg</file>
         <file>resources/shuffle.svg</file>
+        <file>resources/shuffle_b.svg</file>
         <file>resources/x.svg</file>
         <file>resources/trash.svg</file>
         <file>resources/empty_cover.jpg</file>

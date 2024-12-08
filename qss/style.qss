@@ -96,6 +96,9 @@ QFrame#transportFrame {
 QFrame#tranportVerticalFrame {
     padding-left: 20px;
 }
+QPushButton#transportshuffleButtonEnable {
+    background: red;
+}
 
 /* Sliders  */
 QSlider::groove:horizontal {
