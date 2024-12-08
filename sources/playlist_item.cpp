@@ -60,16 +60,16 @@ void PlaylistItem::loadPlaylistImage() const {
         albumArts.append(QImage(":/resources/empty_cover.jpg"));
     }
 
-    int gridSize = 2;
-    int artSize = 16;
+    auto gridSize = 2;
+    auto artSize = 16;
     QImage gridImage(artSize * gridSize, artSize * gridSize, QImage::Format_ARGB32);
     gridImage.fill(Qt::transparent);
 
     QPainter painter(&gridImage);
     for (int i = 0; i < gridSize; ++i) {
         for (int j = 0; j < gridSize; ++j) {
-            int index = i * gridSize + j;
-            QImage scaledArt = albumArts[index].scaled(artSize, artSize, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+            auto index = i * gridSize + j;
+            auto scaledArt = albumArts[index].scaled(artSize, artSize, Qt::KeepAspectRatio, Qt::SmoothTransformation);
             QPoint topLeft(j * artSize, i * artSize);
             painter.drawImage(topLeft, scaledArt);
         }

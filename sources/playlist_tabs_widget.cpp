@@ -39,7 +39,9 @@ void PlaylistTabsWidget::updatePlaylist(const Playlist &playlist) const {
                     auto *songWidget = new SongItem(song, SongItemType::Playlist);
 
                     auto *item = new QListWidgetItem(playlistView);
-                    item->setSizeHint(songWidget->sizeHint());
+                    auto size = songWidget->sizeHint().boundedTo(playlistView->size());
+                    size.setHeight(64);
+                    item->setSizeHint(size);
                     item->setData(Qt::UserRole, QVariant::fromValue(song));
                     playlistView->addItem(item);
                     playlistView->setItemWidget(item, songWidget);
@@ -108,7 +110,9 @@ void PlaylistTabsWidget::onPlaylistSelected(const QListWidgetItem *item) const {
         auto *songWidget = new SongItem(song, SongItemType::Playlist);
 
         auto *item = new QListWidgetItem(playlistView);
-        item->setSizeHint(songWidget->sizeHint());
+        auto size = songWidget->sizeHint().boundedTo(playlistView->size());
+        size.setHeight(64);
+        item->setSizeHint(size);
         item->setData(Qt::UserRole, QVariant::fromValue(song));
         playlistView->addItem(item);
         playlistView->setItemWidget(item, songWidget);
