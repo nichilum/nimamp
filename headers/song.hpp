@@ -23,12 +23,12 @@ class Song {
     bool operator==(Song const &) const = default;
 
     friend QDataStream &operator<<(QDataStream &out, const Song &song) {
-        out << song.url << song.filename << song.title << song.artist;
+        out << song.url << song.filename << song.title << song.artist << song.albumArt;
         return out;
     }
 
     friend QDataStream &operator>>(QDataStream &in, Song &song) {
-        in >> song.url >> song.filename >> song.title >> song.artist;
+        in >> song.url >> song.filename >> song.title >> song.artist >> song.albumArt;
         return in;
     }
 };
