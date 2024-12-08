@@ -122,6 +122,10 @@ void PlaylistTabsWidget::onPlaylistItemRightClicked(const QPoint &globalPos, con
     auto player = Player::getInstance();
     QMenu menu;
 
+    menu.addAction("Add to Queue", [this, player, song]() {
+        player->queueSong(song);
+    });
+
     menu.addAction("Delete", [this, player, playlist, song]() {
         player->removeSongFromPlaylist(song, playlist);
     });
