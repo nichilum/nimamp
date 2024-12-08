@@ -35,7 +35,7 @@ void PlaylistViewWidget::updatePlaylists() {
 
         auto *item = new QListWidgetItem(ui->playlistListWidget);
         auto size = playlistWidget->sizeHint().boundedTo(ui->playlistListWidget->size());
-        size.setHeight(100);
+        size.setHeight(80);
         item->setSizeHint(size);
         item->setData(Qt::UserRole, QVariant::fromValue(playlist));
         ui->playlistListWidget->addItem(item);

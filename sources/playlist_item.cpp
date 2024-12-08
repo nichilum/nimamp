@@ -56,6 +56,6 @@ void PlaylistItem::loadPlaylistImage() const {
     qDebug() << "Using image from song:" << song->title;
 
     auto pixmap = QPixmap::fromImage(song->albumArt);
-    pixmap = pixmap.scaled(QSize(25, 25), Qt::KeepAspectRatio, Qt::SmoothTransformation);
+    pixmap = pixmap.scaled(QSize(32, 32), Qt::KeepAspectRatio, Qt::SmoothTransformation);
     ui->playlistItemImageLabel->setPixmap(pixmap);
 }
