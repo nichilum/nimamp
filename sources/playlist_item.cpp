@@ -1,5 +1,7 @@
 #include "../headers/playlist_item.hpp"
 
+#include <QPainter>
+
 #include "../headers/player.hpp"
 #include "ui_PlaylistItem.h"
 
@@ -44,18 +46,36 @@ void PlaylistItem::loadPlaylistImage() const {
         return;
     }
 
-    auto song = std::find_if(songs.begin(), songs.end(), [](const Song &s) {
-        return !s.albumArt.isNull();
-    });
-
-    if (song == songs.end()) {
-        qDebug() << "No image found for playlist:" << playlist.getName();
-        return;
+    QVector<QImage> albumArts;
+    for (const auto &song : songs) {
+        if (!song.albumArt.isNull()) {
+            albumArts.append(song.albumArt);
+            if (albumArts.size() == 4) {
+                break;
+            }
+        }
     }
 
-    qDebug() << "Using image from song:" << song->title;
+    while (albumArts.size() < 4) {
+        albumArts.append(QImage(":/resources/empty_cover.jpg"));
+    }
 
-    auto pixmap = QPixmap::fromImage(song->albumArt);
-    pixmap = pixmap.scaled(QSize(32, 32), Qt::KeepAspectRatio, Qt::SmoothTransformation);
+    int gridSize = 2;
+    int artSize = 16;
+    QImage gridImage(artSize * gridSize, artSize * gridSize, QImage::Format_ARGB32);
+    gridImage.fill(Qt::transparent);
+
+    QPainter painter(&gridImage);
+    for (int i = 0; i < gridSize; ++i) {
+        for (int j = 0; j < gridSize; ++j) {
+            int index = i * gridSize + j;
+            QImage scaledArt = albumArts[index].scaled(artSize, artSize, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+            QPoint topLeft(j * artSize, i * artSize);
+            painter.drawImage(topLeft, scaledArt);
+        }
+    }
+    painter.end();
+
+    auto pixmap = QPixmap::fromImage(gridImage);
     ui->playlistItemImageLabel->setPixmap(pixmap);
 }
