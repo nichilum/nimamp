@@ -78,4 +78,14 @@ void Playlist::sort(const QString sortingType) {
             return a.filename > b.filename;
         });
     }
+    if (sortingType == "Duration ASC") {
+        std::sort(songs.begin(), songs.end(), [](const Song &a, const Song &b) {
+            return a.duration < b.duration;
+        });
+    }
+    if (sortingType == "Duration DSC") {
+        std::sort(songs.begin(), songs.end(), [](const Song &a, const Song &b) {
+            return a.duration > b.duration;
+        });
+    }
 }

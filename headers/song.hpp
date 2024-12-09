@@ -14,6 +14,7 @@ class Song {
     QString title;
     QString artist;
     QImage albumArt;
+    int duration;
 
     Song() = default;
     explicit Song(const QUrl &url);
@@ -23,12 +24,12 @@ class Song {
     bool operator==(Song const &) const = default;
 
     friend QDataStream &operator<<(QDataStream &out, const Song &song) {
-        out << song.url << song.filename << song.title << song.artist << song.albumArt;
+        out << song.url << song.filename << song.title << song.artist << song.albumArt << song.duration;
         return out;
     }
 
     friend QDataStream &operator>>(QDataStream &in, Song &song) {
-        in >> song.url >> song.filename >> song.title >> song.artist >> song.albumArt;
+        in >> song.url >> song.filename >> song.title >> song.artist >> song.albumArt >> song.duration;
         return in;
     }
 };

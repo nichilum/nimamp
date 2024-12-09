@@ -107,6 +107,13 @@
        </spacer>
       </item>
       <item>
+       <widget class="QLabel" name="songItemDuration">
+        <property name="text">
+         <string>00:00</string>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="QPushButton" name="songItemPlayButton">
         <property name="cursor">
          <cursorShape>PointingHandCursor</cursorShape>
