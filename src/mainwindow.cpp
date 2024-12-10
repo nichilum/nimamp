@@ -42,7 +42,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     mainSplitter->setStretchFactor(1, 2);
     mainSplitter->setStretchFactor(2, 3);
 
-    ui->centralwidget->setLayout(new QVBoxLayout);
     ui->centralwidget->layout()->addWidget(mainSplitter);
 
     // menu buttons
