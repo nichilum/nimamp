@@ -72,11 +72,13 @@ void TransportWidget::onMetadataChanged() const {
 
     auto title = data.stringValue(QMediaMetaData::Title);
     auto artist = data.stringValue(QMediaMetaData::ContributingArtist);
-    auto thumbnail = data.value(QMediaMetaData::ThumbnailImage).value<QImage>();
-    if (thumbnail.isNull()) {
+
+    // for some reason, qt cant load the thumbnail on macos, so we use the one loaded by taglib
+    auto thumbnail = getAlbumArt(player->source());
+    if (!thumbnail.has_value()) {
         thumbnail = QImage(":/resources/empty_cover.jpg");
     }
-    thumbnail = thumbnail.scaled(QSize(100, 100), Qt::KeepAspectRatio, Qt::SmoothTransformation);
+    thumbnail = thumbnail.value().scaled(QSize(100, 100), Qt::KeepAspectRatio, Qt::SmoothTransformation);
     auto duration = data.value(QMediaMetaData::Duration).toInt();
 
     if (title != "") {
@@ -86,7 +88,7 @@ void TransportWidget::onMetadataChanged() const {
     }
 
     ui->transportartistNameLabel->setText(artist == "" ? "Unknown Artist" : artist);
-    ui->transportcoverLabel->setPixmap(QPixmap::fromImage(thumbnail));
+    ui->transportcoverLabel->setPixmap(QPixmap::fromImage(thumbnail.value()));
     ui->transportdurationLabel->setText(msToString(duration));
 }
 
