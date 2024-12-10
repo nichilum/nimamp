@@ -96,7 +96,19 @@ class Player final : public QMediaPlayer {
     void songEnded();
 
    signals:
+    /**
+     * Emitted when the queue changes
+     */
     void queueChanged();
+
+    /**
+     * Emitted when the playlists (in the player) change
+     */
     void playlistsChanged();
+
+    /**
+     * Emitted when the content of a playlist changes
+     * @param playlist The playlist that changed
+     */
     void playlistChanged(const Playlist &playlist);
 };
