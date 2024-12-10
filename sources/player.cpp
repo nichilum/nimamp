@@ -14,7 +14,7 @@ Player::Player() {
 
     shuffled = false;
 
-    connect(this, &QMediaPlayer::positionChanged, this, &Player::songEnded);
+    connect(this, &QMediaPlayer::mediaStatusChanged, this, &Player::songEnded);
     connect(QCoreApplication::instance(), &QCoreApplication::aboutToQuit, this, &Player::savePlayer);
     connect(this, &Player::queueChanged, this, [this]() {
         if (!shuffled) {
@@ -315,7 +315,7 @@ Player *Player::getInstance() {
  * Check if the current song has ended and play the next song if it has
  */
 void Player::songEnded() {
-    if (position() >= duration()) {
+    if (mediaStatus() == EndOfMedia) {
         next();
     }
 }

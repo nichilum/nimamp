@@ -25,6 +25,11 @@ class Player final : public QMediaPlayer {
 
     bool shuffled;
 
+    /**
+     * True if the player is dirty (set on first load)
+     */
+    bool dirty;
+
    public:
     void addPlaylist(const Playlist &playlist);
     void addToPlaylist(const Song &song, const Playlist &playlist);
@@ -83,10 +88,11 @@ class Player final : public QMediaPlayer {
         player.setSource(source);
 
         connect(&player, &QMediaPlayer::mediaStatusChanged, [position](QMediaPlayer::MediaStatus status) {
-            if (status == QMediaPlayer::LoadedMedia) {
-                getInstance()->setPosition(static_cast<qint64>(position));
+            auto player = getInstance();
+            if (!player->dirty && status == QMediaPlayer::LoadedMedia) {
+                player->setPosition(static_cast<qint64>(position));
+                player->dirty = true;
             }
-            disconnect(getInstance(), &QMediaPlayer::mediaStatusChanged, nullptr, nullptr);
         });
 
         return in;
