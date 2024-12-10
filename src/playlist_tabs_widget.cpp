@@ -144,7 +144,7 @@ void PlaylistTabsWidget::onPlaylistSelected(const QListWidgetItem *item) const {
     }
 
     QComboBox *comboBox = new QComboBox;
-    comboBox->addItem("Default");
+    comboBox->addItem("Custom");
     comboBox->addItem("Duration ASC");
     comboBox->addItem("Duration DSC");
     comboBox->addItem("Name ASC");

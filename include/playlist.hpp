@@ -27,7 +27,7 @@ class Playlist {
 
     [[nodiscard]] QString getName() const { return name; }
     [[nodiscard]] QString getSortingType() const { return sortingType; }
-    [[nodiscard]] bool isSorted() const { return sortingType != "Default"; }
+    [[nodiscard]] bool isSorted() const { return sortingType != "Custom"; }
     [[nodiscard]] QUuid getUuid() const { return uuid; }
     [[nodiscard]] QVector<Song> getSongs() const { return sortSongVector(songs, sortingType); }
     [[nodiscard]] QVector<Song> *getSongsPointer() { return &songs; }
