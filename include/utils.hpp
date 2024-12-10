@@ -56,7 +56,6 @@ inline std::optional<QImage> getAlbumArt(const QUrl &url) {
             if (auto *pictureFrame = dynamic_cast<TagLib::ID3v2::AttachedPictureFrame *>(frameList.front())) {
                 QByteArray imageData(pictureFrame->picture().data(), pictureFrame->picture().size());
                 auto coverImage = QImage::fromData(imageData);
-                coverImage = coverImage.scaled(QSize(100, 100), Qt::KeepAspectRatio, Qt::SmoothTransformation);
                 if (!coverImage.isNull()) {
                     return coverImage;
                 }

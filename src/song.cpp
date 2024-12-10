@@ -26,7 +26,8 @@ Song::Song(const QUrl &url) : url(url), filename(url.fileName()) {
                 if (auto *pictureFrame = dynamic_cast<TagLib::ID3v2::AttachedPictureFrame *>(frameList.front())) {
                     QByteArray imageData(pictureFrame->picture().data(), pictureFrame->picture().size());
                     auto coverImage = QImage::fromData(imageData);
-                    coverImage = coverImage.scaled(QSize(100, 100), Qt::KeepAspectRatio, Qt::SmoothTransformation);
+                    // scale the image to 32x32, as this is the size of the album art in the UI
+                    coverImage = coverImage.scaled(QSize(32, 32), Qt::KeepAspectRatio, Qt::SmoothTransformation);
                     if (!coverImage.isNull()) {
                         albumArt = coverImage;
                     }
