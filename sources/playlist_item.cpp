@@ -13,6 +13,7 @@ PlaylistItem::PlaylistItem(const Playlist &playlist, QWidget *parent)
     loadPlaylistImage();
 
     ui->playlistItemNameLabel->setText(playlist.getName());
+    ui->playlistItemAmountLabel->setText(QString::number(playlist.getSongs().size()) + " Songs");
 
     connect(ui->playlistItemPlayButton, &QPushButton::clicked, this, &PlaylistItem::playPlaylist);
     connect(ui->playlistItemQueueButton, &QPushButton::clicked, this, &PlaylistItem::queuePlaylist);
