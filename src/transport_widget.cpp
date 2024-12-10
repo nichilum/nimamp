@@ -85,7 +85,7 @@ void TransportWidget::onMetadataChanged() const {
         ui->transportsongNameLabel->setText(player->source().fileName());
     }
 
-    ui->transportartistNameLabel->setText(artist);
+    ui->transportartistNameLabel->setText(artist == "" ? "Unknown Artist" : artist);
     ui->transportcoverLabel->setPixmap(QPixmap::fromImage(thumbnail));
     ui->transportdurationLabel->setText(msToString(duration));
 }

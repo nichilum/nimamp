@@ -12,7 +12,7 @@ SongItem::SongItem(const Song &song, SongItemType songItemType, int index, QWidg
     ui->setupUi(this);
 
     ui->songItemSongLabel->setText(song.title == "" ? song.getFilename() : song.title);
-    ui->songItemArtistLabel->setText(song.artist == "" ? "Unknown artist" : song.artist);
+    ui->songItemArtistLabel->setText(song.artist == "" ? "Unknown Artist" : song.artist);
     ui->songItemDuration->setText(msToString(song.duration));
     auto image = song.albumArt.isNull() ? QImage(":/resources/empty_cover.jpg") : song.albumArt;
     image = image.scaled(QSize(32, 32), Qt::KeepAspectRatio, Qt::SmoothTransformation);
