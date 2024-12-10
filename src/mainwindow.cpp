@@ -66,6 +66,11 @@ void MainWindow::openFolderDialog() {
     QString dir = QFileDialog::getExistingDirectory(this, tr("Open Directory"),
                                                     "",
                                                     QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
+
+    if (dir.isEmpty()) {
+        return;
+    }
+
     Player::getInstance()->addFolderToQueue(dir);
 }
 
