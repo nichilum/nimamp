@@ -22,33 +22,33 @@ qt_standard_project_setup(REQUIRES 6.5)
 set(CMAKE_AUTOUIC_SEARCH_PATHS ${CMAKE_SOURCE_DIR}/ui)
 
 qt_add_executable(appnimamp
-        sources/main.cpp
-        headers/key_events.hpp
-        headers/player.hpp
-        sources/player.cpp
-        headers/playlist.hpp
-        sources/playlist.cpp
-        headers/utils.hpp
-        headers/song.hpp
-        sources/song.cpp
-        sources/mainwindow.cpp
-        headers/mainwindow.hpp
-        sources/song_item.cpp
-        headers/song_item.hpp
-        sources/playlist_item.cpp
-        headers/playlist_item.hpp
-        sources/queue_widget.cpp
-        headers/queue_widget.hpp
-        sources/playlist_view_widget.cpp
-        headers/playlist_view_widget.hpp
-        sources/transport_widget.cpp
-        headers/transport_widget.hpp
-        sources/playlist_tabs_widget.cpp
-        headers/playlist_tabs_widget.hpp
-        sources/metadata_widget.cpp
-        headers/metadata_widget.hpp
-        sources/equalizer_widget.cpp
-        headers/equalizer_widget.hpp
+        src/main.cpp
+        include/key_events.hpp
+        include/player.hpp
+        src/player.cpp
+        include/playlist.hpp
+        src/playlist.cpp
+        include/utils.hpp
+        include/song.hpp
+        src/song.cpp
+        src/mainwindow.cpp
+        include/mainwindow.hpp
+        src/song_item.cpp
+        include/song_item.hpp
+        src/playlist_item.cpp
+        include/playlist_item.hpp
+        src/queue_widget.cpp
+        include/queue_widget.hpp
+        src/playlist_view_widget.cpp
+        include/playlist_view_widget.hpp
+        src/transport_widget.cpp
+        include/transport_widget.hpp
+        src/playlist_tabs_widget.cpp
+        include/playlist_tabs_widget.hpp
+        src/metadata_widget.cpp
+        include/metadata_widget.hpp
+        src/equalizer_widget.cpp
+        include/equalizer_widget.hpp
 
         ui/MainWindow.ui
         ui/SongItem.ui

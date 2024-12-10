@@ -1,4 +1,4 @@
-#include "../headers/player.hpp"
+#include "../include/player.hpp"
 
 #include <QCoreApplication>
 #include <QDebug>

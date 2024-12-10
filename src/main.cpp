@@ -1,12 +1,12 @@
 #include <QApplication>
 #include <QDir>
 #include <QFontDatabase>
-#include <QMetaType>
 #include <QLoggingCategory>
+#include <QMetaType>
 
-#include "../headers/key_events.hpp"
-#include "../headers/mainwindow.hpp"
-#include "../headers/player.hpp"
+#include "../include/key_events.hpp"
+#include "../include/mainwindow.hpp"
+#include "../include/player.hpp"
 
 int main(int argc, char *argv[]) {
     QApplication app(argc, argv);

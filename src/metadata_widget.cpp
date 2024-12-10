@@ -1,8 +1,8 @@
-#include "../headers/metadata_widget.hpp"
+#include "../include/metadata_widget.hpp"
 
 #include <QMediaMetaData>
 
-#include "../headers/player.hpp"
+#include "../include/player.hpp"
 #include "ui_MetadataWidget.h"
 
 MetadataWidget::MetadataWidget(QWidget *parent) : QWidget(parent), ui(new Ui::MetadataWidget) {

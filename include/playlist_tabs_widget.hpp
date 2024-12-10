@@ -3,7 +3,7 @@
 #include <QListWidgetItem>
 #include <QWidget>
 
-#include "../headers/playlist_view_widget.hpp"
+#include "../include/playlist_view_widget.hpp"
 #include "playlist.hpp"
 
 QT_BEGIN_NAMESPACE

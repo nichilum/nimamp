@@ -1,6 +1,6 @@
-#include "../headers/song_item.hpp"
+#include "../include/song_item.hpp"
 
-#include "../headers/player.hpp"
+#include "../include/player.hpp"
 #include "ui_SongItem.h"
 
 SongItem::SongItem(const Song &song, SongItemType songItemType, QWidget *parent)

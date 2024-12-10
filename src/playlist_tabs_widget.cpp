@@ -1,11 +1,11 @@
-#include "../headers/playlist_tabs_widget.hpp"
+#include "../include/playlist_tabs_widget.hpp"
 
 #include <QComboBox>
 #include <QMenu>
 
-#include "../headers/player.hpp"
-#include "../headers/playlist_view_widget.hpp"
-#include "../headers/song_item.hpp"
+#include "../include/player.hpp"
+#include "../include/playlist_view_widget.hpp"
+#include "../include/song_item.hpp"
 #include "ui_PlaylistTabsWidget.h"
 #include "ui_PlaylistViewWidget.h"
 

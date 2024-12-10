@@ -1,8 +1,8 @@
-#include "../headers/playlist.hpp"
+#include "../include/playlist.hpp"
 
 #include <QDir>
 
-#include "../headers/player.hpp"
+#include "../include/player.hpp"
 
 Playlist::Playlist(const QString &name) : name(name), uuid(QUuid::createUuid()) {}
 

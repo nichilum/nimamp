@@ -1,11 +1,11 @@
-#include "../headers/playlist_view_widget.hpp"
+#include "../include/playlist_view_widget.hpp"
 
 #include <QFileDialog>
 #include <QInputDialog>
 #include <QMenu>
 
-#include "../headers/player.hpp"
-#include "../headers/playlist_item.hpp"
+#include "../include/player.hpp"
+#include "../include/playlist_item.hpp"
 #include "ui_PlaylistViewWidget.h"
 
 PlaylistViewWidget::PlaylistViewWidget(QWidget *parent) : QWidget(parent), ui(new Ui::PlaylistViewWidget) {

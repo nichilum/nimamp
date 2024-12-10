@@ -1,8 +1,8 @@
-#include "../headers/playlist_item.hpp"
+#include "../include/playlist_item.hpp"
 
 #include <QPainter>
 
-#include "../headers/player.hpp"
+#include "../include/player.hpp"
 #include "ui_PlaylistItem.h"
 
 PlaylistItem::PlaylistItem(const Playlist &playlist, QWidget *parent)

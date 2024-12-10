@@ -1,6 +1,6 @@
-#include "../headers/equalizer_widget.hpp"
+#include "../include/equalizer_widget.hpp"
 
-#include "../headers/player.hpp"
+#include "../include/player.hpp"
 #include "ui_EqualizerWidget.h"
 
 EqualizerWidget::EqualizerWidget(QWidget *parent) : QWidget(parent), ui(new Ui::EqualizerWidget) {

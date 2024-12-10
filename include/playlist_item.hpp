@@ -4,7 +4,7 @@
 #include <QPushButton>
 #include <QWidget>
 
-#include "../headers/playlist.hpp"
+#include "../include/playlist.hpp"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {

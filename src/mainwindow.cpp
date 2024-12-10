@@ -1,4 +1,4 @@
-#include "../headers/mainwindow.hpp"
+#include "../include/mainwindow.hpp"
 
 #include <ui_PlaylistViewWidget.h>
 
@@ -6,8 +6,8 @@
 #include <QSplitter>
 #include <QTextEdit>
 
-#include "../headers/player.hpp"
-#include "../headers/queue_widget.hpp"
+#include "../include/player.hpp"
+#include "../include/queue_widget.hpp"
 #include "ui_MainWindow.h"
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow) {

@@ -1,9 +1,9 @@
-#include "../headers/queue_widget.hpp"
+#include "../include/queue_widget.hpp"
 
 #include <QMenu>
 
-#include "../headers/player.hpp"
-#include "../headers/song_item.hpp"
+#include "../include/player.hpp"
+#include "../include/song_item.hpp"
 #include "ui_QueueWidget.h"
 
 QueueWidget::QueueWidget(QWidget *parent) : QWidget(parent), ui(new Ui::QueueWidget) {

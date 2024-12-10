@@ -1,8 +1,8 @@
-#include "../headers/transport_widget.hpp"
+#include "../include/transport_widget.hpp"
 
 #include <QMediaMetaData>
 
-#include "../headers/player.hpp"
+#include "../include/player.hpp"
 #include "ui_TransportWidget.h"
 
 TransportWidget::TransportWidget(QWidget *parent) : QWidget(parent), ui(new Ui::TransportWidget) {

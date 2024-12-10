@@ -1,4 +1,4 @@
-#include "../headers/song.hpp"
+#include "../include/song.hpp"
 
 #include <taglib/attachedpictureframe.h>
 #include <taglib/fileref.h>
