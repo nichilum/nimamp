@@ -38,6 +38,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     mainSplitter->addWidget(leftSplitter);
     mainSplitter->addWidget(queueWidget);
     mainSplitter->addWidget(rightSplitter);
+    mainSplitter->setStretchFactor(0, 1);
+    mainSplitter->setStretchFactor(1, 2);
+    mainSplitter->setStretchFactor(2, 3);
 
     ui->centralwidget->setLayout(new QVBoxLayout);
     ui->centralwidget->layout()->addWidget(mainSplitter);
