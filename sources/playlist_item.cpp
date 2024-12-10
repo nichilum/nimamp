@@ -13,12 +13,14 @@ PlaylistItem::PlaylistItem(const Playlist &playlist, QWidget *parent)
     loadPlaylistImage();
 
     ui->playlistItemNameLabel->setText(playlist.getName());
+    ui->playlistItemAmountLabel->setText(QString::number(playlist.getSongs().size()) + " Songs");
 
     connect(ui->playlistItemPlayButton, &QPushButton::clicked, this, &PlaylistItem::playPlaylist);
     connect(ui->playlistItemQueueButton, &QPushButton::clicked, this, &PlaylistItem::queuePlaylist);
     connect(player, &Player::playlistChanged, this, [this](const Playlist &p) {
         if (this->playlist.getUuid() == p.getUuid()) {
             this->playlist = p;
+            ui->playlistItemAmountLabel->setText(QString::number(p.getSongs().size()) + " Songs");
             loadPlaylistImage();
         }
     });

@@ -296,7 +296,7 @@
            <item>
             <widget class="QLabel" name="transportdurationLabel">
              <property name="text">
-              <string>3:37</string>
+              <string>0:00</string>
              </property>
             </widget>
            </item>

@@ -194,6 +194,9 @@ QWidget#PlaylistItemFrame {
 QLabel#playlistItemNameLabel {
     font-size: 12pt;
 }
+QLabel#playlistItemAmountLabel {
+    color: #b4b4b4;
+}
 
 /* Metadata */
 QLabel#metadataLabel {

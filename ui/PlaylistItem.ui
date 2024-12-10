@@ -43,11 +43,25 @@
        </widget>
       </item>
       <item>
-       <widget class="QLabel" name="playlistItemNameLabel">
-        <property name="text">
-         <string>Playlist Name</string>
+       <layout class="QVBoxLayout" name="verticalLayout_3">
+        <property name="rightMargin">
+         <number>0</number>
         </property>
-       </widget>
+        <item>
+         <widget class="QLabel" name="playlistItemNameLabel">
+          <property name="text">
+           <string>Playlist Name</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="playlistItemAmountLabel">
+          <property name="text">
+           <string>0 Songs</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </item>
       <item>
        <spacer name="horizontalSpacer">
