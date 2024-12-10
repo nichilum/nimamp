@@ -19,6 +19,7 @@ PlaylistItem::PlaylistItem(const Playlist &playlist, QWidget *parent)
     connect(player, &Player::playlistChanged, this, [this](const Playlist &p) {
         if (this->playlist.getUuid() == p.getUuid()) {
             this->playlist = p;
+            ui->playlistItemAmountLabel->setText(QString::number(p.getSongs().size()) + " Songs");
             loadPlaylistImage();
         }
     });
