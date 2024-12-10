@@ -1,6 +1,7 @@
 #include "../headers/song.hpp"
 
 #include <taglib/attachedpictureframe.h>
+#include <taglib/fileref.h>
 #include <taglib/id3v2tag.h>
 #include <taglib/mpegfile.h>
 
@@ -11,22 +12,23 @@
  * @param url The file to create the song from
  */
 Song::Song(const QUrl &url) : url(url), filename(url.fileName()) {
-    TagLib::MPEG::File file(url.toLocalFile().toUtf8().data());
-
-    if (file.ID3v2Tag()) {
-        TagLib::ID3v2::Tag *tag = file.ID3v2Tag();
-        TagLib::AudioProperties *properties = file.audioProperties();
+    TagLib::FileRef file(url.toLocalFile().toUtf8().data());
+    if (!file.isNull() && file.tag()) {
+        TagLib::Tag *tag = file.tag();
         title = QString::fromStdString(tag->title().toCString(true));
         artist = QString::fromStdString(tag->artist().toCString(true));
-        duration = properties->lengthInMilliseconds();
+        duration = file.audioProperties()->lengthInMilliseconds();
 
-        TagLib::ID3v2::FrameList frames = tag->frameList("APIC");  // APIC is the frame for album art
-        if (!frames.isEmpty()) {
-            if (auto *pictureFrame = dynamic_cast<TagLib::ID3v2::AttachedPictureFrame *>(frames.front())) {
-                auto imageData = QByteArray::fromRawData(pictureFrame->picture().data(), pictureFrame->picture().size());
-                auto image = QImage::fromData(imageData);
-                if (!image.isNull()) {
-                    albumArt = image;
+        TagLib::MPEG::File mpegFile(url.toLocalFile().toUtf8().data());
+        TagLib::ID3v2::Tag *id3v2Tag = mpegFile.ID3v2Tag();
+        if (id3v2Tag) {
+            if (const auto &frameList = id3v2Tag->frameListMap()["APIC"]; !frameList.isEmpty()) {
+                if (auto *pictureFrame = dynamic_cast<TagLib::ID3v2::AttachedPictureFrame *>(frameList.front())) {
+                    QByteArray imageData(pictureFrame->picture().data(), pictureFrame->picture().size());
+                    auto coverImage = QImage::fromData(imageData);
+                    if (!coverImage.isNull()) {
+                        albumArt = coverImage;
+                    }
                 }
             }
         }
