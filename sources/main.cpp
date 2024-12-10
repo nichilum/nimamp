@@ -2,6 +2,7 @@
 #include <QDir>
 #include <QFontDatabase>
 #include <QMetaType>
+#include <QLoggingCategory>
 
 #include "../headers/key_events.hpp"
 #include "../headers/mainwindow.hpp"
@@ -15,20 +16,19 @@ int main(int argc, char *argv[]) {
     qRegisterMetaType<QVector<Playlist>>("QVector<Playlist>");
     qRegisterMetaType<Player>("Player");
 
+    QLoggingCategory::setFilterRules("qt.gui.imageio=false");
+
     // key events
-    GlobalKeyFilter *keyFilter = new GlobalKeyFilter();
+    auto *keyFilter = new GlobalKeyFilter();
     app.installEventFilter(keyFilter);
 
     // font
-    int fontId = QFontDatabase::addApplicationFont(":/resources/inter.ttf");
-    QString fontFamily = QFontDatabase::applicationFontFamilies(fontId).at(0);
+    auto fontId = QFontDatabase::addApplicationFont(":/resources/inter.ttf");
+    auto fontFamily = QFontDatabase::applicationFontFamilies(fontId).at(0);
 
     // style sheet
-    // QFile styleFile("/home/jojo/Github/nimamp/qss/style.qss");
     QFile styleFile(":/qss/style.qss");
     styleFile.open(QFile::ReadOnly);
-
-    // Apply the loaded stylesheet
     QString style(styleFile.readAll());
     app.setStyleSheet(style);
 
