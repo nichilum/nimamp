@@ -20,7 +20,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     metadataWidget = new MetadataWidget(this);
     equalizerWidget = new EqualizerWidget(this);
 
-    QSplitter *leftSplitter = new QSplitter(Qt::Vertical);
+    leftSplitter = new QSplitter(Qt::Vertical);
     leftSplitter->addWidget(transportWidget);
     leftSplitter->addWidget(equalizerWidget);
     leftSplitter->addWidget(metadataWidget);
@@ -28,13 +28,13 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     leftSplitter->setStretchFactor(1, 2);
     leftSplitter->setStretchFactor(2, 3);
 
-    QSplitter *rightSplitter = new QSplitter(Qt::Vertical);
+    rightSplitter = new QSplitter(Qt::Vertical);
     rightSplitter->addWidget(playlistViewWidget);
     rightSplitter->addWidget(playlistTabsWidget);
     rightSplitter->setStretchFactor(0, 1);
     rightSplitter->setStretchFactor(1, 2);
 
-    QSplitter *mainSplitter = new QSplitter(Qt::Horizontal);
+    mainSplitter = new QSplitter(Qt::Horizontal);
     mainSplitter->addWidget(leftSplitter);
     mainSplitter->addWidget(queueWidget);
     mainSplitter->addWidget(rightSplitter);
@@ -55,6 +55,9 @@ MainWindow::~MainWindow() {
     delete queueWidget;
     delete playlistViewWidget;
     delete transportWidget;
+    delete leftSplitter;
+    delete rightSplitter;
+    delete mainSplitter;
 }
 
 /**

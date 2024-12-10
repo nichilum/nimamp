@@ -1,6 +1,7 @@
 #pragma once
 
 #include <QMainWindow>
+#include <QSplitter>
 
 #include "equalizer_widget.hpp"
 #include "metadata_widget.hpp"
@@ -31,6 +32,9 @@ class MainWindow : public QMainWindow {
     PlaylistTabsWidget *playlistTabsWidget;
     MetadataWidget *metadataWidget;
     EqualizerWidget *equalizerWidget;
+    QSplitter *leftSplitter;
+    QSplitter *rightSplitter;
+    QSplitter *mainSplitter;
 
     void openFolderDialog();
     void openFileDialog();
