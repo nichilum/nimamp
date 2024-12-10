@@ -27,7 +27,7 @@ inline QString msToString(const qint64 position) {
     return formattedTime;
 }
 
-inline QVector<Song> sortSongVector(const QVector<Song> &songs, QString sortingType) {
+inline QVector<Song> sortSongVector(const QVector<Song> &songs, const QString &sortingType) {
     auto sortedSongs = songs;
     if (sortingType == "Name ASC") {
         std::sort(sortedSongs.begin(), sortedSongs.end(), [](const Song &a, const Song &b) {
