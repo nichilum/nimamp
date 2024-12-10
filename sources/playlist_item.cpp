@@ -16,8 +16,8 @@ PlaylistItem::PlaylistItem(const Playlist &playlist, QWidget *parent)
 
     connect(ui->playlistItemPlayButton, &QPushButton::clicked, this, &PlaylistItem::playPlaylist);
     connect(ui->playlistItemQueueButton, &QPushButton::clicked, this, &PlaylistItem::queuePlaylist);
-    connect(player, &Player::playlistChanged, this, [this](const Playlist &playlist) {
-        if (this->playlist.getUuid() == playlist.getUuid()) {
+    connect(player, &Player::playlistChanged, this, [this](const Playlist &p) {
+        if (this->playlist.getUuid() == p.getUuid()) {
             loadPlaylistImage();
         }
     });
@@ -49,7 +49,7 @@ void PlaylistItem::removePlaylist() const {
 }
 
 /**
- * Load the playlist image
+ * Load the playlist image.
  * Creates a grid of album arts from the first four songs in the playlist
  */
 void PlaylistItem::loadPlaylistImage() const {
