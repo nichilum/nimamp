@@ -14,7 +14,7 @@ QueueWidget::QueueWidget(QWidget *parent) : QWidget(parent), ui(new Ui::QueueWid
 
     auto player = Player::getInstance();
 
-    updateQueue();  // TODO: i hate it here
+    updateQueue();  // render loaded queue
 
     connect(player, &Player::queueChanged, this, &QueueWidget::updateQueue);
     connect(ui->queueListWidget->model(), &QAbstractItemModel::rowsMoved, this, &QueueWidget::onRowsMoved);

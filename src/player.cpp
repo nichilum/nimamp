@@ -373,10 +373,7 @@ void Player::toggleShuffleQueue() {
 
     if (shuffled) {
         auto rng = std::default_random_engine{};
-        // rng.seed(std::chrono::system_clock::now().time_since_epoch().count()); // this just deletes the queue at some point?
         std::shuffle(std::begin(queue), std::end(queue), rng);
-        // TODO: how to best save the queues?
-        // also seed stays the same, do we like that?
     } else {
         queue = originalQueue;
     }

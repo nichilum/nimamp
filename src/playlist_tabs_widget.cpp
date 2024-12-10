@@ -38,7 +38,6 @@ void PlaylistTabsWidget::onPlaylistTabCloseRequested(const int index) const {
  * @param playlist The playlist to update
  */
 void PlaylistTabsWidget::updatePlaylist(const Playlist &playlist) const {
-    // qDebug() << playlist.getSongs();
     for (int i = 0; i < ui->playlistTabs->count(); ++i) {
         if (auto *playlistView = ui->playlistTabs->widget(i)->findChild<QListWidget *>()) {
             if (!playlist.isSorted()) {
