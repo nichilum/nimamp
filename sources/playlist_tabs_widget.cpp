@@ -98,10 +98,12 @@ void PlaylistTabsWidget::onPlaylistSelected(const QListWidgetItem *item) const {
         }
     }
 
-    auto *playlistView = new QListWidget;
+    auto *playlistView = new QListWidget(ui->playlistTabs);
     playlistView->setProperty("playlistUuid", playlist.getUuid());
     playlistView->setObjectName("playlistTabListWidget");
     playlistView->setContextMenuPolicy(Qt::CustomContextMenu);
+    playlistView->setWordWrap(true);
+    playlistView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     if (!it->isSorted()) {
         playlistView->setDragDropMode(QAbstractItemView::InternalMove);
     }
