@@ -3,6 +3,8 @@
 #include <ui_PlaylistViewWidget.h>
 
 #include <QFileDialog>
+#include <QSplitter>
+#include <QTextEdit>
 
 #include "../headers/player.hpp"
 #include "../headers/queue_widget.hpp"
@@ -18,29 +20,27 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     metadataWidget = new MetadataWidget(this);
     equalizerWidget = new EqualizerWidget(this);
 
-    ui->queueWidgetPlaceholder->setLayout(new QVBoxLayout);
-    ui->queueWidgetPlaceholder->layout()->addWidget(queueWidget);
-    ui->queueWidgetPlaceholder->layout()->setContentsMargins(0, 0, 0, 0);
+    QSplitter *leftSplitter = new QSplitter(Qt::Vertical);
+    leftSplitter->addWidget(transportWidget);
+    leftSplitter->addWidget(equalizerWidget);
+    leftSplitter->addWidget(metadataWidget);
+    leftSplitter->setStretchFactor(0, 1);
+    leftSplitter->setStretchFactor(1, 2);
+    leftSplitter->setStretchFactor(2, 3);
 
-    ui->playlistViewWidgetPlaceholder->setLayout(new QVBoxLayout);
-    ui->playlistViewWidgetPlaceholder->layout()->addWidget(playlistViewWidget);
-    ui->playlistViewWidgetPlaceholder->layout()->setContentsMargins(0, 0, 0, 0);
+    QSplitter *rightSplitter = new QSplitter(Qt::Vertical);
+    rightSplitter->addWidget(playlistViewWidget);
+    rightSplitter->addWidget(playlistTabsWidget);
+    rightSplitter->setStretchFactor(0, 1);
+    rightSplitter->setStretchFactor(1, 2);
 
-    ui->transportWidgetPlaceholder->setLayout(new QVBoxLayout);
-    ui->transportWidgetPlaceholder->layout()->addWidget(transportWidget);
-    ui->transportWidgetPlaceholder->layout()->setContentsMargins(0, 0, 0, 0);
+    QSplitter *mainSplitter = new QSplitter(Qt::Horizontal);
+    mainSplitter->addWidget(leftSplitter);
+    mainSplitter->addWidget(queueWidget);
+    mainSplitter->addWidget(rightSplitter);
 
-    ui->playlistTabsWidgetPlaceholder->setLayout(new QVBoxLayout);
-    ui->playlistTabsWidgetPlaceholder->layout()->addWidget(playlistTabsWidget);
-    ui->playlistTabsWidgetPlaceholder->layout()->setContentsMargins(0, 0, 0, 0);
-
-    ui->metadataWidgetPlaceholder->setLayout(new QVBoxLayout);
-    ui->metadataWidgetPlaceholder->layout()->addWidget(metadataWidget);
-    ui->metadataWidgetPlaceholder->layout()->setContentsMargins(0, 0, 0, 0);
-
-    ui->eqWidgetPlaceholder->setLayout(new QVBoxLayout);
-    ui->eqWidgetPlaceholder->layout()->addWidget(equalizerWidget);
-    ui->eqWidgetPlaceholder->layout()->setContentsMargins(0, 0, 0, 0);
+    ui->centralwidget->setLayout(new QVBoxLayout);
+    ui->centralwidget->layout()->addWidget(mainSplitter);
 
     // menu buttons
     connect(ui->actionFolderToQueue, &QAction::triggered, this, &MainWindow::openFolderDialog);
