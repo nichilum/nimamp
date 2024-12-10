@@ -161,7 +161,7 @@ void PlaylistTabsWidget::onPlaylistSelected(const QListWidgetItem *item) const {
     container->setObjectName("tabContainer");
     container->setLayout(layout);
     ui->playlistTabs->addTab(container, playlist.getName());
-    ui->playlistTabs->setCurrentWidget(playlistView);
+    ui->playlistTabs->setCurrentWidget(container);
 }
 
 /**
