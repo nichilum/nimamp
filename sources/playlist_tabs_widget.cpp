@@ -42,12 +42,18 @@ void PlaylistTabsWidget::updatePlaylist(const Playlist &playlist) const {
     for (int i = 0; i < ui->playlistTabs->count(); ++i) {
         // if (auto *playlistView = qobject_cast<QListWidget *>(ui->playlistTabs->widget(i))) {
         if (auto *playlistView = ui->playlistTabs->widget(i)->findChild<QListWidget *>()) {
+            if (!playlist.isSorted()) {
+                playlistView->setDragDropMode(QAbstractItemView::InternalMove);
+            } else {
+                playlistView->setDragDropMode(QAbstractItemView::NoDragDrop);
+            }
             auto tabPlaylist = playlistView->property("playlistUuid").toUuid();
             if (tabPlaylist == playlist.getUuid()) {
                 qDebug() << "Updating playlist:" << playlist.getName();
                 playlistView->clear();
+                int index = 0;
                 for (const auto &song : playlist.getSongs()) {
-                    auto *songWidget = new SongItem(song, SongItemType::Playlist);
+                    auto *songWidget = new SongItem(song, SongItemType::Playlist, ++index);
 
                     auto *item = new QListWidgetItem(playlistView);
                     auto size = songWidget->sizeHint().boundedTo(playlistView->size());
@@ -97,7 +103,9 @@ void PlaylistTabsWidget::onPlaylistSelected(const QListWidgetItem *item) const {
     playlistView->setProperty("playlistUuid", playlist.getUuid());
     playlistView->setObjectName("playlistTabListWidget");
     playlistView->setContextMenuPolicy(Qt::CustomContextMenu);
-    playlistView->setDragDropMode(QAbstractItemView::InternalMove);
+    if (!it->isSorted()) {
+        playlistView->setDragDropMode(QAbstractItemView::InternalMove);
+    }
 
     connect(playlistView, &QListWidget::customContextMenuRequested, this, [this, playlist, playlistView](const QPoint &pos) {
         auto songItem = playlistView->itemAt(pos);
@@ -134,13 +142,13 @@ void PlaylistTabsWidget::onPlaylistSelected(const QListWidgetItem *item) const {
         playlistView->setItemWidget(item, songWidget);
     }
 
-    // ui->playlistTabs->addTab(playlistView, playlist.getName());
     QComboBox *comboBox = new QComboBox;
     comboBox->addItem("Default");
     comboBox->addItem("Duration ASC");
     comboBox->addItem("Duration DSC");
     comboBox->addItem("Name ASC");
     comboBox->addItem("Name DSC");
+    comboBox->setCurrentText(it->getSortingType());
 
     connect(comboBox, &QComboBox::textActivated, this, [playlist](const QString &text) {
         Player::getInstance()->sortPlaylist(text, playlist);

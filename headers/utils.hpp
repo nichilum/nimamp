@@ -22,3 +22,25 @@ inline QString msToString(const qint64 position) {
 
     return formattedTime;
 }
+
+inline QVector<Song> sortSongVector(const QVector<Song> &songs, QString sortingType) {
+    auto sortedSongs = songs;
+    if (sortingType == "Name ASC") {
+        std::sort(sortedSongs.begin(), sortedSongs.end(), [](const Song &a, const Song &b) {
+            return a.filename < b.filename;
+        });
+    } else if (sortingType == "Name DSC") {
+        std::sort(sortedSongs.begin(), sortedSongs.end(), [](const Song &a, const Song &b) {
+            return a.filename > b.filename;
+        });
+    } else if (sortingType == "Duration ASC") {
+        std::sort(sortedSongs.begin(), sortedSongs.end(), [](const Song &a, const Song &b) {
+            return a.duration < b.duration;
+        });
+    } else if (sortingType == "Duration DSC") {
+        std::sort(sortedSongs.begin(), sortedSongs.end(), [](const Song &a, const Song &b) {
+            return a.duration > b.duration;
+        });
+    }
+    return sortedSongs;
+}

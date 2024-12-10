@@ -388,8 +388,8 @@ void Player::sortPlaylist(const QString sortingType, const Playlist &playlist) {
         return p.getUuid() == playlist.getUuid();
     });
     if (it != playlists.end()) {
-        it->sort(sortingType);
-        emit Player::playlistChanged(*it);
+        it->setSortingType(sortingType);
+        emit playlistChanged(*it);
     } else {
         qDebug() << "Playlist not found!";
     }

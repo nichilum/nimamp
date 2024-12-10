@@ -262,3 +262,35 @@ QFrame#equalizerFrame {
     background-color: #1c1c1c;
     border-radius: 10px;
 }
+
+/* Sort Combobox */
+QComboBox {
+    background-color: #2d2d2d;
+    color: #ffffff;
+    border: 1px solid #5a5a5a;
+    border-radius: 4px;
+    padding: 4px 8px;
+}
+
+QComboBox::drop-down {
+    subcontrol-origin: padding;
+    subcontrol-position: top right;
+    width: 25px;
+    background-color: #3c3c3c;
+    border-left: 1px solid #5a5a5a;
+}
+
+QComboBox::down-arrow {
+    image: url(:/resources/down-arrow.svg);
+    width: 10px;
+    height: 10px;
+}
+
+QComboBox QAbstractItemView {
+    background-color: #3c3c3c;
+    color: #ffffff;
+    selection-background-color: #5a5a5a;
+    selection-color: #ffffff;
+    border: 1px solid #5a5a5a;
+    outline: none;
+}
