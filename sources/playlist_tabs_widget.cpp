@@ -40,7 +40,6 @@ void PlaylistTabsWidget::onPlaylistTabCloseRequested(const int index) const {
 void PlaylistTabsWidget::updatePlaylist(const Playlist &playlist) const {
     // qDebug() << playlist.getSongs();
     for (int i = 0; i < ui->playlistTabs->count(); ++i) {
-        // if (auto *playlistView = qobject_cast<QListWidget *>(ui->playlistTabs->widget(i))) {
         if (auto *playlistView = ui->playlistTabs->widget(i)->findChild<QListWidget *>()) {
             if (!playlist.isSorted()) {
                 playlistView->setDragDropMode(QAbstractItemView::InternalMove);
@@ -90,7 +89,7 @@ void PlaylistTabsWidget::onPlaylistSelected(const QListWidgetItem *item) const {
 
     // switch to the tab if it's already open
     for (int i = 0; i < ui->playlistTabs->count(); ++i) {
-        if (auto *playlistView = qobject_cast<QListWidget *>(ui->playlistTabs->widget(i))) {
+        if (auto *playlistView = ui->playlistTabs->widget(i)->findChild<QListWidget *>()) {
             auto tabPlaylist = playlistView->property("playlistUuid").toUuid();
             if (tabPlaylist == playlist.getUuid()) {
                 ui->playlistTabs->setCurrentIndex(i);
