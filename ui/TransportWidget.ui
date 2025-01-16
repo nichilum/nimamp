@@ -324,6 +324,13 @@
         </layout>
        </widget>
       </item>
+      <item>
+       <widget class="QSlider" name="volumeSlider">
+        <property name="orientation">
+         <enum>Qt::Orientation::Vertical</enum>
+        </property>
+       </widget>
+      </item>
      </layout>
     </widget>
    </item>

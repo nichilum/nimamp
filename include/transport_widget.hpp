@@ -25,4 +25,5 @@ class TransportWidget : public QWidget {
     void toggleLoop() const;
     void toggleShuffle() const;
     void changePlayPauseIcon() const;
+    static void updateVolume(int volume);
 };

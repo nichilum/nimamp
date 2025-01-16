@@ -260,10 +260,21 @@ QListWidget#playlistTabListWidget::item {
     margin: 0px 10px;
 }
 
-/* Equalizer */
-QFrame#equalizerFrame {
+/* Lyrics */
+QFrame#lyricsFrame {
     background-color: #1c1c1c;
     border-radius: 10px;
+}
+
+QScrollArea#lyricsScrollArea {
+    background-color: #1c1c1c;
+    border: none;
+}
+
+QLabel#lyricsLabel {
+    background-color: #1c1c1c;
+    border: none;
+    padding: 10px;
 }
 
 /* Sort Combobox */

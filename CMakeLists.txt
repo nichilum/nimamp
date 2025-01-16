@@ -5,7 +5,7 @@ project(nimamp VERSION 0.1 LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_STANDARD 20)
 
-find_package(Qt6 6.5 REQUIRED COMPONENTS Widgets Svg Multimedia)
+find_package(Qt6 6.5 REQUIRED COMPONENTS Widgets Svg Multimedia Network)
 
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(TAGLIB REQUIRED IMPORTED_TARGET taglib)
@@ -47,8 +47,8 @@ qt_add_executable(appnimamp
         include/playlist_tabs_widget.hpp
         src/metadata_widget.cpp
         include/metadata_widget.hpp
-        src/equalizer_widget.cpp
-        include/equalizer_widget.hpp
+        src/lyrics_widget.cpp
+        include/lyrics_widget.hpp
 
         ui/MainWindow.ui
         ui/SongItem.ui
@@ -58,7 +58,7 @@ qt_add_executable(appnimamp
         ui/TransportWidget.ui
         ui/PlaylistTabsWidget.ui
         ui/MetadataWidget.ui
-        ui/EqualizerWidget.ui
+        ui/LyricsWidget.ui
 
         resources.qrc
 )
@@ -78,6 +78,7 @@ target_link_libraries(appnimamp
         PRIVATE Qt6::Multimedia
         PRIVATE Qt6::Widgets
         PRIVATE Qt6::Svg
+        PRIVATE Qt6::Network
         PRIVATE ${TAGLIB_LIBRARIES}
 )
 

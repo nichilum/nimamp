@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>EqualizerWidget</class>
- <widget class="QWidget" name="EqualizerWidget">
+ <class>LyricsWidget</class>
+ <widget class="QWidget" name="LyricsWidget">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -27,7 +27,7 @@
     <number>0</number>
    </property>
    <item>
-    <widget class="QFrame" name="equalizerFrame">
+    <widget class="QFrame" name="lyricsFrame">
      <property name="frameShape">
       <enum>QFrame::Shape::StyledPanel</enum>
      </property>
@@ -36,23 +36,20 @@
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout_2">
       <item>
-       <spacer name="horizontalSpacer">
-        <property name="orientation">
-         <enum>Qt::Orientation::Horizontal</enum>
+       <widget class="QScrollArea" name="lyricsScrollArea">
+        <property name="widgetResizable">
+         <bool>true</bool>
         </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item>
-       <widget class="QSlider" name="volumeSlider">
-        <property name="orientation">
-         <enum>Qt::Orientation::Vertical</enum>
-        </property>
+        <widget class="QWidget" name="scrollAreaWidgetContents">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>0</y>
+           <width>653</width>
+           <height>272</height>
+          </rect>
+         </property>
+        </widget>
        </widget>
       </item>
      </layout>

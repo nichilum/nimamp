@@ -10,6 +10,8 @@ TransportWidget::TransportWidget(QWidget *parent) : QWidget(parent), ui(new Ui::
 
     auto player = Player::getInstance();
 
+    ui->volumeSlider->setValue(static_cast<int>(player->getVolume() * 100.));
+
     // buttons
     connect(ui->transportplayButton, &QPushButton::clicked, player, &Player::togglePlayPause);
     connect(ui->transportnextButton, &QPushButton::clicked, player, &Player::next);
@@ -24,6 +26,9 @@ TransportWidget::TransportWidget(QWidget *parent) : QWidget(parent), ui(new Ui::
 
     connect(player, &QMediaPlayer::metaDataChanged, this, &TransportWidget::onMetadataChanged);
     connect(player, &QMediaPlayer::playingChanged, this, &TransportWidget::changePlayPauseIcon);
+
+    // volume slider
+    connect(ui->volumeSlider, &QSlider::valueChanged, this, &TransportWidget::updateVolume);
 }
 
 TransportWidget::~TransportWidget() {
@@ -132,4 +137,13 @@ void TransportWidget::toggleShuffle() const {
         ui->transportshuffleButton->setStyleSheet("QPushButton { background-color: transparent; }");
         ui->transportshuffleButton->setIcon(QIcon(":/resources/shuffle.svg"));
     }
+}
+
+/**
+ * Updates the volume of the player
+ * @param volume New volume (0-100)
+ */
+void TransportWidget::updateVolume(const int volume) {
+    auto player = Player::getInstance();
+    player->setVolume(static_cast<float>(volume) / 100);
 }

@@ -18,15 +18,15 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     transportWidget = new TransportWidget(this);
     playlistTabsWidget = new PlaylistTabsWidget(playlistViewWidget, this);
     metadataWidget = new MetadataWidget(this);
-    equalizerWidget = new EqualizerWidget(this);
+    lyricsWidget = new LyricsWidget(this);
 
     leftSplitter = new QSplitter(Qt::Vertical);
     leftSplitter->addWidget(transportWidget);
-    leftSplitter->addWidget(equalizerWidget);
+    leftSplitter->addWidget(lyricsWidget);
     leftSplitter->addWidget(metadataWidget);
     leftSplitter->setStretchFactor(0, 1);
     leftSplitter->setStretchFactor(1, 2);
-    leftSplitter->setStretchFactor(2, 3);
+    leftSplitter->setStretchFactor(2, 1);
 
     rightSplitter = new QSplitter(Qt::Vertical);
     rightSplitter->addWidget(playlistViewWidget);

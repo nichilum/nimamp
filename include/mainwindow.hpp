@@ -3,7 +3,7 @@
 #include <QMainWindow>
 #include <QSplitter>
 
-#include "equalizer_widget.hpp"
+#include "lyrics_widget.hpp"
 #include "metadata_widget.hpp"
 #include "playlist.hpp"
 #include "playlist_tabs_widget.hpp"
@@ -31,7 +31,7 @@ class MainWindow : public QMainWindow {
     TransportWidget *transportWidget;
     PlaylistTabsWidget *playlistTabsWidget;
     MetadataWidget *metadataWidget;
-    EqualizerWidget *equalizerWidget;
+    LyricsWidget *lyricsWidget;
     QSplitter *leftSplitter;
     QSplitter *rightSplitter;
     QSplitter *mainSplitter;

@@ -3,6 +3,7 @@
 #include <QFontDatabase>
 #include <QLoggingCategory>
 #include <QMetaType>
+#include <QNetworkProxyFactory>
 
 #include "../include/key_events.hpp"
 #include "../include/mainwindow.hpp"
@@ -16,6 +17,7 @@ int main(int argc, char *argv[]) {
     qRegisterMetaType<QVector<Playlist>>("QVector<Playlist>");
     qRegisterMetaType<Player>("Player");
 
+    QNetworkProxyFactory::setUseSystemConfiguration(false);
     QLoggingCategory::setFilterRules("qt.gui.imageio=false");
 
     // key events
@@ -32,8 +34,8 @@ int main(int argc, char *argv[]) {
     QString style(styleFile.readAll());
     app.setStyleSheet(style);
 
-    //auto player = Player::getInstance();
-    //player->setVolume(0.);  // gehoerschutz
+    // auto player = Player::getInstance();
+    // player->setVolume(0.);  // gehoerschutz
 
     MainWindow window;
     window.show();
