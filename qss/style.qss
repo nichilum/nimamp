@@ -275,6 +275,7 @@ QLabel#lyricsLabel {
     background-color: #1c1c1c;
     border: none;
     padding: 10px;
+    color: #b4b4b4;
 }
 
 /* Sort Combobox */

@@ -8,6 +8,7 @@
 #include <QNetworkReply>
 #include <QNetworkRequest>
 #include <QScrollArea>
+#include <QScrollBar>
 
 #include "../include/player.hpp"
 #include "ui_LyricsWidget.h"
@@ -23,9 +24,8 @@ LyricsWidget::LyricsWidget(QWidget *parent) : QWidget(parent), ui(new Ui::Lyrics
     label->setWordWrap(true);
     label->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Minimum);
 
-    QScrollArea *scrollArea = ui->lyricsScrollArea;
-    scrollArea->setWidget(label);
-    scrollArea->setWidgetResizable(true);
+    ui->lyricsScrollArea->setWidget(label);
+    ui->lyricsScrollArea->setWidgetResizable(true);
 
     connect(player, &Player::metaDataChanged, this, &LyricsWidget::loadLyrics);
 
@@ -41,7 +41,7 @@ LyricsWidget::LyricsWidget(QWidget *parent) : QWidget(parent), ui(new Ui::Lyrics
                             if (obj.contains("lyrics")) {
                                 QJsonValue value = obj.value("lyrics");
                                 if (value.isString()) {
-                                    lyrics = value.toString();
+                                    lyrics = "\n\n\n\n\n\n\n" + value.toString() + "\n\n\n\n\n\n\n";
                                 }
                             }
                         }
@@ -53,10 +53,16 @@ LyricsWidget::LyricsWidget(QWidget *parent) : QWidget(parent), ui(new Ui::Lyrics
                 label->setWordWrap(true);
                 label->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Minimum);
 
-                QScrollArea *scrollArea = ui->lyricsScrollArea;
-                scrollArea->setWidget(label);
-                scrollArea->setWidgetResizable(true);
+                ui->lyricsScrollArea->setWidget(label);
+                ui->lyricsScrollArea->setWidgetResizable(true);
             });
+
+    connect(player, &QMediaPlayer::positionChanged, [this, player](qint64 position) {
+        QScrollBar *scrollBar = ui->lyricsScrollArea->verticalScrollBar();
+        int maxScroll = scrollBar->maximum();
+        int scrollValue = (position * maxScroll) / (player->duration() + 1);
+        scrollBar->setValue(scrollValue);
+    });
 }
 
 LyricsWidget::~LyricsWidget() {
