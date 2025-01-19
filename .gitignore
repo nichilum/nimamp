@@ -75,6 +75,7 @@ CMakeLists.txt.user*
 # Build
 /build
 /cmake-build-*
+/release
 
 # ide
 /.vscode
