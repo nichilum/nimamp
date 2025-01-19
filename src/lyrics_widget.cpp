@@ -23,6 +23,7 @@ LyricsWidget::LyricsWidget(QWidget *parent) : QWidget(parent), ui(new Ui::Lyrics
     label->setObjectName("lyricsLabel");
     label->setWordWrap(true);
     label->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Minimum);
+    label->setAlignment(Qt::AlignCenter);
 
     ui->lyricsScrollArea->setWidget(label);
     ui->lyricsScrollArea->setWidgetResizable(true);
@@ -52,6 +53,7 @@ LyricsWidget::LyricsWidget(QWidget *parent) : QWidget(parent), ui(new Ui::Lyrics
                 label->setObjectName("lyricsLabel");
                 label->setWordWrap(true);
                 label->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Minimum);
+                label->setAlignment(Qt::AlignCenter);
 
                 ui->lyricsScrollArea->setWidget(label);
                 ui->lyricsScrollArea->setWidgetResizable(true);

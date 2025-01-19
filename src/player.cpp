@@ -115,6 +115,22 @@ void Player::addFolderToPlaylist(const QString &directory, const Playlist &playl
     }
 }
 
+void Player::addFilesToPlaylist(const QStringList &filePaths, const Playlist &playlist) {
+    auto it = std::find_if(playlists.begin(), playlists.end(), [&playlist](const Playlist &p) {
+        return p.getUuid() == playlist.getUuid();
+    });
+
+    if (it != playlists.end()) {
+        for (QString filePath : filePaths) {
+            auto song = Song(QUrl::fromLocalFile(filePath));
+            it->addSong(song);
+        }
+
+        emit playlistChanged(*it);
+        qDebug() << "Added files to playlist: " << playlist.getName();
+    }
+}
+
 /**
  * Add a folder to the queue
  * @param directory The directory to add

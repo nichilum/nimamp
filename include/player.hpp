@@ -42,6 +42,7 @@ class Player final : public QMediaPlayer {
     void queuePlaylist(const Playlist &playlist);
     void removePlaylist(const Playlist &playlist);
     void addFolderToPlaylist(const QString &directory, const Playlist &playlist);
+    void addFilesToPlaylist(const QStringList &filePaths, const Playlist &playlist);
     void addFolderToQueue(const QString &directory);
     void playSong(const Song &song);
     void playSongFromQueue(const Song &song);

@@ -86,6 +86,17 @@ void PlaylistViewWidget::onPlaylistItemRightClicked(const QPoint &pos) {
         player->addFolderToPlaylist(folderPath, playlist);
     });
 
+    menu.addAction("Add Files to Playlist", [this, player, playlist]() {
+        QString fileFilter = "Audio Files (*.mp3 *.wav)";
+        QStringList filePaths = QFileDialog::getOpenFileNames(
+            this,
+            "Select an Audio File",
+            "",
+            fileFilter);
+
+        player->addFilesToPlaylist(filePaths, playlist);
+    });
+
     menu.addAction("Delete", [this, player, playlist]() {
         player->removePlaylist(playlist);
     });

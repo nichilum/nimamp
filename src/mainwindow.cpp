@@ -87,6 +87,6 @@ void MainWindow::openFileDialog() {
 
     auto player = Player::getInstance();
     for (QString filePath : filePaths) {
-        player->queueSong(Song(filePath));
+        player->queueSong(Song(QUrl::fromLocalFile(filePath)));
     }
 }
