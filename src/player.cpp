@@ -146,8 +146,6 @@ void Player::addFolderToQueue(const QString &directory) {
         auto song = Song(QUrl::fromLocalFile(dir.absoluteFilePath(filename)));
         queueSong(song);
     }
-
-    qDebug() << "Added folder to queue: " << queue;
 }
 
 /**

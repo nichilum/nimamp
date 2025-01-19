@@ -34,9 +34,6 @@ int main(int argc, char *argv[]) {
     QString style(styleFile.readAll());
     app.setStyleSheet(style);
 
-    // auto player = Player::getInstance();
-    // player->setVolume(0.);  // gehoerschutz
-
     MainWindow window;
     window.show();
 
