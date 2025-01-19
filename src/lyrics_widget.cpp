@@ -73,6 +73,9 @@ LyricsWidget::~LyricsWidget() {
     delete ui;
 }
 
+/**
+ * Fetches the lyrics for the currently playing track.
+ */
 void LyricsWidget::loadLyrics() {
     auto player = Player::getInstance();
 

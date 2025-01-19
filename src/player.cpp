@@ -115,6 +115,12 @@ void Player::addFolderToPlaylist(const QString &directory, const Playlist &playl
     }
 }
 
+/**
+ * Adds a list of files to a specified playlist.
+ *
+ * @param filePaths A list of file paths to be added to the playlist.
+ * @param playlist The target playlist to which the files will be added.
+ */
 void Player::addFilesToPlaylist(const QStringList &filePaths, const Playlist &playlist) {
     auto it = std::find_if(playlists.begin(), playlists.end(), [&playlist](const Playlist &p) {
         return p.getUuid() == playlist.getUuid();
@@ -382,6 +388,15 @@ void Player::loadPlayer() {
     }
 }
 
+/**
+ * Toggles the shuffle mode for the playback queue.
+ *
+ * @note The function assumes that `originalQueue` holds the original
+ * order of the playback queue and that `queue` is a modifiable container.
+ *
+ * @warning The shuffle operation uses a default random engine, which may
+ * produce non-deterministic results on different runs.
+ */
 void Player::toggleShuffleQueue() {
     shuffled = !shuffled;
 
@@ -394,6 +409,20 @@ void Player::toggleShuffleQueue() {
     emit queueChanged();
 }
 
+/**
+ * @brief Sorts a specified playlist based on the given sorting type.
+ * @param sortingType A string representing the desired sorting criterion
+ * (e.g., "title", "artist", "duration").
+ * @param playlist The target playlist to be sorted.
+ *
+ * @note The function assumes that the `Playlist` class provides a method
+ * to set the sorting type (`setSortingType`) and that `playlists` contains
+ * valid `Playlist` objects.
+ *
+ * @warning The sorting behavior depends on the implementation of
+ * `Playlist::setSortingType`. Ensure the sorting type string is valid
+ * and supported.
+ */
 void Player::sortPlaylist(const QString sortingType, const Playlist &playlist) {
     auto it = std::find_if(playlists.begin(), playlists.end(), [&playlist](const Playlist &p) {
         return p.getUuid() == playlist.getUuid();
