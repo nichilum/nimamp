@@ -27,54 +27,6 @@ QScrollBar::add-line, QScrollBar::sub-line {
     background: transparent;
 }
 
-
-/* Push Buttons */
-/* QPushButton {
-    background-color: #1f1f1f;
-    border: 1px solid #333333;
-    border-radius: 5px;
-    padding: 5px 10px;
-    color: red;
-}
-QPushButton:hover {
-    background-color: #2b2b2b;
-}
-QPushButton:pressed {
-    background-color: #333333;
-} */
-
-/* Text Areas */
-/* QTextEdit, QLineEdit {
-    background-color: #1f1f1f;
-    color: #ffffff;
-    border: 1px solid #333333;
-    border-radius: 5px;
-    padding: 5px;
-} */
-
-/* Progress Bar (e.g., Music progress)
-QProgressBar {
-    border: 1px solid #333333;
-    border-radius: 5px;
-    text-align: center;
-    background-color: #1f1f1f;
-    color: #ffffff;
-}
-QProgressBar::chunk {
-    background-color: #0078d4;
-    width: 20px;
-} */
-
-/* Search Bar */
-/* QLineEdit {
-    background-color: #1a1a1a;
-    border: 1px solid #333333;
-    border-radius: 5px;
-    padding: 5px;
-    color: #ffffff;
-} */
-
-
 /* Transport Widget */
 QLabel#transportsongNameLabel {
     font-size: 18pt;
