@@ -49,8 +49,10 @@ void Player::playPlaylist(const Playlist &playlist) {
         queue.append(p->getSongs());
         emit queueChanged();
 
-        setSource(queue.front().getUrl());
-        play();
+        if (!queue.isEmpty()) {
+            setSource(queue.front().getUrl());
+            play();
+        }
     }
 }
 
